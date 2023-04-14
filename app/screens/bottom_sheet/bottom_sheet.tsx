@@ -1,0 +1,195 @@
+import {Events} from '@app/constants';
+import { useTheme } from '@app/context/theme';
+import {useAndroidHardwareBackHandler} from '@app/hooks';
+import useNavButtonPressed from '@app/hooks/navigation_button_pressed';
+import {dismissModal} from '@app/navigation/navigation';
+import {hapticFeedback, makeStyleSheetFromTheme} from '@app/utils';
+import BottomSheetM, {
+    BottomSheetBackdrop,
+    BottomSheetBackdropProps,
+    BottomSheetFooterProps,
+} from '@gorhom/bottom-sheet';
+import {BaseScreens} from '@typings/screens/navigation';
+import React, {ReactNode, useCallback, useEffect, useMemo, useRef} from 'react';
+import {
+    DeviceEventEmitter,
+    Handle,
+    InteractionManager,
+    Keyboard,
+    StyleProp,
+    View,
+    ViewStyle,
+} from 'react-native';
+import { WithSpringConfig } from 'react-native-reanimated';
+
+type BottomSheetProps = {
+    closeButtonId?: string;
+    componentId: BaseScreens;
+    contentStyle?: StyleProp<ViewStyle>;
+    initialSnapIndex?: number;
+    footerComponent?: React.FC<BottomSheetFooterProps>;
+    renderContent: () => ReactNode;
+    snapPoints?: Array<string | number>;
+    testID?: string;
+};
+
+export const animatedConfig: Omit<WithSpringConfig, 'velocity'> = {
+    damping: 50,
+    mass: 0.4,
+    stiffness: 121.6,
+    overshootClamping: true,
+    restSpeedThreshold: 0.1,
+    restDisplacementThreshold: 0.3,
+};
+
+
+export const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
+    return {
+        bottomSheet: {
+            borderTopStartRadius: 24,
+            borderTopEndRadius: 24,
+            shadowOffset: {
+                width: 0,
+                height: 8,
+            },
+            shadowOpacity: 0.12,
+            shadowRadius: 24,
+            shadowColor: '#000',
+            elevation: 24,
+        },
+        bottomSheetBackground: {},
+        content: {
+            flex: 1,
+            paddingHorizontal: 20,
+        },
+        contentTablet: {},
+        separator: {
+            height: 1,
+            borderTopWidth: 1,
+        },
+    };
+});
+
+export const BottomSheet: React.FC<BottomSheetProps> = ({
+    closeButtonId,
+    componentId,
+    contentStyle,
+    initialSnapIndex = 1,
+    footerComponent,
+    renderContent,
+    snapPoints = [1, '50%', '80%'],
+    testID,
+}) => {
+    const theme = useTheme();
+    const styles = getStyleSheet(theme);
+    const sheetRef = useRef<BottomSheetM>(null);
+    const interaction = useRef<Handle>();
+    const timeoutRef = useRef<NodeJS.Timeout>();
+
+    useEffect(() => {
+        interaction.current = InteractionManager.createInteractionHandle();
+    }, []);
+
+    const bottomSheetBackgroundStyle = useMemo(() => [], []);
+
+    const close = useCallback(() => {
+        dismissModal({componentId});
+    }, [componentId]);
+
+    useEffect(() => {
+        const listener = DeviceEventEmitter.addListener(Events.CLOSE_BOTTOM_SHEET, () => {
+            if (sheetRef.current) {
+                sheetRef.current.close();
+            } else {
+                close();
+            }
+        });
+
+        return () => listener.remove();
+    }, [close]);
+
+    const handleAnimationStart = useCallback(() => {
+        if (!interaction.current) {
+            interaction.current = InteractionManager.createInteractionHandle();
+        }
+    }, []);
+
+    const handleClose = useCallback(() => {
+        if (sheetRef.current) {
+            sheetRef.current.close();
+        } else {
+            close();
+        }
+    }, []);
+
+    const handleChange = useCallback((index: number) => {
+        timeoutRef.current = setTimeout(() => {
+            if (interaction.current) {
+                InteractionManager.clearInteractionHandle(interaction.current);
+                interaction.current = undefined;
+            }
+        });
+
+        if (index <= 0) {
+            close();
+        }
+    }, []);
+
+    useAndroidHardwareBackHandler(componentId, handleClose);
+
+    useNavButtonPressed(closeButtonId || '', componentId, close, [close]);
+
+    useEffect(() => {
+        hapticFeedback();
+        Keyboard.dismiss();
+
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+
+            if (interaction.current) {
+                InteractionManager.clearInteractionHandle(interaction.current);
+            }
+        };
+    }, []);
+
+    const renderBackdrop = useCallback((props: BottomSheetBackdropProps) => {
+        return (
+            <BottomSheetBackdrop
+                {...props}
+                disappearsOnIndex={0}
+                appearsOnIndex={1}
+                opacity={0.6}
+            />
+        );
+    }, []);
+
+    const renderContainerContent = () => (
+        <View
+            style={[styles.content, contentStyle]}
+            testID={`${testID}.screen`}>
+            {renderContent()}
+        </View>
+    );
+
+    return (
+        <BottomSheetM
+            ref={sheetRef}
+            index={initialSnapIndex}
+            snapPoints={snapPoints}
+            animateOnMount={true}
+            backdropComponent={renderBackdrop}
+            onAnimate={handleAnimationStart}
+            onChange={handleChange}
+            animationConfigs={animatedConfig}
+            // handleComponent={Indicator}
+            backgroundStyle={bottomSheetBackgroundStyle}
+            footerComponent={footerComponent}
+            keyboardBehavior="extend"
+            keyboardBlurBehavior="restore"
+            onClose={close}>
+            {renderContainerContent()}
+        </BottomSheetM>
+    );
+};

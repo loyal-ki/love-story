@@ -1,0 +1,8 @@
+{
+    "common.action_close": "Close",
+    "common.action_retry": "Retry",
+    "common.action_refresh": "Refresh",
+    "common.action_cancel": "Cancel",
+    "common.general_error": "An error occurred. We will record and fix this issue soon.",
+    "home.page_title": "Home"
+}
