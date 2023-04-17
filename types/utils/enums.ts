@@ -3,3 +3,7 @@ export enum NetworkLoadingStatusTypes {
     Success = 2,
     Error = 3,
 }
+
+export enum ClientDatePatterns {
+    Log = 'DD-MM-YYYY HH:mm:ss.SSS',
+}

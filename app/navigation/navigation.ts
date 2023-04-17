@@ -90,7 +90,7 @@ export const onNavigateToInit = () => {
         ],
     };
 
-    if (env.LOG_REQUESTS) {
+    if (__DEV__ && env.LOG_REQUESTS) {
         logInfo('INIT SCREEN SUCCESSFULLY');
     }
 
@@ -125,7 +125,7 @@ export const onNavigationToScreen = ({screen, params = {}, options = {}}: Naviga
 
     const componentId = NavigationHandler.getVisibleScreen();
 
-    if (env.LOG_REQUESTS) {
+    if (__DEV__ && env.LOG_REQUESTS) {
         logInfo(`● [PUSH] TO SCREEN: ${componentId}\n ● [PARAMS]\n${formatLog(params)}`);
     }
 
@@ -145,7 +145,7 @@ export const onNavigationToScreen = ({screen, params = {}, options = {}}: Naviga
 export async function popScreen(screenId?: BaseScreens) {
     try {
         if (screenId) {
-            if (env.LOG_REQUESTS) {
+            if (__DEV__ && env.LOG_REQUESTS) {
                 logInfo(`● [POP] SCREEN: ${screenId}`);
             }
 
@@ -167,7 +167,7 @@ export async function popAllToRoot() {
     const componentId = NavigationHandler.getVisibleScreen();
 
     try {
-        if (env.LOG_REQUESTS) {
+        if (__DEV__ && env.LOG_REQUESTS) {
             logInfo(`● [POP] TO ROOT`);
         }
 
@@ -191,7 +191,7 @@ export function showModalAsScreen(
         return;
     }
 
-    if (env.LOG_REQUESTS) {
+    if (__DEV__ && env.LOG_REQUESTS) {
         logInfo(`● [SHOW] MODAL`);
     }
 

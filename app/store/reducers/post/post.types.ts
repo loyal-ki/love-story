@@ -1,3 +1,3 @@
-import {PostModel} from '@app/database/models';
+import {PostModel} from '@app/models';
 
 export type IPostByIdState = PostModel[];

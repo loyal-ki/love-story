@@ -1,8 +1,8 @@
 import merge from 'deepmerge';
 
 import {SCHEMA_NAME} from '@app/constants';
+import {UserModel} from '@app/models';
 import DatabaseHandler from '@database/handler/handler';
-import {UserModel} from '@database/models';
 
 // DEFAULT USER KEY
 const USER_ID = 1;

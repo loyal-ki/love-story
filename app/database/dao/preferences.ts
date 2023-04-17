@@ -1,8 +1,8 @@
 import merge from 'deepmerge';
 
+import {PreferencesModel} from '@app/models';
 import {SCHEMA_NAME} from '@constants';
 import DatabaseHandler from '@database/handler/handler';
-import {PreferencesModel} from '@database/models';
 
 // DEFAULT PREFERENCES KEY
 const PREFERENCES_ID = 2;

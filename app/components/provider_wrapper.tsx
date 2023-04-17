@@ -5,7 +5,6 @@ import {Provider} from 'react-redux';
 
 import store from '@app/store';
 
-
 export function withProviderWrapper(Component: ComponentType): ComponentType {
     return function providerWrapper(props: any) {
         return (

@@ -1,4 +1,4 @@
-import {UserModel} from '@app/database/models';
+import {UserModel} from '@app/models';
 import UserDAO from '@database/dao/user';
 
 export const initUser = async (): Promise<void> => {

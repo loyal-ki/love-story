@@ -6,8 +6,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {Screens} from '@app/constants';
-import {PostModel} from '@app/database/models';
 import {useMemoizedCallback, useMount} from '@app/hooks';
+import {PostModel} from '@app/models';
 import {counterActions} from '@app/store/actions';
 import {postActions} from '@app/store/actions/post.action';
 import {isPostFetchingSelector, postListSelector} from '@app/store/selectors/post.selector';
