@@ -89,6 +89,18 @@
       "@managers/*": [
         "app/managers/*"
       ],
+      "@navigation": [
+        "app/navigation"
+      ],
+      "@navigation/*": [
+        "app/navigation/*"
+      ],
+      "@services": [
+        "app/services"
+      ],
+      "@services/*": [
+        "app/services/*"
+      ],
       "@screens": [
         "app/screens"
       ],

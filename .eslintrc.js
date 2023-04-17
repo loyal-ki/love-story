@@ -27,7 +27,7 @@ module.exports = {
         },
     },
     rules: {
-        'prettier/prettier': ['error'],
+        'prettier/prettier': 0,
         'eol-last': ['error', 'always'],
         'react/prop-types': 'warn',
         camelcase: [
@@ -36,11 +36,33 @@ module.exports = {
                 properties: 'never',
             },
         ],
+        'react/require-default-props': 'off',
+        'react/function-component-definition': [
+            'error',
+            {
+                namedComponents: 'arrow-function',
+                unnamedComponents: 'arrow-function',
+            },
+        ],
+        'class-methods-use-this': 'off',
         'import/prefer-default-export': [0],
         'react/jsx-filename-extension': [0],
+        'no-shadow': 'off',
+        'import/no-named-as-default': 0,
         'import/extensions': 'off',
         'no-unused-vars': 'warn',
         'unused-imports/no-unused-imports': 'error',
+        indent: [2, 4, {SwitchCase: 1}],
+        'key-spacing': [
+            2,
+            {
+                singleLine: {
+                    beforeColon: false,
+                    afterColon: true,
+                },
+            },
+        ],
+        '@typescript-eslint/member-delimiter-style': 2,
         'import/order': [
             2,
             {
@@ -90,10 +112,9 @@ module.exports = {
                 project: './tsconfig.json',
             },
             plugins: ['react', '@typescript-eslint', 'prettier', 'jest', 'rxjs', 'unused-imports'],
-            indent: [2, 4, {SwitchCase: 1}],
             settings: {react: {version: 'detect'}},
             rules: {
-                'prettier/prettier': ['error'],
+                'prettier/prettier': [0],
                 'react/prop-types': 'warn',
                 'import/prefer-default-export': [0],
                 '@typescript-eslint/prefer-optional-chain': ['error'],

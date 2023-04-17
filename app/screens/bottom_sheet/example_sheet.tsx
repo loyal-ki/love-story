@@ -1,8 +1,8 @@
+import {dismissModalIfShowing} from '@navigation/navigation';
 import React from 'react';
-
-import {dismissModal} from '@app/navigation/navigation';
-import type {BaseScreens} from '@typings/screens/navigation';
 import {Button, StyleSheet, View} from 'react-native';
+
+import type {BaseScreens} from '@typings/screens/navigation';
 
 const styles = StyleSheet.create({
     container: {
@@ -22,7 +22,7 @@ export const ExampleSheetScreen: React.FC<ExampleSheetScreenProps> = () => {
             <Button
                 title="Dismiss bottom sheet"
                 onPress={() => {
-                    dismissModal();
+                    dismissModalIfShowing();
                 }}
             />
         </View>

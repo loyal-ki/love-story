@@ -1,5 +1,5 @@
-import {UserRepository} from './user';
 import {PreferencesRepository} from './preferences';
+import {UserRepository} from './user';
 
 export const preferencesRepository = () => {
     return PreferencesRepository;

@@ -1,19 +1,18 @@
-import React, {useState} from 'react';
+import {onNavigationToScreen, showReviewOverlay} from '@navigation/navigation';
+import React from 'react';
+import {useIntl} from 'react-intl';
+import {Button, StyleSheet, View} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {Screens} from '@app/constants';
-import {onNavigationToScreen, showReviewOverlay} from '@app/navigation/navigation';
-import {counterActions} from '@app/store/actions';
-import type {BaseScreens} from '@typings/screens/navigation';
-import {Button, StyleSheet, View} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {PostModel} from '@app/database/models';
 import {useMemoizedCallback, useMount} from '@app/hooks';
-import {DatabaseService} from '@app/database';
-import {logInfo} from '@app/utils';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {useIntl} from 'react-intl';
+import {counterActions} from '@app/store/actions';
 import {postActions} from '@app/store/actions/post.action';
 import {isPostFetchingSelector, postListSelector} from '@app/store/selectors/post.selector';
-import {PostModel} from '@app/database/models';
+
+import type {BaseScreens} from '@typings/screens/navigation';
 
 const styles = StyleSheet.create({
     container: {
@@ -35,21 +34,15 @@ export const HomeScreen: React.FC<HomeScreenProps> = () => {
     const postList = useSelector(postListSelector);
     const isFetch = useSelector(isPostFetchingSelector);
 
-    console.log(postList);
-    console.log(isFetch);
-
     const init = useMemoizedCallback(async () => {
         reduxDispatch(
             postActions.fetchPostIfNeeded({
-                onStart: () => {
-                },
-                onComplete: (data?: PostModel[]) => {
-                },
-                onError: (error: unknown) => {
-                },
+                onStart: () => {},
+                onComplete: (data?: PostModel[]) => {},
+                onError: (error: unknown) => {},
             })
         );
-    }, []);
+    }, [reduxDispatch]);
 
     useMount(init);
 
@@ -59,7 +52,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = () => {
             <Icon
                 name="camera"
                 size={35}
-                color={'#EEEFEF'}
+                color="#EEEFEF"
                 style={{
                     alignSelf: 'center',
                 }}

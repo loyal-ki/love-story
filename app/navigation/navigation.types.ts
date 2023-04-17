@@ -1,4 +1,4 @@
-import type { BaseScreens } from "@typings/screens/navigation";
+import type {BaseScreens} from '@typings/screens/navigation';
 
 export interface NavigationInfo {
     screen: BaseScreens;

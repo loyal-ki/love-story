@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from 'react';
+import {useRef, useEffect, useCallback} from 'react';
 
 export const useIsUnmounted = (): (() => boolean) => {
     const isUnmountedRef = useRef(false);

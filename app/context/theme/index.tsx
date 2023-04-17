@@ -1,10 +1,9 @@
-import {Themes} from '@app/constants/themes';
-import {DatabaseService} from '@app/database';
-import {useMemoizedCallback, useMount} from '@app/hooks';
-import {logInfo} from '@app/utils';
-import React, {useEffect, useState} from 'react';
-import {ComponentType, createContext} from 'react';
+import React, {useEffect, useState, ComponentType, createContext} from 'react';
 import {Appearance} from 'react-native';
+
+import {Themes} from '@app/constants/themes';
+import {DatabaseLocal} from '@app/database';
+import {useMemoizedCallback, useMount} from '@app/hooks';
 
 type Props = {
     children: React.ReactNode;
@@ -52,7 +51,7 @@ export const ThemeProvider = ({children}: Props) => {
     }, [theme]);
 
     const updateTheme = useMemoizedCallback(async () => {
-        await DatabaseService.preferencesRepository().setTheme(theme);
+        await DatabaseLocal.preferencesRepository().setTheme(theme);
     }, [theme]);
 
     useEffect(() => {
@@ -63,6 +62,7 @@ export const ThemeProvider = ({children}: Props) => {
 };
 
 export function withTheme<T extends WithThemeProps>(Component: ComponentType<T>): ComponentType<T> {
+    // eslint-disable-next-line react/function-component-definition
     return function ThemeComponent(props) {
         return <Consumer>{(theme: Theme) => <Component {...props} theme={theme} />}</Consumer>;
     };

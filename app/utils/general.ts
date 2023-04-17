@@ -1,5 +1,4 @@
 import _, {PropertyPath} from 'lodash';
-
 import ReactNativeHapticFeedback, {HapticFeedbackTypes} from 'react-native-haptic-feedback';
 
 export function hapticFeedback(method: HapticFeedbackTypes = HapticFeedbackTypes.impactLight) {
@@ -56,5 +55,6 @@ export const isNilOrNaN = (text: string | null | undefined): boolean => {
 };
 
 export const delay = (ms: number) => {
+    // eslint-disable-next-line no-promise-executor-return
     return new Promise(resolve => setTimeout(resolve, ms));
 };

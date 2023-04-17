@@ -1,4 +1,5 @@
-import { Navigation, Options } from "react-native-navigation";
+import {Platform} from 'react-native';
+import {Navigation, Options, OptionsModalPresentationStyle} from 'react-native-navigation';
 
 export const defaultOptions: Options = {
     layout: {
@@ -6,8 +7,8 @@ export const defaultOptions: Options = {
     },
     popGesture: true,
     sideMenu: {
-        left: { enabled: false },
-        right: { enabled: false },
+        left: {enabled: false},
+        right: {enabled: false},
     },
     statusBar: {
         style: 'light',
@@ -60,3 +61,25 @@ Navigation.setDefaultOptions({
         },
     },
 });
+
+export const bottomSheetModalOptions = (): Options => {
+    return {
+        animations: {
+            showModal: {
+                enabled: false,
+            },
+            dismissModal: {
+                enabled: false,
+            },
+        },
+        modalPresentationStyle: Platform.select({
+            ios: OptionsModalPresentationStyle.overFullScreen,
+            default: OptionsModalPresentationStyle.overCurrentContext,
+        }),
+        statusBar: {
+            backgroundColor: null,
+            drawBehind: true,
+            translucent: true,
+        },
+    };
+};

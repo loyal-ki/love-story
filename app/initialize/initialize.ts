@@ -1,5 +1,5 @@
-import GlobalEventHandler from '@managers/global_event_handler';
 import LocalDatabase from '@database/local_database';
+import GlobalEventHandler from '@managers/global_event_handler';
 
 let alreadyInitialized = false;
 

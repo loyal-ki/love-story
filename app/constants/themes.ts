@@ -1,4 +1,4 @@
-export enum APP_THEME {
+export enum AppThemeEnum {
     light = 'light',
     dark = 'dark',
     system = 'system',

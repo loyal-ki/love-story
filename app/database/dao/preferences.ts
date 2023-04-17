@@ -1,7 +1,7 @@
 import merge from 'deepmerge';
 
+import {SCHEMA_NAME} from '@constants';
 import DatabaseHandler from '@database/handler/handler';
-import {SCHEMA_NAME} from '@app/constants';
 import {PreferencesModel} from '@database/models';
 
 // DEFAULT PREFERENCES KEY

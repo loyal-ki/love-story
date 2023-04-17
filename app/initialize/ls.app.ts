@@ -1,12 +1,13 @@
-import {registerScreens} from '@app/navigation';
-import {registerNavigationListeners} from '@app/navigation/navigation';
-import {initialize} from './initialize';
-import {initialLaunch} from './launch';
+import {registerScreens} from '@navigation';
+import {registerNavigationListeners} from '@navigation/navigation';
 import SplashScreen from 'react-native-splash-screen';
 
-/*//////////////////////////////////////////////////////////////
+import {initialize} from './initialize';
+import {initialLaunch} from './launch';
+
+/* //////////////////////////////////////////////////////////////
                     APP ROOT
-  //////////////////////////////////////////////////////////////*/
+  ////////////////////////////////////////////////////////////// */
 export const LoveStoryApp = async () => {
     // Validate app initialized or not
     await initialize();

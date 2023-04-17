@@ -1,7 +1,5 @@
+import env from '@env';
 import merge from 'deepmerge';
-
-import {Screens} from '@app/constants';
-import type {BaseScreens} from '@typings/screens/navigation';
 import {Alert, Platform} from 'react-native';
 import {
     Navigation,
@@ -9,11 +7,15 @@ import {
     OptionsModalPresentationStyle,
     ScreenPoppedEvent,
 } from 'react-native-navigation';
-import NavigationHandler from './navigation.handler';
-import type {NavigationInfo} from './navigation.types';
-import {defaultOptions} from './default.options';
-import env from '@env';
+
+import {Screens} from '@app/constants';
 import {formatLog, logInfo} from '@app/utils';
+
+import {bottomSheetModalOptions, defaultOptions} from './default.options';
+import NavigationHandler from './navigation.handler';
+
+import type {NavigationInfo} from './navigation.types';
+import type {BaseScreens} from '@typings/screens/navigation';
 
 // NAVIGATION COMMAND TYPE
 enum NavigationCommandEnum {
@@ -35,18 +37,13 @@ type BottomSheetArgs = {
     title: string;
 };
 
-export const registerNavigationListeners = () => {
-    Navigation.events().registerScreenPoppedListener(onPoppedListener);
-    Navigation.events().registerCommandListener(onCommandListener);
-};
-
 function onPoppedListener({componentId}: ScreenPoppedEvent) {
     NavigationHandler.removeScreenFromStack(componentId as BaseScreens);
 }
 
-/*//////////////////////////////////////////////////////////////
+/* //////////////////////////////////////////////////////////////
                     NAVIGATION COMMAND LISTENER 
-  //////////////////////////////////////////////////////////////*/
+  ////////////////////////////////////////////////////////////// */
 function onCommandListener(name: string, params: any) {
     switch (name) {
         case NavigationCommandEnum.setRoot:
@@ -69,8 +66,15 @@ function onCommandListener(name: string, params: any) {
         case NavigationCommandEnum.dismissModal:
             NavigationHandler.removeModalFromStack(params.componentId);
             break;
+        default:
+            break;
     }
 }
+
+export const registerNavigationListeners = () => {
+    Navigation.events().registerScreenPoppedListener(onPoppedListener);
+    Navigation.events().registerCommandListener(onCommandListener);
+};
 
 export const onNavigateToInit = () => {
     // set init-screen is default (root) when launch app
@@ -95,14 +99,14 @@ export const onNavigateToInit = () => {
     });
 };
 
-/*//////////////////////////////////////////////////////////////
+/* //////////////////////////////////////////////////////////////
                     VALIDATE SCREEN REGISTERED 
-  //////////////////////////////////////////////////////////////*/
+  ////////////////////////////////////////////////////////////// */
 function isScreenRegistered(screen: BaseScreens) {
     const notImplemented = !Object.values(Screens).includes(screen);
     if (notImplemented) {
         Alert.alert(
-            'Temporary error ' + screen,
+            `Temporary error ${screen}`,
             'The functionality you are trying to use has not been implemented yet'
         );
         return false;
@@ -111,9 +115,9 @@ function isScreenRegistered(screen: BaseScreens) {
     return true;
 }
 
-/*//////////////////////////////////////////////////////////////
+/* //////////////////////////////////////////////////////////////
                     NAVIGATION COMMAND PUSH
-  //////////////////////////////////////////////////////////////*/
+  ////////////////////////////////////////////////////////////// */
 export const onNavigationToScreen = ({screen, params = {}, options = {}}: NavigationInfo) => {
     if (!isScreenRegistered(screen)) {
         return '';
@@ -122,7 +126,7 @@ export const onNavigationToScreen = ({screen, params = {}, options = {}}: Naviga
     const componentId = NavigationHandler.getVisibleScreen();
 
     if (env.LOG_REQUESTS) {
-        logInfo(`● [PUSH] TO SCREEN: ${componentId}\n` + '● [PARAMS]\n' + formatLog(params));
+        logInfo(`● [PUSH] TO SCREEN: ${componentId}\n ● [PARAMS]\n${formatLog(params)}`);
     }
 
     return Navigation.push(componentId, {
@@ -135,9 +139,9 @@ export const onNavigationToScreen = ({screen, params = {}, options = {}}: Naviga
     });
 };
 
-/*//////////////////////////////////////////////////////////////
+/* //////////////////////////////////////////////////////////////
                     NAVIGATION COMMAND POP
-  //////////////////////////////////////////////////////////////*/
+  ////////////////////////////////////////////////////////////// */
 export async function popScreen(screenId?: BaseScreens) {
     try {
         if (screenId) {
@@ -156,10 +160,10 @@ export async function popScreen(screenId?: BaseScreens) {
     }
 }
 
-/*//////////////////////////////////////////////////////////////
+/* //////////////////////////////////////////////////////////////
                     NAVIGATION - RESET TO ROOT
-  //////////////////////////////////////////////////////////////*/
-export async function popToRoot() {
+  ////////////////////////////////////////////////////////////// */
+export async function popAllToRoot() {
     const componentId = NavigationHandler.getVisibleScreen();
 
     try {
@@ -174,71 +178,15 @@ export async function popToRoot() {
     }
 }
 
-/*//////////////////////////////////////////////////////////////
-                    NAVIGATION - SHOW BOTTOM SHEET
-  //////////////////////////////////////////////////////////////*/
-export async function bottomSheet({
-    title,
-    renderContent,
-    // footerComponent,
-    // snapPoints,
-    initialSnapIndex = 1,
-    closeButtonId,
-}: BottomSheetArgs) {
-    showOverlayModal(
-        Screens.BOTTOM_SHEET,
-        {
-            initialSnapIndex,
-            renderContent,
-            // footerComponent,
-            // snapPoints,
-        },
-        bottomSheetModalOptions()
-    );
-}
-
-/*//////////////////////////////////////////////////////////////
+/* //////////////////////////////////////////////////////////////
                     NAVIGATION - SHOW MODAL
-  //////////////////////////////////////////////////////////////*/
-export function showOverlayModal(name: BaseScreens, passProps = {}, options: Options = {}) {
-    let animations = {
-        showModal: {
-            alpha: {
-                from: 0,
-                to: 1,
-                duration: 250,
-            },
-        },
-        dismissModal: {
-            enter: {
-                enabled: false,
-            },
-            exit: {
-                enabled: false,
-            },
-        },
-    };
-
-    const defaultOptions = {
-        modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
-        layout: {
-            backgroundColor: 'transparent',
-            componentBackgroundColor: 'transparent',
-        },
-        topBar: {
-            visible: false,
-            height: 0,
-        },
-        animations,
-    };
-    const mergeOptions = merge(defaultOptions, options);
-    showModal(name, '', passProps, mergeOptions);
-}
-
-/*//////////////////////////////////////////////////////////////
-                    NAVIGATION - SHOW MODAL
-  //////////////////////////////////////////////////////////////*/
-export function showModal(name: BaseScreens, title: string, passProps = {}, options: Options = {}) {
+  ////////////////////////////////////////////////////////////// */
+export function showModalAsScreen(
+    name: BaseScreens,
+    title: string,
+    passProps = {},
+    options: Options = {}
+) {
     if (!isScreenRegistered(name)) {
         return;
     }
@@ -252,7 +200,7 @@ export function showModal(name: BaseScreens, title: string, passProps = {}, opti
             ? OptionsModalPresentationStyle.pageSheet
             : OptionsModalPresentationStyle.none;
 
-    const defaultOptions: Options = {
+    const defaultStyleOptions: Options = {
         modalPresentationStyle,
         statusBar: {
             visible: true,
@@ -288,7 +236,7 @@ export function showModal(name: BaseScreens, title: string, passProps = {}, opti
                             ...passProps,
                             isModal: true,
                         },
-                        options: merge(defaultOptions, options),
+                        options: merge(defaultStyleOptions, options),
                     },
                 },
             ],
@@ -296,7 +244,68 @@ export function showModal(name: BaseScreens, title: string, passProps = {}, opti
     });
 }
 
-export async function dismissModal(options?: Options & {componentId: BaseScreens}) {
+/* //////////////////////////////////////////////////////////////
+                    NAVIGATION - SHOW MODAL
+  ////////////////////////////////////////////////////////////// */
+export function showOverlayModal(name: BaseScreens, passProps = {}, options: Options = {}) {
+    const animations = {
+        showModal: {
+            alpha: {
+                from: 0,
+                to: 1,
+                duration: 250,
+            },
+        },
+        dismissModal: {
+            enter: {
+                enabled: false,
+            },
+            exit: {
+                enabled: false,
+            },
+        },
+    };
+
+    const defaultStyleOptions = {
+        modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext,
+        layout: {
+            backgroundColor: 'transparent',
+            componentBackgroundColor: 'transparent',
+        },
+        topBar: {
+            visible: false,
+            height: 0,
+        },
+        animations,
+    };
+    const mergeOptions = merge(defaultStyleOptions, options);
+    showModalAsScreen(name, '', passProps, mergeOptions);
+}
+
+/* //////////////////////////////////////////////////////////////
+                    NAVIGATION - SHOW BOTTOM SHEET
+  ////////////////////////////////////////////////////////////// */
+export async function bottomSheet({
+    title,
+    renderContent,
+    // footerComponent,
+    // snapPoints,
+    initialSnapIndex = 1,
+    closeButtonId,
+}: BottomSheetArgs) {
+    showOverlayModal(
+        Screens.BOTTOM_SHEET,
+        {
+            initialSnapIndex,
+            renderContent,
+            // footerComponent,
+            // snapPoints,
+        },
+        bottomSheetModalOptions()
+    );
+}
+
+export async function dismissModalIfShowing(options?: Options & {componentId: BaseScreens}) {
     if (!NavigationHandler.hasModalsOpened()) {
         return;
     }
@@ -312,16 +321,12 @@ export async function dismissModal(options?: Options & {componentId: BaseScreens
     }
 }
 
-export const showReviewOverlay = () => {
-    showOverlay(Screens.ALERT, {}, {overlay: {interceptTouchOutside: true}});
-};
-
 export function showOverlay(name: BaseScreens, passProps = {}, options: Options = {}) {
     if (!isScreenRegistered(name)) {
         return;
     }
 
-    const defaultOptions = {
+    const defaultStyleOptions = {
         layout: {
             backgroundColor: 'transparent',
             componentBackgroundColor: 'transparent',
@@ -336,10 +341,14 @@ export function showOverlay(name: BaseScreens, passProps = {}, options: Options 
             id: name,
             name,
             passProps,
-            options: merge(defaultOptions, options),
+            options: merge(defaultStyleOptions, options),
         },
     });
 }
+
+export const showReviewOverlay = () => {
+    showOverlay(Screens.ALERT, {}, {overlay: {interceptTouchOutside: true}});
+};
 
 export async function dismissOverlay(componentId: BaseScreens) {
     try {
@@ -357,6 +366,7 @@ export async function dismissAllModals(componentId: BaseScreens) {
 
     try {
         const modals = [...NavigationHandler.getModalsInStack()];
+        // eslint-disable-next-line no-restricted-syntax
         for await (const modal of modals) {
             await Navigation.dismissModal(modal, {animations: {dismissModal: {enabled: false}}});
         }
@@ -365,25 +375,3 @@ export async function dismissAllModals(componentId: BaseScreens) {
         // dismiss. We'll do nothing in this case.
     }
 }
-
-export const bottomSheetModalOptions = (): Options => {
-    return {
-        animations: {
-            showModal: {
-                enabled: false,
-            },
-            dismissModal: {
-                enabled: false,
-            },
-        },
-        modalPresentationStyle: Platform.select({
-            ios: OptionsModalPresentationStyle.overFullScreen,
-            default: OptionsModalPresentationStyle.overCurrentContext,
-        }),
-        statusBar: {
-            backgroundColor: null,
-            drawBehind: true,
-            translucent: true,
-        },
-    };
-};

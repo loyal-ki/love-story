@@ -1,11 +1,12 @@
+import {DatabaseLocal} from '@database';
+
 import {logInfo} from '@app/utils';
-import {DatabaseService} from '@database';
 
 class LocalDatabase {
     init = async () => {
         const settled = await Promise.allSettled([
-            DatabaseService.userRepository().initUser(),
-            DatabaseService.preferencesRepository().initPreferences(),
+            DatabaseLocal.userRepository().initUser(),
+            DatabaseLocal.preferencesRepository().initPreferences(),
         ]);
 
         const database = settled.reduce<any[]>((result, e) => {

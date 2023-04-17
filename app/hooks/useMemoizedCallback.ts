@@ -1,4 +1,4 @@
-import React, { DependencyList, useRef, useCallback } from 'react';
+import React, {DependencyList, useRef, useCallback} from 'react';
 
 export const useMemoizedCallback = <T extends (...a: any[]) => any>(
     callback: T,

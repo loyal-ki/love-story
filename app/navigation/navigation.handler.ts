@@ -4,6 +4,7 @@ export class NavigationHandler {
     static removeScreenFromStack(arg0: string) {
         throw new Error('Method not implemented.');
     }
+
     static clearScreensFromStack() {
         throw new Error('Method not implemented.');
     }
@@ -106,7 +107,7 @@ export class NavigationHandler {
     waitUntilScreenHasLoaded = async (screenId: BaseScreens): Promise<void> => {
         let found = false;
         while (!found) {
-            // eslint-disable-next-line no-await-in-loop
+            // eslint-disable-next-line no-await-in-loop, no-promise-executor-return
             await new Promise(r => requestAnimationFrame(r));
 
             found = this.screensInStack.includes(screenId);
@@ -122,7 +123,7 @@ export class NavigationHandler {
     waitUntilScreenIsTop = async (screenId: BaseScreens): Promise<void> => {
         let found = false;
         while (!found) {
-            // eslint-disable-next-line no-await-in-loop
+            // eslint-disable-next-line no-await-in-loop, no-promise-executor-return
             await new Promise(r => requestAnimationFrame(r));
 
             found = this.getVisibleScreen() === screenId;
@@ -139,7 +140,7 @@ export class NavigationHandler {
     waitUntilScreensIsRemoved = async (screenId: BaseScreens): Promise<void> => {
         let found = false;
         while (!found) {
-            // eslint-disable-next-line no-await-in-loop
+            // eslint-disable-next-line no-await-in-loop, no-promise-executor-return
             await new Promise(r => setTimeout(r, 250));
 
             found = !this.screensInStack.includes(screenId);

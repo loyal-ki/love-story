@@ -1,11 +1,10 @@
-import _ from 'lodash';
-
+import {IPostActionType} from '@store/actions/actions.types';
+import {postActions} from '@store/actions/post.action';
 import {NetworkLoadingStatusTypes} from '@typings/utils/enums';
 import {combineReducers} from 'redux';
 import {createReducer} from 'typesafe-actions';
+
 import {IPostByIdState} from './post.types';
-import {IPostActionType} from '@store/actions/actions.types';
-import {postActions} from '@store/actions/post.action';
 
 const isFetchingReducer = createReducer<NetworkLoadingStatusTypes, IPostActionType>(
     NetworkLoadingStatusTypes.Loading
@@ -22,7 +21,7 @@ const isFetchingReducer = createReducer<NetworkLoadingStatusTypes, IPostActionTy
 
 export const lastUpdatedReducer = createReducer<number, IPostActionType>(-1).handleAction(
     postActions.fetchPostSuccess,
-    (_state, _) => {
+    (_state, action) => {
         return new Date().getTime();
     }
 );

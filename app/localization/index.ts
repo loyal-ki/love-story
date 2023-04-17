@@ -1,12 +1,24 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable global-require */
 import {logError} from '@app/utils';
+
 import 'moment/min/locales';
-import en from '@assets/i18n/en.json';
-import {getLocales} from 'react-native-localize';
 import availableLanguages from './languages';
+
+import en from '@assets/i18n/en.json';
+
+// eslint-disable-next-line import/order
+import {getLocales} from 'react-native-localize';
 
 const deviceLocale = getLocales()[0].languageTag;
 
 export const PRIMARY_LOCALE = 'en';
+
+export function getLocaleFromLanguage(lang: string) {
+    const languageCode = lang.split('-')[0];
+    const locale = availableLanguages[lang] || availableLanguages[languageCode] || PRIMARY_LOCALE;
+    return locale;
+}
 
 export const DEFAULT_LOCALE = getLocaleFromLanguage(deviceLocale);
 
@@ -43,12 +55,6 @@ const loadTranslation = (locale?: string): Record<string, string> => {
         return en;
     }
 };
-
-export function getLocaleFromLanguage(lang: string) {
-    const languageCode = lang.split('-')[0];
-    const locale = availableLanguages[lang] || availableLanguages[languageCode] || PRIMARY_LOCALE;
-    return locale;
-}
 
 export const getTranslations = (lang: string): Record<string, string> => {
     const locale = getLocaleFromLanguage(lang);

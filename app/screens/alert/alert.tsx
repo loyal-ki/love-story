@@ -1,15 +1,15 @@
-import { dismissModal, dismissOverlay } from '@app/navigation/navigation';
+import {dismissOverlay} from '@navigation/navigation';
 import {BaseScreens} from '@typings/screens/navigation';
-import React, {useState} from 'react';
-import {View, Text, Button} from 'react-native';
-import {Navigation} from 'react-native-navigation';
+import React from 'react';
+import {View, Text, Button, StyleSheet} from 'react-native';
+
 export interface HomeScreenProps {
     componentId: BaseScreens;
     title: string;
     message: string;
 }
 
-const styles = {
+const styles = StyleSheet.create({
     root: {
         flex: 1,
         justifyContent: 'center',
@@ -29,7 +29,7 @@ const styles = {
     message: {
         marginVertical: 8,
     },
-};
+});
 
 export const Alert: React.FC<HomeScreenProps> = ({componentId, title, message}) => {
     const dismiss = () => dismissOverlay(componentId);

@@ -1,9 +1,7 @@
+import NavigationHandler from '@navigation/navigation.handler';
+import {BaseScreens} from '@typings/screens/navigation';
 import {useEffect} from 'react';
 import {BackHandler} from 'react-native';
-
-import NavigationHandler from '@app/navigation/navigation.handler';
-
-import {BaseScreens} from '@typings/screens/navigation';
 
 export const useAndroidHardwareBackHandler = (
     componentId: BaseScreens | undefined,
@@ -22,5 +20,5 @@ export const useAndroidHardwareBackHandler = (
         return () => {
             backHandler.remove();
         };
-    }, [componentId]);
+    }, [callback, componentId]);
 };

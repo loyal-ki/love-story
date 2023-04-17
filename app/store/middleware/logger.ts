@@ -7,7 +7,7 @@ export const createLogger = () => {
             logInfo('REDUX DISPATCHING');
 
             // Log the current action
-            logDebug('● [ACTION]: \n' + formatLog(action));
+            logDebug(`● [ACTION]: \n${formatLog(action)}`);
 
             /*
               Call when middleware has done its job 
@@ -16,6 +16,6 @@ export const createLogger = () => {
             next(action);
 
             // Log the new state after the action is executed
-            logDebug('● [NEXT_STATE]: \n' + formatLog(getState()));
+            logDebug(`● [NEXT_STATE]: \n${formatLog(getState())}`);
         };
 };

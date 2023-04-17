@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { useEffect, useRef } from 'react';
+import {useEffect, useRef} from 'react';
 
 export const useDebouncedCallback = <A extends any[]>(
     callback: (...args: A) => void,

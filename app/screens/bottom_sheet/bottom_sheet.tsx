@@ -1,14 +1,9 @@
-import {Events} from '@app/constants';
-import { useTheme } from '@app/context/theme';
-import {useAndroidHardwareBackHandler} from '@app/hooks';
-import useNavButtonPressed from '@app/hooks/navigation_button_pressed';
-import {dismissModal} from '@app/navigation/navigation';
-import {hapticFeedback, makeStyleSheetFromTheme} from '@app/utils';
 import BottomSheetM, {
     BottomSheetBackdrop,
     BottomSheetBackdropProps,
     BottomSheetFooterProps,
 } from '@gorhom/bottom-sheet';
+import {dismissModalIfShowing} from '@navigation/navigation';
 import {BaseScreens} from '@typings/screens/navigation';
 import React, {ReactNode, useCallback, useEffect, useMemo, useRef} from 'react';
 import {
@@ -20,9 +15,15 @@ import {
     View,
     ViewStyle,
 } from 'react-native';
-import { WithSpringConfig } from 'react-native-reanimated';
+import {WithSpringConfig} from 'react-native-reanimated';
 
-type BottomSheetProps = {
+import {Events} from '@app/constants';
+import {useTheme} from '@app/context/theme';
+import {useAndroidHardwareBackHandler} from '@app/hooks';
+import useNavButtonPressed from '@app/hooks/navigation_button_pressed';
+import {hapticFeedback, makeStyleSheetFromTheme} from '@app/utils';
+
+export interface BottomSheetProps {
     closeButtonId?: string;
     componentId: BaseScreens;
     contentStyle?: StyleProp<ViewStyle>;
@@ -31,7 +32,7 @@ type BottomSheetProps = {
     renderContent: () => ReactNode;
     snapPoints?: Array<string | number>;
     testID?: string;
-};
+}
 
 export const animatedConfig: Omit<WithSpringConfig, 'velocity'> = {
     damping: 50,
@@ -41,7 +42,6 @@ export const animatedConfig: Omit<WithSpringConfig, 'velocity'> = {
     restSpeedThreshold: 0.1,
     restDisplacementThreshold: 0.3,
 };
-
 
 export const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
     return {
@@ -93,7 +93,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
     const bottomSheetBackgroundStyle = useMemo(() => [], []);
 
     const close = useCallback(() => {
-        dismissModal({componentId});
+        dismissModalIfShowing({componentId});
     }, [componentId]);
 
     useEffect(() => {
@@ -120,20 +120,23 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
         } else {
             close();
         }
-    }, []);
+    }, [close]);
 
-    const handleChange = useCallback((index: number) => {
-        timeoutRef.current = setTimeout(() => {
-            if (interaction.current) {
-                InteractionManager.clearInteractionHandle(interaction.current);
-                interaction.current = undefined;
+    const handleChange = useCallback(
+        (index: number) => {
+            timeoutRef.current = setTimeout(() => {
+                if (interaction.current) {
+                    InteractionManager.clearInteractionHandle(interaction.current);
+                    interaction.current = undefined;
+                }
+            });
+
+            if (index <= 0) {
+                close();
             }
-        });
-
-        if (index <= 0) {
-            close();
-        }
-    }, []);
+        },
+        [close]
+    );
 
     useAndroidHardwareBackHandler(componentId, handleClose);
 
@@ -166,9 +169,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
     }, []);
 
     const renderContainerContent = () => (
-        <View
-            style={[styles.content, contentStyle]}
-            testID={`${testID}.screen`}>
+        <View style={[styles.content, contentStyle]} testID={`${testID}.screen`}>
             {renderContent()}
         </View>
     );
@@ -178,7 +179,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
             ref={sheetRef}
             index={initialSnapIndex}
             snapPoints={snapPoints}
-            animateOnMount={true}
+            animateOnMount
             backdropComponent={renderBackdrop}
             onAnimate={handleAnimationStart}
             onChange={handleChange}

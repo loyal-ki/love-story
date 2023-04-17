@@ -1,1 +1,1 @@
-export { InitScreen } from './init';
+export {InitScreen} from './init';

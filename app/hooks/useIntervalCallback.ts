@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import { useEffect, useRef } from 'react';
+import {useEffect, useRef} from 'react';
 
 type Delay = number | null;
 type TimerHandler = (...args: any[]) => void;

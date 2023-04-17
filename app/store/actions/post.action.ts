@@ -1,6 +1,7 @@
-import {PostModel} from '@app/database/models';
-import {createAction} from 'typesafe-actions';
 import {UIUtils} from '@utils';
+import {createAction} from 'typesafe-actions';
+
+import {PostModel} from '@app/database/models';
 
 const fetchPostIfNeeded = createAction(
     'post/fetchPostIfNeeded',

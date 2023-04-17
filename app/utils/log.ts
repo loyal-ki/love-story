@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable no-console */
 // @ts-nocheck
 import stringifyObject from 'stringify-object';
 
@@ -36,5 +38,5 @@ export function formatLog(value) {
     return stringifyObject(value, {
         indent: '  ',
         singleQuotes: false,
-    })
+    });
 }

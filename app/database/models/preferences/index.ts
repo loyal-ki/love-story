@@ -1,4 +1,3 @@
-import {Themes} from '@app/constants/themes';
 import {safeGet} from '@app/utils';
 
 export class PreferencesModel implements IPreferences {

@@ -1,19 +1,20 @@
-import React from 'react';
-
-import {Screens} from '@app/constants';
-import {Platform, StyleProp, ViewStyle} from 'react-native';
-import {Navigation} from 'react-native-navigation';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+/* eslint-disable default-case */
 import {HomeScreen, InitScreen, LoginScreen} from '@screens';
+import React from 'react';
+import {Platform, StyleProp, ViewStyle} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {Navigation} from 'react-native-navigation';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+
 import {withProviderWrapper} from '@app/components/provider_wrapper';
+import {Screens} from '@app/constants';
+import {Alert} from '@app/screens/alert/alert';
 import {ExampleSheetScreen} from '@app/screens/bottom_sheet';
 import {BottomSheet} from '@app/screens/bottom_sheet/bottom_sheet';
-import { Alert } from '@app/screens/alert/alert';
 
-/*//////////////////////////////////////////////////////////////
+/* //////////////////////////////////////////////////////////////
                     GESTURE HANDLER WRAPPER
-  //////////////////////////////////////////////////////////////*/
+  ////////////////////////////////////////////////////////////// */
 const withGestures = (Screen: React.ComponentType, styles: StyleProp<ViewStyle>) => {
     return function gestureHOC(props: any) {
         if (Platform.OS === 'android') {
@@ -28,10 +29,11 @@ const withGestures = (Screen: React.ComponentType, styles: StyleProp<ViewStyle>)
     };
 };
 
-/*//////////////////////////////////////////////////////////////
+/* //////////////////////////////////////////////////////////////
                     SAFE AREA WRAPPER
-  //////////////////////////////////////////////////////////////*/
+  ////////////////////////////////////////////////////////////// */
 const withSafeAreaInsets = (Screen: React.ComponentType) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, react/function-component-definition
     return function SafeAreaInsets(props: any) {
         return (
             <SafeAreaProvider>
@@ -41,18 +43,18 @@ const withSafeAreaInsets = (Screen: React.ComponentType) => {
     };
 };
 
-/*//////////////////////////////////////////////////////////////
+/* //////////////////////////////////////////////////////////////
                     REGISTER SCREEN
-  //////////////////////////////////////////////////////////////*/
+  ////////////////////////////////////////////////////////////// */
 export const registerScreens = (): void => {
     Navigation.registerComponent(Screens.INIT, () =>
         withGestures(withSafeAreaInsets(withProviderWrapper(InitScreen)), undefined)
     );
 };
 
-/*//////////////////////////////////////////////////////////////
+/* //////////////////////////////////////////////////////////////
                     LAZY LOAD COMPONENT SCREEN
-  //////////////////////////////////////////////////////////////*/
+  ////////////////////////////////////////////////////////////// */
 Navigation.setLazyComponentRegistrator(screenName => {
     let screen: any | undefined;
     let extraStyles: StyleProp<ViewStyle>;

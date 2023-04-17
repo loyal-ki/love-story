@@ -1,4 +1,5 @@
 import Realm from 'realm';
+
 import {PreferencesSchema, UserSchema} from '@database/schema';
 
 class AppDatabaseManager {

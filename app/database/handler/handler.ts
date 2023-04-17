@@ -1,9 +1,32 @@
+/* eslint-disable no-restricted-syntax */
 import {COMBINE_SCHEMA} from '@database/combine_schema';
 import manager from '@database/manager';
 
-/*//////////////////////////////////////////////////////////////
+interface ComparedFields {
+    id?: number;
+    searched_item_id?: number;
+    mangaId?: number;
+}
+
+function compareFields(first: ComparedFields, second: ComparedFields) {
+    const isRefEq = first === second;
+    const isIdEq =
+        first.id !== undefined && second.id !== undefined ? first.id === second.id : false;
+    const isSearchRecentIdEq =
+        first.searched_item_id !== undefined && second.searched_item_id !== undefined
+            ? first.searched_item_id === second.searched_item_id
+            : false;
+    const isReadingStatusEq =
+        first.mangaId !== undefined && second.mangaId !== undefined
+            ? first.mangaId === second.mangaId
+            : false;
+
+    return isRefEq || isIdEq || isSearchRecentIdEq || isReadingStatusEq;
+}
+
+/* //////////////////////////////////////////////////////////////
                     DATABASE HANDLER
-  //////////////////////////////////////////////////////////////*/
+  ////////////////////////////////////////////////////////////// */
 class DatabaseHandler {
     /**
      * convertToItem<T>(item: T & Realm.Object, schema: string): T: A private method that takes
@@ -86,7 +109,7 @@ class DatabaseHandler {
         const objects = realm.objects<T>(schema).snapshot();
         const result: T[] = [];
         for (const obj of objects) {
-            let newObj = {};
+            const newObj = {};
             for (const key in obj) {
                 if (!omits.includes(key)) {
                     (newObj as any)[key] = (obj as any)[key];
@@ -174,8 +197,8 @@ class DatabaseHandler {
         realm.write(() => {
             if (obj) {
                 fields.forEach((fieldName, index) => {
-                    let value = values[index];
-                    let field = (obj as any)[fieldName];
+                    const value = values[index];
+                    const field = (obj as any)[fieldName];
                     const findIndex = field.findIndex((el: T) => compareFields(el, value));
                     if (findIndex === -1) {
                         field.push(value);
@@ -209,7 +232,7 @@ class DatabaseHandler {
             if (obj) {
                 fields.forEach((fieldName, index) => {
                     const value = values[index];
-                    let field = (obj as any)[fieldName];
+                    const field = (obj as any)[fieldName];
                     const findIndex = field.findIndex((el: T) => compareFields(el, value));
                     if (findIndex !== -1) {
                         field.splice(findIndex, 1);
@@ -230,6 +253,7 @@ class DatabaseHandler {
         schema: string,
         id: number,
         dictionaries: string[],
+        // eslint-disable-next-line @typescript-eslint/ban-types
         values: {[key: string]: {}}[]
     ) {
         const realm = await manager.databaseConnection();
@@ -255,28 +279,6 @@ class DatabaseHandler {
             realm.deleteAll();
         });
     }
-}
-
-interface ComparedFields {
-    id?: number;
-    searched_item_id?: number;
-    mangaId?: number;
-}
-
-function compareFields(first: ComparedFields, second: ComparedFields) {
-    const isRefEq = first === second;
-    const isIdEq =
-        first.id !== undefined && second.id !== undefined ? first.id === second.id : false;
-    const isSearchRecentIdEq =
-        first.searched_item_id !== undefined && second.searched_item_id !== undefined
-            ? first.searched_item_id === second.searched_item_id
-            : false;
-    const isReadingStatusEq =
-        first.mangaId !== undefined && second.mangaId !== undefined
-            ? first.mangaId === second.mangaId
-            : false;
-
-    return isRefEq || isIdEq || isSearchRecentIdEq || isReadingStatusEq;
 }
 
 export default new DatabaseHandler();

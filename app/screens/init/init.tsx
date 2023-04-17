@@ -1,9 +1,10 @@
+import {bottomSheet, onNavigationToScreen, showOverlayModal} from '@navigation/navigation';
 import React from 'react';
+import {Button, StyleSheet, Text, View} from 'react-native';
+
+import {Screens} from '@app/constants';
 
 import type {BaseScreens} from '@typings/screens/navigation';
-import {Button, StyleSheet, Text, View} from 'react-native';
-import {bottomSheet, onNavigationToScreen, showOverlayModal} from '@app/navigation/navigation';
-import {Screens} from '@app/constants';
 
 const styles = StyleSheet.create({
     container: {
@@ -34,6 +35,7 @@ export const InitScreen: React.FC<IntroScreenProps> = ({componentId}) => {
             <Button
                 title="Bottom sheet"
                 onPress={() => {
+                    // eslint-disable-next-line react/no-unstable-nested-components
                     const renderContent = () => {
                         return (
                             <View>

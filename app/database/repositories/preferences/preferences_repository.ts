@@ -1,4 +1,3 @@
-import { logInfo } from '@app/utils';
 import PreferencesDAO from '@database/dao/preferences';
 
 export const initPreferences = async (): Promise<void> => {
@@ -6,7 +5,7 @@ export const initPreferences = async (): Promise<void> => {
 };
 
 export const getLocale = async (): Promise<string | undefined> => {
-    return await PreferencesDAO.getLocale();
+    return PreferencesDAO.getLocale();
 };
 
 export const setLocale = async (locale: string): Promise<void> => {
@@ -14,7 +13,7 @@ export const setLocale = async (locale: string): Promise<void> => {
 };
 
 export const getTheme = async (): Promise<Theme | undefined> => {
-    return await PreferencesDAO.getTheme();
+    return PreferencesDAO.getTheme();
 };
 
 export const setTheme = async (theme: Theme): Promise<void> => {

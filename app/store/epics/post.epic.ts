@@ -1,15 +1,16 @@
-import _ from 'lodash';
 import {IPostActionType} from '@store/actions/actions.types';
+import {postActions} from '@store/actions/post.action';
 import {ReduxAppState} from '@store/rootReducer';
-import {isActionOf} from 'typesafe-actions';
+import _ from 'lodash';
 import {Epic, ActionsObservable, StateObservable} from 'redux-observable';
 import {of, defer} from 'rxjs';
 import {map, switchMap, filter, catchError, retry, tap} from 'rxjs/operators';
-import {postActions} from '@store/actions/post.action';
+import {isActionOf} from 'typesafe-actions';
+
 import {delay} from '@app/utils';
 
 const fetchPost = async () => {
-    await delay(2000);
+    await delay(5000);
     return [
         {
             userId: 1,
@@ -53,7 +54,6 @@ const requestPostIfNeededEpic: Epic<IPostActionType, IPostActionType, ReduxAppSt
         filter(action => {
             const postValue = state$.value.post;
 
-            
             return (
                 _.isNil(postValue.byId) ||
                 postValue.lastUpdated === -1 ||

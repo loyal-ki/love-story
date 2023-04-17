@@ -1,7 +1,8 @@
-import {useMemoizedCallback, useMount} from '@app/hooks';
-import {DEFAULT_LOCALE, PRIMARY_LOCALE, getTranslations} from '@app/localization';
 import React, {ComponentType, createContext, useState} from 'react';
 import {IntlProvider} from 'react-intl';
+
+import {useMemoizedCallback, useMount} from '@app/hooks';
+import {DEFAULT_LOCALE, PRIMARY_LOCALE, getTranslations} from '@app/localization';
 
 type Props = {
     children: React.ReactNode;
@@ -17,9 +18,7 @@ const {Consumer, Provider} = UserLocaleContext;
 export const UserLocaleProvider = ({children}: Props) => {
     const [locale, setLocale] = useState(() => PRIMARY_LOCALE);
 
-    const init = useMemoizedCallback(() => {
-        
-    }, []);
+    const init = useMemoizedCallback(() => {}, []);
 
     useMount(init);
 
@@ -35,6 +34,7 @@ export const UserLocaleProvider = ({children}: Props) => {
 export const withUserLocale = <T extends WithUserLocaleProps>(
     Component: ComponentType<T>
 ): ComponentType<T> => {
+    // eslint-disable-next-line react/function-component-definition
     return function UserLocaleComponent(props) {
         return (
             <Consumer>

@@ -1,7 +1,7 @@
-import { createAction } from 'typesafe-actions';
+import {createAction} from 'typesafe-actions';
 
 const setCounter = createAction('counter/setCounter', (count: number) => {
-    return { count };
+    return {count};
 })();
 
 export const counterActions = {

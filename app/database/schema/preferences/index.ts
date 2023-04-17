@@ -1,5 +1,4 @@
 import {SCHEMA_NAME} from '@app/constants';
-import {PreferencesModel} from '@database/models';
 
 export class PreferencesSchema {
     static schema = {

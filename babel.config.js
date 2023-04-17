@@ -23,6 +23,8 @@ module.exports = {
                     '@initialize': './app/initialize',
                     '@localization': './app/localization',
                     '@managers': './app/managers',
+                    '@navigation': './app/navigation',
+                    '@services': './app/services',
                     '@utils': './app/utils',
                     '@store': './app/store',
                     '@screens': './app/screens',

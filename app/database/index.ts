@@ -1,3 +1,3 @@
-import * as DatabaseService from './repositories';
+import * as DatabaseLocal from './repositories';
 
-export { DatabaseService };
+export {DatabaseLocal};
