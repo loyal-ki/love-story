@@ -1,4 +1,7 @@
+import {logInfo} from '@app/utils';
 import LocalDatabase from '@database/local_database';
+import FCMService from '@managers/fcm_service';
+import FirebaseConfig from '@managers/firebase_config';
 import GlobalEventHandler from '@managers/global_event_handler';
 
 let alreadyInitialized = false;
@@ -6,7 +9,16 @@ let alreadyInitialized = false;
 export const initialize = async () => {
     if (!alreadyInitialized) {
         alreadyInitialized = true;
-        await GlobalEventHandler.init();
-        await LocalDatabase.init();
+        Promise.all([
+            GlobalEventHandler.init(),
+            LocalDatabase.init(),
+            FCMService.init(),
+            FirebaseConfig.init(),
+        ]).then(values => {
+            const result = values.filter(x => !x);
+            if (result.length === 0) {
+                logInfo('[LAUNCHER] Successful initialization !!!');
+            }
+        });
     }
 };

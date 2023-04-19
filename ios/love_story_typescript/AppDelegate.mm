@@ -8,6 +8,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
+
   [ReactNativeNavigation bootstrapWithDelegate:self launchOptions:launchOptions];
 
   [RNSplashScreen show];

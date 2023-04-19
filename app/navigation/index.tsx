@@ -1,4 +1,3 @@
-/* eslint-disable default-case */
 import {HomeScreen, InitScreen, LoginScreen} from '@screens';
 import React from 'react';
 import {Platform, StyleProp, ViewStyle} from 'react-native';
@@ -75,11 +74,12 @@ Navigation.setLazyComponentRegistrator(screenName => {
         case Screens.ALERT:
             screen = withProviderWrapper(Alert);
             break;
+        default:
+            break;
     }
 
     if (screen) {
-        Navigation.registerComponent(screenName, () =>
-            withGestures(withSafeAreaInsets(screen), extraStyles)
-        );
+        const wrapper = withGestures(withSafeAreaInsets(screen), extraStyles);
+        Navigation.registerComponent(screenName, () => wrapper);
     }
 });

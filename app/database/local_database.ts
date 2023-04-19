@@ -17,8 +17,10 @@ class LocalDatabase {
         }, []);
 
         if (database.length) {
-            logInfo('INIT DATABASE SUCCESSFULLY !!!');
+            logInfo('Successful initialization database !!!');
         }
+
+        return true;
     };
 }
 

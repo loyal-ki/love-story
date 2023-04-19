@@ -22,7 +22,8 @@
         "start": "react-native start",
         "test": "jest",
         "test-no-cache": "jest --no-cache",
-        "visualize": "./node_modules/.bin/react-native-bundle-visualizer"
+        "visualize": "./node_modules/.bin/react-native-bundle-visualizer",
+        "postinstall": "patch-package"
     },
     "jest": {
         "preset": "react-native"
@@ -35,7 +36,10 @@
         "@formatjs/intl-pluralrules": "5.1.4",
         "@formatjs/intl-relativetimeformat": "11.1.4",
         "@gorhom/bottom-sheet": "^4.4.5",
+        "@notifee/react-native": "^7.7.1",
         "@react-native-community/netinfo": "^9.3.7",
+        "@react-native-firebase/app": "^17.4.2",
+        "@react-native-firebase/messaging": "^17.4.2",
         "@react-navigation/bottom-tabs": "^6.5.7",
         "@react-navigation/native": "^6.1.6",
         "@react-navigation/native-stack": "^6.9.12",
@@ -46,6 +50,8 @@
         "moment": "^2.24.0",
         "moment-timezone": "^0.5.43",
         "nanoid": "^3.1.12",
+        "patch-package": "^6.5.1",
+        "postinstall-postinstall": "^2.1.0",
         "react": "18.2.0",
         "react-intl": "^6.3.2",
         "react-native": "0.71.4",

@@ -1,5 +1,5 @@
 // Enable log request
-export const LOG_REQUESTS = true && __DEV__;
+export const LOG_REQUESTS = false && __DEV__;
 
 // Delay when sending network requests
 export const DELAY_NETWORK_RESPONSES = false && __DEV__;

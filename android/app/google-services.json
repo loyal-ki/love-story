@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "292821423690",
+    "project_id": "love-story-aa5f5",
+    "storage_bucket": "love-story-aa5f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292821423690:android:510e15b2b1a38660fab8b3",
+        "android_client_info": {
+          "package_name": "com.love_story_typescript"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292821423690-0telf6paan7gca1o83vd3umpoo5bnhqn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGsrXRIU_E09L-7E1zxm6jFi252YTJUXU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292821423690-0telf6paan7gca1o83vd3umpoo5bnhqn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

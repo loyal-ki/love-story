@@ -13,7 +13,9 @@ class GlobalEventHandler {
         });
     }
 
-    init = () => {};
+    init = () => {
+        return true;
+    };
 }
 
 export default new GlobalEventHandler();
