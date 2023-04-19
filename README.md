@@ -15,4 +15,6 @@
 
 ## 🔥 How to build your app
 
+## Star history
 
+[![Star History Chart](https://api.star-history.com/svg?repos=loyal-ki/love-story&type=Date)](https://star-history.com/#loyal-ki/love-story&Date)
