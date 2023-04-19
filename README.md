@@ -13,7 +13,10 @@
 
 ## ✨ Features
 
-## 🔥 How to build your app
+## 🔥 Contributing
+Are you a dev and would like to help? Found a bug that you would like to report or a missing feature that you would like to work on? Great! We have written down a [Contribution guide](https://github.com/loyal-ki/love-story/blob/main/CONTRIBUTING.md) so you can start easily.
+
+
 
 ## Star history
 
