@@ -73,8 +73,8 @@ Then reload your bash configuration:
 source ~/.zshenv
 ```
 
-Note:
-Depending on the shell you’re using, this might need to be put into a different file such as ~/.bash_profile. Adjust this accordingly.
+> Note:
+> Depending on the shell you’re using, this might need to be put into a different file such as ~/.bash_profile. Adjust this accordingly.
 
 ### Install the SDKs and SDK tools
 
@@ -113,4 +113,107 @@ In the SDK Manager using Android Studio or the [Android SDK command line tool](h
 cd love-story
 ```
 
-4. Install the project dependencies with <span style="background-color: #EAEAEA; color: #E30B5C">yarn install</span>
+4. Install the project dependencies with:
+
+```sh
+yarn all
+```
+
+### Run the LoveStory mobile app
+
+We provide a set of scripts to help you run the app for the different platforms that are executed with npm/yarn:
+
+-   **yarn start**: Start the React Native packager. The packager has to be running in order to build the JavaScript code that powers the app.
+-   **yarn android**: Compile and run the mobile app on Android.
+-   **yarn ios**: Compile and run the mobile app on IOS.
+
+To speed up development, only compile and run the apps in the following cases:
+
+```sh
+"adb": "adb reverse tcp:8081 tcp:8081",
+"all": "watchman watch-del-all && rm -rf yarn.lock && rm -rf node_modules/ && rm -fr $TMPDIR/metro* && yarn install",
+"android": "react-native run-android",
+"eslint": "eslint --quiet --ext js,jsx,ts,tsx app --fix",
+"fix": "prettier --write \"{app,src,modules}/**/*.{ts,tsx}\"",
+"git-clean": "git config --local filter.turnOfDebugging.clean 'sed \"s/= true/= false/\"'",
+"git-hide": "git update-index --skip-worktree packages/core/services/sender/getUrlForPath.ts",
+"git-pull-rebase": "git config --local pull.rebase true",
+"git-smudge": "git config --local filter.turnOfDebugging.smudge 'sed \"s/= true/= false/\"'",
+"git-unhide": "git update-index --no-skip-worktree packages/core/services/sender/getUrlForPath.ts",
+"ios": "react-native run-ios",
+"ios-14": "react-native run-ios --simulator=\"iPhone 14 \"",
+"ios-gems": "cd ios && bundle install",
+"kill": "kill $(lsof -ti:8081)",
+"lint": "tsc && eslint --quiet --ext js,jsx,ts,tsx app && jest",
+"sort": "npx sort-package-json",
+"start": "react-native start",
+"test": "jest",
+"test-no-cache": "jest --no-cache",
+"visualize": "./node_modules/.bin/react-native-bundle-visualizer",
+"postinstall": "patch-package"
+```
+
+### Run on a device
+
+By default, running the app will launch an Android emulator (if you created one) or an iOS simulator.
+
+### Android
+
+1. Enable debugging over USB
+
+    Most Android devices can only install and run apps downloaded from Google Play, by default. You will need to enable USB Debugging on your device in order to install your app during development.
+
+    To enable USB debugging on your device, you will first need to enable the "Developer options" menu by going to Settings → About phone → Software information and then tapping the Build number row at the bottom seven times. You can then go back to Settings → Developer options to enable "USB debugging".
+
+2. Plug in your device via USB
+
+    To find the device name, run the following adb command:
+
+```sh
+$ adb devices
+
+List of devices attached
+abc1234    device
+```
+
+3. Compile and run
+
+```sh
+yarn android
+```
+
+4. Connecting to the development server
+
+    Run the following in a command prompt:
+
+```sh
+$ adb -s <device name> reverse tcp:8081 tcp:8081
+```
+
+### IOS
+
+1. Get an Apple Developer account
+
+    The apps that run on an iOS device must be signed. To sign it, you’ll need a set of provisioning profiles. If you already have an Apple Developer account enrolled in the Apple Developer program you can skip this step. If you don’t have an account yet you’ll need to [create one](https://appleid.apple.com/account?appId=632&returnUrl=https%3A%2F%2Fdeveloper.apple.com%2Faccount%2F#!&page=create) and enroll in the [Apple Developer Program](https://developer.apple.com/programs/).
+
+2. Open the project in Xcode
+
+    Navigate to the $\textcolor{magenta}{\textsf{ios}}$ folder in your love_story project, then open the file love_story_typescript.xcworkspace in Xcode.
+
+3. Configure code signing and capabilities
+
+Select the **LoveStory** project in the Xcode Project Navigator, then select the **LoveStory** target. Look for the **Signing & Capabilities** tab.
+
+-   Go to the **Signing** section and make sure your Apple developer account or team is selected under the Team dropdown and change the [Bundle Identifier](https://developer.apple.com/documentation/appstoreconnectapi/bundle_ids). Xcode will register your provisioning profiles in your account for the Bundle Identifier you’ve entered if it doesn’t exist.
+-   Go to the **App Groups** section and change the [App Groups](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_security_application-groups?language=objc). Xcode will register your AppGroupId and update the provision profile.
+-   Go to the **iCloud** section and change the [Containers](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_icloud-container-identifiers?language=objc). Xcode will register your iCloud container and update the provision profile.
+-   Go to the **Keychain Sharing** section and change the [Keychain Groups](https://developer.apple.com/documentation/bundleresources/entitlements/keychain-access-groups?language=objc). Xcode will register your Keychain access groups and update the provision profile.
+
+4. Compile and run
+
+    Plug in your iOS device in any available USB port in your development computer.
+
+    If everything is set up correctly, your device will be listed as the build target in the Xcode toolbar, and it will also appear in the Devices Pane (⇧⌘2). You can press the **Build and run** button (⌘R) or select **Run** from the Product menu to run the app.
+
+> Note:
+> If you run into any issues, please take a look at Apple’s [Launching Your App on a Device](https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/LaunchingYourApponDevices/LaunchingYourApponDevices.html#//apple_ref/doc/uid/TP40012582-CH27-SW4) documentation. If the app fails to build, go to the Product menu and select Clean Build Folder before trying to build the app again. Also, be sure that your iOS device is trusted so app deployments can proceed.
