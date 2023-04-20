@@ -1,6 +1,6 @@
-import {DatabaseLocal} from '@database';
-
 import {logInfo} from '@app/utils';
+
+import {DatabaseLocal} from '@database';
 
 class LocalDatabase {
     init = async () => {

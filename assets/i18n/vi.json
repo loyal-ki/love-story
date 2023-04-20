@@ -4,5 +4,9 @@
     "common.action_refresh": "Tải lại",
     "common.action_cancel": "Huỷ",
     "common.general_error": "Đã có lỗi xảy ra trong quá trình xử lý. Chúng tôi sẽ ghi nhận và sẽ khắc phục sớm.",
-    "home.page_title": "Trang chủ"
+    "home.page_title": "Trang chủ",
+    "home.input_email_title": "Email",
+    "home.input_email_placeholder": "Hãy nhập email.",
+    "home.input_email_empty": "Vui lòng nhập số điện thoại liên hệ.",
+    "home.floating_input_email_message_error_invalid_email": "Email không đúng định dạng."
 }

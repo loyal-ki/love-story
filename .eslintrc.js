@@ -16,7 +16,7 @@ module.exports = {
             jsx: true,
         },
     },
-    plugins: ['@babel', 'react', 'prettier', 'unused-imports'],
+    plugins: ['@babel', 'react', 'prettier', 'unused-imports', 'jsx-a11y'],
     settings: {
         react: {version: 'detect'},
         'import/resolver': {
@@ -46,10 +46,10 @@ module.exports = {
         ],
         'class-methods-use-this': 'off',
         'import/prefer-default-export': [0],
-        'react/jsx-filename-extension': [0],
         'no-shadow': 'off',
         'import/no-named-as-default': 0,
         'import/extensions': 'off',
+        'react/jsx-filename-extension': [0],
         'no-unused-vars': 'warn',
         'unused-imports/no-unused-imports': 'error',
         indent: [2, 4, {SwitchCase: 1}],

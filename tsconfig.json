@@ -29,7 +29,6 @@
     "sourceMap": false,
     "rootDir": "./",
     "outDir": "./",
-    "noImplicitAny": true,
     "strictNullChecks": true,
     "strictFunctionTypes": false,
     "strictPropertyInitialization": true,
@@ -49,6 +48,12 @@
       ],
       "@app/*": [
         "app/*"
+      ],
+      "@components": [
+        "app/components"
+      ],
+      "@components/*": [
+        "app/components/*"
       ],
       "@constants": [
         "app/constants"

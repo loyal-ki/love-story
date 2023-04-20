@@ -1,3 +1,4 @@
+import {DEFAULT_LOCALE} from '@app/localization';
 import {safeGet} from '@app/utils';
 
 export class PreferencesModel implements IPreferences {
@@ -21,7 +22,7 @@ export class PreferencesModel implements IPreferences {
     static default = (): PreferencesModel => {
         return {
             id: 0,
-            locale: '',
+            locale: DEFAULT_LOCALE,
             persistedTheme: undefined,
             isFirstInstall: false,
         };

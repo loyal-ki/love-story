@@ -14,9 +14,11 @@ module.exports = {
             'module-resolver',
             {
                 root: ['.'],
+                extensions: ['.ts', '.tsx', '.js', '.json'],
                 alias: {
                     '@app': './app',
                     '@database': './app/database',
+                    '@components': './app/components',
                     '@constants': './app/constants',
                     '@context': './app/context',
                     '@hooks': './app/hooks',
