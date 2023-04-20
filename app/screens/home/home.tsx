@@ -67,7 +67,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = () => {
             <Button
                 title="show alert"
                 onPress={() => {
-                    // showReviewOverlay();
+                    showReviewOverlay();
                 }}
             />
         </View>
