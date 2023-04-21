@@ -76,7 +76,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
         backgroundColor: changeOpacity('#FFFFFF', 0.16),
     },
     smallLabel: {
-        fontSize: 10,
+        fontSize: 12,
     },
     textInput: {
         flexDirection: 'row',

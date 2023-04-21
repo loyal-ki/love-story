@@ -6,7 +6,7 @@
     "common.general_error": "An error occurred. We will record and fix this issue soon.",
     "home.page_title": "Home",
     "home.input_email_title": "Email",
-    "home.input_email_placeholder": "Input your Email.",
-    "home.input_email_empty": "Please input your Email.",
+    "home.input_email_placeholder": "Input your email",
+    "home.input_email_empty": "Please input your email.",
     "home.floating_input_email_message_error_invalid_email": "Wrong email format."
 }

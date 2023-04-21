@@ -1,12 +1,9 @@
 import {ValidationResult} from '@app/utils';
 
-export const SET_PHONE = 'SET_PHONE';
-export const SET_NAME = 'SET_NAME';
-export const SET_EMAIL = 'SET_EMAIL';
-export const VALIDATE_FORM = 'VALIDATE_FORM';
+export const SET_EMAIL = 'LoginActionsConstance/SetEmail';
 
-export const HomeActionsConstance = {
-    setEmail: 'agencyBasicRegister/setEmail',
+export const LoginActionsConstance = {
+    setEmail: SET_EMAIL,
 };
 
 export interface IHomeState {

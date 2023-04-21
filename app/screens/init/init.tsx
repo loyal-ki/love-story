@@ -5,7 +5,7 @@ import {Screens} from '@app/constants';
 
 import type {BaseScreens} from '@typings/screens/navigation';
 
-import {bottomSheet, onNavigationToScreen, showOverlayModal} from '@navigation/navigation';
+import {bottomSheet, onNavigationToScreen} from '@navigation/navigation';
 
 const styles = StyleSheet.create({
     container: {
@@ -22,15 +22,15 @@ export const InitScreen: React.FC<IntroScreenProps> = ({componentId}) => {
     return (
         <View style={styles.container}>
             <Button
-                title="Show Modal"
-                onPress={() => {
-                    showOverlayModal(Screens.EXAMPLE_BOTTOM_SHEET);
-                }}
-            />
-            <Button
                 title="Navigation to Home"
                 onPress={() => {
                     onNavigationToScreen({screen: Screens.HOME});
+                }}
+            />
+            <Button
+                title="Navigation to Login"
+                onPress={() => {
+                    onNavigationToScreen({screen: Screens.LOGIN});
                 }}
             />
             <Button

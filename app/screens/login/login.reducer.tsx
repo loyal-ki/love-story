@@ -1,8 +1,8 @@
 import {createReducer} from 'typesafe-actions';
 
-import {HomeActionType, homeActions} from './home.actions';
-import {IHomeState} from './home.types';
-import {validateEmailContact} from './home.validation';
+import {HomeActionType, homeActions} from './login.actions';
+import {IHomeState} from './login.types';
+import {validateEmailContact} from './login.validation';
 
 export const initialState: IHomeState = {
     email: '',

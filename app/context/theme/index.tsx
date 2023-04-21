@@ -52,6 +52,7 @@ export const ThemeProvider = ({children}: Props) => {
 
     const updateTheme = useMemoizedCallback(async () => {
         await DatabaseLocal.preferencesRepository().setTheme(theme);
+        setTheme(theme);
     }, [theme]);
 
     useEffect(() => {

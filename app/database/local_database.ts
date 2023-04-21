@@ -9,7 +9,7 @@ class LocalDatabase {
             DatabaseLocal.preferencesRepository().initPreferences(),
         ]);
 
-        const database = settled.reduce<any[]>((result, e) => {
+        const database = settled.reduce<unknown[]>((result, e) => {
             if (e.status === 'fulfilled') {
                 result.push(e);
             }

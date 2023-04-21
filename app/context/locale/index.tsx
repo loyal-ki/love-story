@@ -1,8 +1,9 @@
-import React, {ComponentType, createContext, useState} from 'react';
+import React, {ComponentType, createContext, useEffect, useState} from 'react';
 import {IntlProvider} from 'react-intl';
 
-import {useMemoizedCallback, useMount} from '@app/hooks';
-import {DEFAULT_LOCALE, PRIMARY_LOCALE, getTranslations} from '@app/localization';
+import {DatabaseLocal} from '@app/database';
+import {useMemoizedCallback} from '@app/hooks';
+import {DEFAULT_LOCALE, getTranslations} from '@app/localization';
 
 type Props = {
     children: React.ReactNode;
@@ -16,11 +17,15 @@ export const UserLocaleContext = createContext(DEFAULT_LOCALE);
 const {Consumer, Provider} = UserLocaleContext;
 
 export const UserLocaleProvider = ({children}: Props) => {
-    const [locale, setLocale] = useState(() => PRIMARY_LOCALE);
+    const [locale, setLocale] = useState(() => DEFAULT_LOCALE);
 
-    const init = useMemoizedCallback(() => {}, []);
-
-    useMount(init);
+    const updateLocale = useMemoizedCallback(async () => {
+        await DatabaseLocal.preferencesRepository().setLocale(locale);
+    }, [locale]);
+    
+    useEffect(() => {
+        updateLocale();
+    }, [locale, updateLocale]);
 
     return (
         <Provider value={locale}>

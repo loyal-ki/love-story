@@ -1,126 +1,73 @@
-import React, {useRef, useState} from 'react';
-import {useIntl} from 'react-intl';
-import {Button, StyleSheet, View} from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import Animated from 'react-native-reanimated';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {BottomTabBarProps, createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {NavigationContainer} from '@react-navigation/native';
+import React from 'react';
+import {Platform, StyleSheet} from 'react-native';
+import {enableFreeze, enableScreens} from 'react-native-screens';
 
-import FloatingInput from '@app/components/input';
-import SettingOption from '@app/components/options';
 import {Screens} from '@app/constants';
-import {counterActions} from '@app/store/actions';
-import { logDebug } from '@app/utils';
+import {useTheme} from '@app/context/theme';
+import {AccountScreen} from '@screens/account';
+import {StoryScreen} from '@screens/story';
 
-import {useViewModel} from './home.view_model';
+import TabBar from './tab_bar';
 
 import type {BaseScreens} from '@typings/screens/navigation';
 
-import {onNavigationToScreen, showReviewOverlay} from '@navigation/navigation';
+enableFreeze(true);
+
+if (Platform.OS === 'ios') {
+    enableScreens(false);
+}
 
 const styles = StyleSheet.create({
-    flex: {
-        flex: 1,
-    },
     container: {
         flex: 1,
         backgroundColor: '#FFFFFF',
-    },
-    innerContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingHorizontal: 24,
-    },
-    centered: {
-        flex: 1,
-        width: '100%',
     },
 });
 
 export interface HomeScreenProps {
     componentId: BaseScreens;
-    theme: Theme;
 }
 
-const AnimatedSafeArea = Animated.createAnimatedComponent(SafeAreaView);
+const Tab = createBottomTabNavigator();
 
-export const HomeScreen: React.FC<HomeScreenProps> = ({componentId, theme}) => {
-    const intl = useIntl();
-    const {formatMessage} = intl;
-    const [isEnabled, setIsEnabled] = useState(false);
-
-    const keyboardAwareRef = useRef<KeyboardAwareScrollView>(null);
-
-    const viewModel = useViewModel();
-
-    logDebug(viewModel.postList);
+export const HomeScreen: React.FC<HomeScreenProps> = ({componentId}) => {
+    const theme = useTheme();
 
     return (
-        <View style={styles.container}>
-            <AnimatedSafeArea style={[styles.container]}>
-                <KeyboardAwareScrollView
-                    bounces
-                    contentContainerStyle={[styles.innerContainer]}
-                    enableAutomaticScroll
-                    enableOnAndroid={false}
-                    enableResetScrollToCoords
-                    extraScrollHeight={0}
-                    keyboardDismissMode="interactive"
-                    keyboardShouldPersistTaps="handled"
-                    ref={keyboardAwareRef}
-                    scrollToOverflowEnabled
-                    style={styles.flex}>
-                    <View style={styles.centered}>
-                        <View style={{height: 200}} />
-                        <Icon
-                            name="camera"
-                            size={35}
-                            color="#EEEFEF"
-                            style={{
-                                alignSelf: 'center',
-                            }}
-                        />
-                        <Button
-                            title={formatMessage({id: 'home.page_title'})}
-                            onPress={() => {
-                                viewModel.reduxDispatch(counterActions.setCounter(100));
-                                onNavigationToScreen({screen: Screens.LOGIN});
-                            }}
-                        />
-                        <Button
-                            title="show alert"
-                            onPress={() => {
-                                showReviewOverlay();
-                            }}
-                        />
-                        <FloatingInput
-                            theme={theme}
-                            autoCorrect={false}
-                            autoCapitalize="none"
-                            blurOnSubmit={false}
-                            disableFullscreenUI
-                            enablesReturnKeyAutomatically
-                            onChangeText={viewModel.onLoginChange}
-                            onSubmitEditing={viewModel.focusLogin}
-                            error={viewModel.state.emailError ? viewModel.state.emailError : ''}
-                            keyboardType="email-address"
-                            label="Email"
-                            ref={viewModel.loginRef}
-                            value={viewModel.state.email}
-                            returnKeyType="next"
-                            showErrorIcon
-                            spellCheck={false}
-                        />
-
-                        <SettingOption
-                            action={setIsEnabled}
-                            label="Setting"
-                            selected={isEnabled}
-                            type="toggle"
-                        />
-                    </View>
-                </KeyboardAwareScrollView>
-            </AnimatedSafeArea>
-        </View>
+        <NavigationContainer
+            theme={{
+                dark: false,
+                colors: {
+                    primary: '#3f4350',
+                    background: 'transparent',
+                    card: '#ffffff',
+                    text: '#3f4350',
+                    border: 'white',
+                    notification: '#7ff0f0',
+                },
+            }}>
+            <Tab.Navigator
+                screenOptions={{headerShown: false, unmountOnBlur: false, lazy: true}}
+                backBehavior="none"
+                // eslint-disable-next-line react/no-unstable-nested-components
+                tabBar={(tabProps: BottomTabBarProps) => <TabBar {...tabProps} theme={theme} />}
+                >
+                <Tab.Screen
+                    name={Screens.STORY}
+                    component={StoryScreen}
+                    options={{freezeOnBlur: true, lazy: true}}
+                />
+                <Tab.Screen
+                    name={Screens.ACCOUNT}
+                    component={AccountScreen}
+                    options={{
+                        freezeOnBlur: true,
+                        lazy: true,
+                    }}
+                />
+            </Tab.Navigator>
+        </NavigationContainer>
     );
 };

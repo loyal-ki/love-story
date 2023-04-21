@@ -1,8 +1,8 @@
 import {ActionType, createAction} from 'typesafe-actions';
 
-import {HomeActionsConstance} from './home.types';
+import {LoginActionsConstance} from './login.types';
 
-const setEmail = createAction(HomeActionsConstance.setEmail, (email: string) => ({
+const setEmail = createAction(LoginActionsConstance.setEmail, (email: string) => ({
     email,
 }))();
 
