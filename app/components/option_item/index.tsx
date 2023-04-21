@@ -1,7 +1,6 @@
 import React, {useCallback, useMemo} from 'react';
 import {
     LayoutChangeEvent,
-    Platform,
     StyleProp,
     Text,
     TextStyle,

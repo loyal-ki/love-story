@@ -6,12 +6,10 @@ import {useMemoizedCallback, useMount} from '@app/hooks';
 import {PostModel} from '@app/models';
 import {postActions} from '@app/store/actions/post.action';
 import {postListSelector, isPostFetchingSelector} from '@app/store/selectors/post.selector';
-import {logDebug} from '@app/utils';
+import {delay} from '@app/utils';
 
 import {homeActions} from './home.actions';
 import {reducer, initialState} from './home.reducer';
-
-import {DatabaseLocal} from '@database';
 
 export const useViewModel = () => {
     const loginRef = useRef<TextInput>(null);
@@ -23,7 +21,7 @@ export const useViewModel = () => {
     const postList = useSelector(postListSelector);
     const isFetch = useSelector(isPostFetchingSelector);
 
-    const init = useMemoizedCallback(() => {
+    const init = useMemoizedCallback(async () => {
         reduxDispatch(
             postActions.fetchPostIfNeeded({
                 onStart: () => {},

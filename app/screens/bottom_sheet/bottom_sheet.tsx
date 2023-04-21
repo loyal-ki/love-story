@@ -3,8 +3,6 @@ import BottomSheetM, {
     BottomSheetBackdropProps,
     BottomSheetFooterProps,
 } from '@gorhom/bottom-sheet';
-import {dismissModalIfShowing} from '@navigation/navigation';
-import {BaseScreens} from '@typings/screens/navigation';
 import React, {ReactNode, useCallback, useEffect, useMemo, useRef} from 'react';
 import {
     DeviceEventEmitter,
@@ -22,6 +20,9 @@ import {useTheme} from '@app/context/theme';
 import {useAndroidHardwareBackHandler} from '@app/hooks';
 import useNavButtonPressed from '@app/hooks/navigation_button_pressed';
 import {hapticFeedback, makeStyleSheetFromTheme} from '@app/utils';
+
+import {dismissModalIfShowing} from '@navigation/navigation';
+import {BaseScreens} from '@typings/screens/navigation';
 
 export interface BottomSheetProps {
     closeButtonId?: string;

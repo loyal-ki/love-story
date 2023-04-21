@@ -37,7 +37,7 @@
     "noUnusedLocals": false,
     "downlevelIteration": true,
     "noUnusedParameters": false,
-    "noImplicitReturns": true,
+    "noImplicitReturns": false,
     "noImplicitUseStrict": false,
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
@@ -81,6 +81,9 @@
       ],
       "@initialize": [
         "app/initialize"
+      ],
+      "@initialize/*": [
+        "app/initialize/*"
       ],
       "@localization": [
         "app/localization"
@@ -136,14 +139,14 @@
       "@env/*": [
         "env/*"
       ],
-      "@typings": [
-        "./types"
-      ],
       "@assets": [
         "./assets"
       ],
       "@assets/*": [
         "assets/*"
+      ],
+      "@typings": [
+        "./types"
       ],
       "@typings/*": [
         "types/*"

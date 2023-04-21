@@ -1,7 +1,9 @@
-import {UIUtils} from '@utils';
 import {createAction} from 'typesafe-actions';
 
 import {PostModel} from '@app/models';
+
+import {AsyncActionListener} from '@typings/utils/general';
+import {UIUtils} from '@utils';
 
 const fetchPostIfNeeded = createAction(
     'post/fetchPostIfNeeded',
@@ -23,9 +25,12 @@ const fetchPostFailure = createAction('post/fetchPostFailure', (error: unknown) 
     return {errorMessage: UIUtils.extractMessageFromError(error)};
 })();
 
+const resetAction = createAction('post/reset')();
+
 export const postActions = {
     fetchPostIfNeeded,
     fetchPostRequest,
     fetchPostSuccess,
     fetchPostFailure,
+    resetAction,
 };

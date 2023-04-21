@@ -1,10 +1,12 @@
-import {IPostActionType} from '@store/actions/actions.types';
-import {postActions} from '@store/actions/post.action';
-import {NetworkLoadingStatusTypes} from '@typings/utils/enums';
 import {combineReducers} from 'redux';
 import {createReducer} from 'typesafe-actions';
 
 import {IPostByIdState} from './post.types';
+
+import {IPostActionType} from '@store/actions/actions.types';
+import {postActions} from '@store/actions/post.action';
+import {NetworkLoadingStatusTypes} from '@typings/utils/enums';
+
 
 const isFetchingReducer = createReducer<NetworkLoadingStatusTypes, IPostActionType>(
     NetworkLoadingStatusTypes.Loading

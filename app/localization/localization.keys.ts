@@ -1,1 +1,3 @@
-class AppLocalizationKeys {}
+export class AppLocalizationKeys {
+    /* empty */
+}

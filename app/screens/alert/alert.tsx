@@ -1,7 +1,8 @@
-import {dismissOverlay} from '@navigation/navigation';
-import {BaseScreens} from '@typings/screens/navigation';
 import React from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
+
+import {dismissOverlay} from '@navigation/navigation';
+import {BaseScreens} from '@typings/screens/navigation';
 
 export interface HomeScreenProps {
     componentId: BaseScreens;

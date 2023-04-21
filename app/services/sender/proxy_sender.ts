@@ -1,10 +1,12 @@
+import _ from 'lodash';
+
+import APISender from './base_sender';
+
 import {RequestMessageModel} from '@models/request/request_message';
 import {GeneralError} from '@services/errors/general_error';
 import {AppErrorCode} from '@services/errors/type';
 import {BackendMethodService} from '@typings/services/method';
-import _ from 'lodash';
 
-import APISender from './base_sender';
 
 /// This method is only used for development.
 export const sendMessage = async (message: RequestMessageModel<unknown>): Promise<unknown> => {

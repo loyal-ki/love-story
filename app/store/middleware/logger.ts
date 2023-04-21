@@ -1,6 +1,6 @@
-import env from '@env';
-
 import {formatLog, logDebug, logInfo} from '@app/utils';
+
+import env from '@env';
 
 export const createLogger = () => {
     return ({getState}: any) =>
@@ -20,6 +20,8 @@ export const createLogger = () => {
 
                 // Log the new state after the action is executed
                 logDebug(`● [NEXT_STATE]: \n${formatLog(getState())}`);
+            } else {
+                next(action);
             }
         };
 };

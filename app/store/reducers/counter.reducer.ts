@@ -1,7 +1,8 @@
-import {counterActions} from '@store/actions';
 import {createReducer} from 'typesafe-actions';
 
 import type {ICounterActionType} from '@store/actions/actions.types';
+
+import {counterActions} from '@store/actions';
 
 export const initState: ICounterState = {
     count: 0,

@@ -1,4 +1,11 @@
 /* eslint-disable no-console */
+import {AxiosRequestConfig} from 'axios';
+import _ from 'lodash';
+import moment from 'moment';
+import {nanoid} from 'nanoid/non-secure';
+
+import {delay, formatLog, safeGet} from '@app/utils';
+
 import env from '@env';
 import {MessageBodyModel} from '@models/request/message_body';
 import {RequestMessageModel} from '@models/request/request_message';
@@ -9,12 +16,6 @@ import * as directSender from '@services/sender/direct_sender';
 import * as proxySender from '@services/sender/proxy_sender';
 import {BackendMethodService} from '@typings/services/method';
 import {ClientDatePatterns} from '@typings/utils/enums';
-import {AxiosRequestConfig} from 'axios';
-import _ from 'lodash';
-import moment from 'moment';
-import {nanoid} from 'nanoid/non-secure';
-
-import {delay, formatLog, safeGet} from '@app/utils';
 
 export const makeBackendRequestMessage = <T>(
     endpoint: string,
@@ -129,7 +130,7 @@ export const parseBackendData = <T>(
 
     switch (backendStatus) {
         case 200: {
-            const data = safeGet(proxyResponse, 'data', undefined);
+            const data = proxyResponse;
             return {data, error: undefined, message: errorMessageFromServer};
         }
         default: {
@@ -160,12 +161,16 @@ export const doFetchArrayData = async <T>(
     requestMessage: RequestMessageModel<unknown>
 ): Promise<T[]> => {
     const response = await sendProxyMessage(requestMessage);
+
     const {data, error} = parseBackendData<T[]>(requestMessage, response);
+
     if (error) {
         throw error;
     }
+
     if (_.isNil(data) || !_.isArray(data)) {
         throw new GeneralError(AppErrorCode.BackendRespondsEmptyData);
     }
+
     return data;
 };

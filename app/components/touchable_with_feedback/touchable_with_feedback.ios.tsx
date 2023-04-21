@@ -1,3 +1,5 @@
+/* eslint-disable new-cap */
+
 import React, {memo} from 'react';
 import {
     PanResponder,

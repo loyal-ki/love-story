@@ -1,4 +1,3 @@
-import {HomeScreen, InitScreen, LoginScreen} from '@screens';
 import React from 'react';
 import {Platform, StyleProp, ViewStyle} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
@@ -10,6 +9,8 @@ import {Screens} from '@app/constants';
 import {Alert} from '@app/screens/alert/alert';
 import {ExampleSheetScreen} from '@app/screens/bottom_sheet';
 import {BottomSheet} from '@app/screens/bottom_sheet/bottom_sheet';
+
+import {HomeScreen, InitScreen, LoginScreen} from '@screens';
 
 /* //////////////////////////////////////////////////////////////
                     GESTURE HANDLER WRAPPER

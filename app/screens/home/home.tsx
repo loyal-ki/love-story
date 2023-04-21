@@ -10,6 +10,7 @@ import FloatingInput from '@app/components/input';
 import SettingOption from '@app/components/options';
 import {Screens} from '@app/constants';
 import {counterActions} from '@app/store/actions';
+import { logDebug } from '@app/utils';
 
 import {useViewModel} from './home.view_model';
 
@@ -51,6 +52,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({componentId, theme}) => {
     const keyboardAwareRef = useRef<KeyboardAwareScrollView>(null);
 
     const viewModel = useViewModel();
+
+    logDebug(viewModel.postList);
 
     return (
         <View style={styles.container}>

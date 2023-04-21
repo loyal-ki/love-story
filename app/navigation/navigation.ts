@@ -1,4 +1,3 @@
-import env from '@env';
 import merge from 'deepmerge';
 import {Alert, Platform} from 'react-native';
 import {
@@ -16,6 +15,8 @@ import NavigationHandler from './navigation.handler';
 
 import type {NavigationInfo} from './navigation.types';
 import type {BaseScreens} from '@typings/screens/navigation';
+
+import env from '@env';
 
 // NAVIGATION COMMAND TYPE
 enum NavigationCommandEnum {

@@ -41,8 +41,6 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
     },
     errorContainer: {
         flexDirection: 'row',
-
-        // Hack to properly place text in flexbox
         borderColor: 'transparent',
         borderWidth: 1,
     },

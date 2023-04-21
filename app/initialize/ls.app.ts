@@ -1,9 +1,10 @@
-import {registerScreens} from '@navigation';
-import {registerNavigationListeners} from '@navigation/navigation';
 import SplashScreen from 'react-native-splash-screen';
 
 import {initialize} from './initialize';
 import {initialLaunch} from './launch';
+
+import {registerScreens} from '@navigation';
+import {registerNavigationListeners} from '@navigation/navigation';
 
 /* //////////////////////////////////////////////////////////////
                     APP ROOT

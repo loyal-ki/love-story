@@ -1,5 +1,6 @@
-import {BackendMethodService} from '@typings/services/method';
 import {AxiosRequestConfig} from 'axios';
+
+import {BackendMethodService} from '@typings/services/method';
 
 export class MessageBodyModel<T> {
     requestType: BackendMethodService;

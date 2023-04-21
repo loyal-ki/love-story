@@ -1,4 +1,4 @@
-/* eslint-disable consistent-return */
+// @ts-ignore
 import {useEffect, useRef} from 'react';
 
 type Delay = number | null;

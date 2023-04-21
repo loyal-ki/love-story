@@ -1,6 +1,7 @@
-import {RequestMessageModel} from '@models/request/request_message';
 import {AxiosHeaders, AxiosRequestConfig} from 'axios';
 import {EmitterSubscription} from 'react-native';
+
+import {RequestMessageModel} from '@models/request/request_message';
 
 export const sessionDefaultConfiguration = {
     allowsCellularAccess: true,

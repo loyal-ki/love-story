@@ -1,10 +1,11 @@
-import {bottomSheet, onNavigationToScreen, showOverlayModal} from '@navigation/navigation';
 import React from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
 
 import {Screens} from '@app/constants';
 
 import type {BaseScreens} from '@typings/screens/navigation';
+
+import {bottomSheet, onNavigationToScreen, showOverlayModal} from '@navigation/navigation';
 
 const styles = StyleSheet.create({
     container: {

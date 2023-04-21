@@ -1,8 +1,9 @@
-import {dismissModalIfShowing} from '@navigation/navigation';
 import React from 'react';
 import {Button, StyleSheet, View} from 'react-native';
 
 import type {BaseScreens} from '@typings/screens/navigation';
+
+import {dismissModalIfShowing} from '@navigation/navigation';
 
 const styles = StyleSheet.create({
     container: {
