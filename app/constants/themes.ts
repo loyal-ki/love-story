@@ -7,16 +7,16 @@ export enum AppThemeEnum {
 export const Themes = {
     dark: {
         type: 'dark',
-        background: '#222324',
+        background: '#16213E',
         primary: '#7F669D',
         text: '#FFFFFF',
-        error: '#ED2B2A',
+        error: '#E94560',
     },
     light: {
         type: 'light',
         background: '#FFFFFF',
         primary: '#7F669D',
         text: '#222324',
-        error: '#ED2B2A',
+        error: '#E94560',
     },
 } as Record<ThemeKey, Theme>;

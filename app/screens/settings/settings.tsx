@@ -7,6 +7,8 @@ import {useTheme} from '@app/context/theme';
 import {useMemoizedCallback} from '@app/hooks';
 import {makeStyleSheetFromTheme} from '@app/utils';
 
+import {showLanguageOptionsBottomSheet} from './advanced';
+
 import type {BaseScreens} from '@typings/screens/navigation';
 
 import DarkModeIcon from '@assets/svg/dark_mode.svg';
@@ -28,6 +30,11 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
         color: theme.text,
         fontSize: 16,
         fontWeight: '600',
+    },
+    descriptionOptionStyle: {
+        color: theme.text,
+        fontSize: 16,
+        fontWeight: '300',
     },
 }));
 
@@ -54,6 +61,10 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
         setIsEnabled(!isEnabled);
     }, [isEnabled, theme.type, updateTheme]);
 
+    const openLanguageBottomSelect = useMemoizedCallback(() => {
+        showLanguageOptionsBottomSheet({theme, title: '', intl});
+    }, [intl, theme]);
+
     return (
         <View style={styles.container}>
             <SettingOption
@@ -64,6 +75,18 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
                 label="Dark Mode"
                 selected={isEnabled}
                 type="toggle"
+            />
+
+            <SettingOption
+                action={openLanguageBottomSelect}
+                iconContainerStyle={styles.iconContainerStyle}
+                iconLeft={<DarkModeIcon width={20} height={20} fill="#FFFFFF" />}
+                optionLabelTextStyle={styles.labelOptionStyle}
+                optionDescriptionTextStyle={styles.descriptionOptionStyle}
+                label="Language"
+                description="English"
+                selected={isEnabled}
+                type="arrow"
             />
         </View>
     );

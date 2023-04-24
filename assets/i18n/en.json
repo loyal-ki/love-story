@@ -4,6 +4,8 @@
     "common.action_refresh": "Refresh",
     "common.action_cancel": "Cancel",
     "common.general_error": "An error occurred. We will record and fix this issue soon.",
+    "common.language.en": "English",
+    "common.language.vi": "Vietnamese",
     "home.page_title": "Home",
     "home.input_email_title": "Email",
     "home.input_email_placeholder": "Input your email",

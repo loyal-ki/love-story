@@ -97,6 +97,14 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
             flex: 1,
             flexDirection: 'row',
         },
+        arrowContainer: {
+            width: 40,
+            height: 40,
+            backgroundColor: '#EAE9E9',
+            borderRadius: 8,
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
     };
 });
 
@@ -171,7 +179,7 @@ const OptionItem = ({
     let actionComponent;
     let radioComponent;
     if (type === OptionType.SELECT && selected) {
-        actionComponent = <CheckIcon color="#1C58D9" width={24} height={24} />;
+        actionComponent = <CheckIcon color={theme.primary} width={24} height={24} />;
     } else if (type === OptionType.RADIO) {
         const radioComponentTestId = selected ? `${testID}.selected` : `${testID}.not_selected`;
         radioComponent = (
@@ -187,7 +195,7 @@ const OptionItem = ({
                 onValueChange={action}
                 value={selected}
                 backgroundActive={theme.primary}
-                backgroundInactive="#D5D5D5"
+                backgroundInactive="#EAE9E9"
                 circleBorderActiveColor="#FFFFFF"
                 circleBorderInactiveColor="#FFFFFF"
                 renderActiveText={false}
@@ -204,12 +212,14 @@ const OptionItem = ({
         );
     } else if (type === OptionType.ARROW) {
         actionComponent = (
-            <ChevronRight
-                color={changeOpacity('#3f4350', 0.32)}
-                height={24}
-                width={24}
-                style={arrowStyle}
-            />
+            <View style={styles.arrowContainer}>
+                <ChevronRight
+                    fill={changeOpacity(theme.primary, 0.72)}
+                    height={24}
+                    width={24}
+                    style={arrowStyle}
+                />
+            </View>
         );
     } else if (type === OptionType.REMOVE) {
         actionComponent = (
@@ -219,7 +229,11 @@ const OptionItem = ({
                 style={[styles.iconContainer]}
                 type="opacity"
                 testID={`${testID}.remove.button`}>
-                <CloseCircleIcon width={18} height={18} color={changeOpacity('#3f4350', 0.64)} />
+                <CloseCircleIcon
+                    width={18}
+                    height={18}
+                    color={changeOpacity(theme.primary, 0.64)}
+                />
             </TouchableWithFeedback>
         );
     }
@@ -260,7 +274,7 @@ const OptionItem = ({
                                 style={[
                                     styles.info,
                                     !actionComponent && styles.iconContainer,
-                                    destructive && {color: '#ff3333'},
+                                    destructive && {color: theme.error},
                                 ]}
                                 testID={`${testID}.info`}>
                                 {info}
