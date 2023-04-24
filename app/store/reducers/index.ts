@@ -1,1 +1,1 @@
-export * from './counter.reducer';
+export * from './locale/locale.reducer';

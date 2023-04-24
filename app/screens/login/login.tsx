@@ -1,42 +1,44 @@
 import React, {useRef} from 'react';
 import {useIntl} from 'react-intl';
-import {Animated, SafeAreaView, StyleSheet, View} from 'react-native';
+import {Animated, SafeAreaView, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {BlankSpacer} from '@app/components/alias';
 import FloatingInput from '@app/components/input';
+import {makeStyleSheetFromTheme} from '@app/utils';
 
 import {useViewModel} from './login.view_model';
 
 import {BaseScreens} from '@typings/screens/navigation';
 
-const styles = StyleSheet.create({
-    flex: {
-        flex: 1,
-    },
-    container: {
-        flex: 1,
-        backgroundColor: '#FFFFFF',
-    },
-    innerContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingHorizontal: 24,
-    },
-    centered: {
-        flex: 1,
-        width: '100%',
-    },
+const getStyleSheet = makeStyleSheetFromTheme(theme => {
+    return {
+        flex: {
+            flex: 1,
+        },
+        container: {
+            flex: 1,
+            backgroundColor: theme.background,
+        },
+        innerContainer: {
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingHorizontal: 24,
+        },
+        centered: {
+            flex: 1,
+            width: '100%',
+        },
+    };
 });
 
 export interface LoginScreenProps {
     componentId: BaseScreens;
-    theme: Theme;
 }
 
 const AnimatedSafeArea = Animated.createAnimatedComponent(SafeAreaView);
 
-export const LoginScreen: React.FC<LoginScreenProps> = ({componentId, theme}) => {
+export const LoginScreen: React.FC<LoginScreenProps> = () => {
     const intl = useIntl();
 
     const {formatMessage} = intl;
@@ -44,6 +46,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({componentId, theme}) =>
     const keyboardAwareRef = useRef<KeyboardAwareScrollView>(null);
 
     const viewModel = useViewModel();
+    const styles = getStyleSheet(viewModel.theme);
 
     return (
         <View style={styles.container}>
@@ -63,7 +66,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({componentId, theme}) =>
                     <View style={styles.centered}>
                         <BlankSpacer height={20} />
                         <FloatingInput
-                            theme={theme}
+                            theme={viewModel.theme}
                             autoCorrect={false}
                             autoCapitalize="none"
                             blurOnSubmit={false}
@@ -72,7 +75,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({componentId, theme}) =>
                             enablesReturnKeyAutomatically
                             onChangeText={viewModel.onLoginChange}
                             onSubmitEditing={viewModel.focusLogin}
-                            error={viewModel.state.emailError ? viewModel.state.emailError : ''}
+                            error={
+                                viewModel.state.emailError
+                                    ? formatMessage({id: viewModel.state.emailError})
+                                    : ''
+                            }
                             keyboardType="email-address"
                             label={formatMessage({id: 'home.input_email_title'})}
                             ref={viewModel.loginRef}

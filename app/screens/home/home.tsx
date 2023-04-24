@@ -6,7 +6,7 @@ import {enableFreeze, enableScreens} from 'react-native-screens';
 
 import {Screens} from '@app/constants';
 import {useTheme} from '@app/context/theme';
-import {AccountScreen} from '@screens/account';
+import {SettingsScreen} from '@screens/settings';
 import {StoryScreen} from '@screens/story';
 
 import TabBar from './tab_bar';
@@ -33,7 +33,7 @@ export interface HomeScreenProps {
 const Tab = createBottomTabNavigator();
 
 export const HomeScreen: React.FC<HomeScreenProps> = ({componentId}) => {
-    const theme = useTheme();
+    const {theme} = useTheme();
 
     return (
         <NavigationContainer
@@ -52,16 +52,15 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({componentId}) => {
                 screenOptions={{headerShown: false, unmountOnBlur: false, lazy: true}}
                 backBehavior="none"
                 // eslint-disable-next-line react/no-unstable-nested-components
-                tabBar={(tabProps: BottomTabBarProps) => <TabBar {...tabProps} theme={theme} />}
-                >
+                tabBar={(tabProps: BottomTabBarProps) => <TabBar {...tabProps} theme={theme} />}>
                 <Tab.Screen
                     name={Screens.STORY}
                     component={StoryScreen}
                     options={{freezeOnBlur: true, lazy: true}}
                 />
                 <Tab.Screen
-                    name={Screens.ACCOUNT}
-                    component={AccountScreen}
+                    name={Screens.SETTINGS}
+                    component={SettingsScreen}
                     options={{
                         freezeOnBlur: true,
                         lazy: true,

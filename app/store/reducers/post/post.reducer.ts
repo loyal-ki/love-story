@@ -1,10 +1,11 @@
 import {combineReducers} from 'redux';
 import {createReducer} from 'typesafe-actions';
 
+import {postActions} from '@app/store/actions/post/post.action';
+
 import {IPostByIdState} from './post.types';
 
 import {IPostActionType} from '@store/actions/actions.types';
-import {postActions} from '@store/actions/post.action';
 import {NetworkLoadingStatusTypes} from '@typings/utils/enums';
 
 

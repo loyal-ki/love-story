@@ -22,7 +22,7 @@ const getStyleSheet = makeStyleSheetFromTheme(theme => {
 });
 
 const SettingOption = ({...props}: OptionItemProps) => {
-    const theme = useTheme();
+    const {theme} = useTheme();
 
     const styles = getStyleSheet(theme);
 

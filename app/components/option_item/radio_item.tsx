@@ -1,8 +1,8 @@
 import React, {useCallback} from 'react';
 import {View} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
+import CheckIcon from '@assets/svg/check.svg';
 
 import {useTheme} from '@context/theme';
 
@@ -39,14 +39,14 @@ export type RadioItemProps = {
     testID?: string;
 };
 const RadioItem = ({selected, checkedBody, testID}: RadioItemProps) => {
-    const theme = useTheme();
+    const {theme} = useTheme();
     const styles = getStyleSheet(theme);
 
     const getBody = useCallback(() => {
         if (checkedBody) {
             return (
                 <View style={styles.checkedBodyContainer}>
-                    <Icon color="#FFFFFF" name="check" size={RADIO_SIZE / 1.5} />
+                    <CheckIcon color="#FFFFFF" width={RADIO_SIZE / 1.5} height={RADIO_SIZE / 1.5} />
                 </View>
             );
         }

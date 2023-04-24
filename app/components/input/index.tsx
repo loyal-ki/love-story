@@ -25,11 +25,12 @@ import {
     ViewStyle,
 } from 'react-native';
 import Animated, {useAnimatedStyle, withTiming, Easing} from 'react-native-reanimated';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 
 import {getLabelPositions, onExecution} from './utils';
+
+import WarningCircle from '@assets/svg/warning_circle.svg';
 
 const DEFAULT_INPUT_HEIGHT = 48;
 const BORDER_DEFAULT_WIDTH = 1;
@@ -46,9 +47,8 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
     },
     errorIcon: {
         color: '#ff3333',
-        fontSize: 14,
-        marginRight: 7,
-        top: 5,
+        marginRight: 3,
+        top: 3,
     },
     errorText: {
         color: '#ff3333',
@@ -317,7 +317,12 @@ const FloatingInput = forwardRef<FloatingInputRef, FloatingInputProps>(
                     {Boolean(error) && (
                         <View style={styles.errorContainer}>
                             {showErrorIcon && errorIcon && (
-                                <Icon name={errorIcon} style={styles.errorIcon} />
+                                <WarningCircle
+                                    width={20}
+                                    height={20}
+                                    fill="#ff3333"
+                                    style={styles.errorIcon}
+                                />
                             )}
                             <Text style={styles.errorText} testID={`${testID}.error`}>
                                 {error}

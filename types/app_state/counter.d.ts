@@ -1,3 +1,0 @@
-type ICounterState = {
-    count: number;
-};

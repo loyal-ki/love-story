@@ -10,7 +10,14 @@ import {Alert} from '@app/screens/alert/alert';
 import {ExampleSheetScreen} from '@app/screens/bottom_sheet';
 import {BottomSheet} from '@app/screens/bottom_sheet/bottom_sheet';
 
-import {AccountScreen, HomeScreen, InitScreen, LoginScreen, StoryScreen} from '@screens';
+import {
+    AccountScreen,
+    HomeScreen,
+    InitScreen,
+    LoginScreen,
+    StoryScreen,
+    SettingsScreen,
+} from '@screens';
 
 /* //////////////////////////////////////////////////////////////
                     GESTURE HANDLER WRAPPER
@@ -68,6 +75,9 @@ Navigation.setLazyComponentRegistrator(screenName => {
             break;
         case Screens.ACCOUNT:
             screen = withProviderWrapper(AccountScreen);
+            break;
+        case Screens.SETTINGS:
+            screen = withProviderWrapper(SettingsScreen);
             break;
         case Screens.STORY:
             screen = withProviderWrapper(StoryScreen);

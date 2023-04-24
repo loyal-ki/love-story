@@ -6,6 +6,7 @@ export const ALERT = 'Alert';
 export const EXAMPLE_BOTTOM_SHEET = 'Example_Bottom_Sheet';
 export const STORY = 'Story';
 export const ACCOUNT = 'Account';
+export const SETTINGS = 'Settings';
 
 export default {
     INIT,
@@ -13,6 +14,7 @@ export default {
     HOME,
     STORY,
     ACCOUNT,
+    SETTINGS,
     BOTTOM_SHEET,
     ALERT,
     EXAMPLE_BOTTOM_SHEET,

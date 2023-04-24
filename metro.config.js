@@ -13,7 +13,7 @@ module.exports = (async () => {
     } = await getDefaultConfig();
     return {
         transformer: {
-            // babelTransformerPath: require.resolve('react-native-svg-transformer'),
+            babelTransformerPath: require.resolve('react-native-svg-transformer'),
             getTransformOptions: async () => ({
                 transform: {
                     experimentalImportSupport: false,

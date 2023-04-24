@@ -1,1 +1,1 @@
-export * from './counter.action';
+export * from './locale/locale.action';

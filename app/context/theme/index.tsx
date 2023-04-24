@@ -1,9 +1,11 @@
-import React, {useEffect, useState, ComponentType, createContext} from 'react';
+import React, {ComponentType, createContext, useMemo} from 'react';
 import {Appearance} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {Themes} from '@app/constants/themes';
-import {DatabaseLocal} from '@app/database';
 import {useMemoizedCallback, useMount} from '@app/hooks';
+import {themeActions} from '@app/store/actions/theme/theme.action';
+import {selectThemeFromStore} from '@app/store/selectors/theme/locale.selector';
 
 type Props = {
     children: React.ReactNode;
@@ -11,6 +13,7 @@ type Props = {
 
 type WithThemeProps = {
     theme: Theme;
+    updateTheme: (value: ThemeType) => void;
 };
 
 export function getDefaultThemeByAppearance() {
@@ -20,7 +23,17 @@ export function getDefaultThemeByAppearance() {
     return Themes.light;
 }
 
-export const ThemeContext = createContext(getDefaultThemeByAppearance());
+export function getThemeMode(value: ThemeType) {
+    if (value === 'dark') {
+        return Themes.dark;
+    }
+    return Themes.light;
+}
+
+export const ThemeContext = createContext({
+    theme: getDefaultThemeByAppearance(),
+    updateTheme: (value: ThemeType) => {},
+});
 
 const {Consumer, Provider} = ThemeContext;
 
@@ -31,44 +44,40 @@ const getTheme = (): Theme => {
 };
 
 export const ThemeProvider = ({children}: Props) => {
-    const [theme, setTheme] = useState(() => getTheme());
+    const theme = useSelector(selectThemeFromStore);
 
-    const init = useMemoizedCallback(() => {
-        setTheme(getTheme());
-    }, []);
+    const reduxDispatch = useDispatch();
 
-    useMount(init);
+    const initAppTheme = useMemoizedCallback(() => {
+        reduxDispatch(themeActions.fetchThemeFromDbRequest());
+    }, [reduxDispatch]);
 
-    useEffect(() => {
-        const listener = Appearance.addChangeListener(() => {
-            const newTheme = getTheme();
-            if (theme !== newTheme) {
-                setTheme(newTheme);
-            }
-        });
+    const updateTheme = useMemoizedCallback(
+        (value: ThemeType) => {
+            const appTheme = getThemeMode(value);
+            reduxDispatch(themeActions.setThemeToDbRequest(appTheme));
+        },
+        [reduxDispatch]
+    );
 
-        return () => listener.remove();
-    }, [theme]);
-
-    const updateTheme = useMemoizedCallback(async () => {
-        await DatabaseLocal.preferencesRepository().setTheme(theme);
-        setTheme(theme);
-    }, [theme]);
-
-    useEffect(() => {
-        updateTheme();
+    const themeRef = useMemo(() => {
+        return {theme, updateTheme};
     }, [theme, updateTheme]);
 
-    return <Provider value={theme}>{children}</Provider>;
+    useMount(initAppTheme);
+
+    return <Provider value={themeRef}>{children}</Provider>;
 };
 
 export function withTheme<T extends WithThemeProps>(Component: ComponentType<T>): ComponentType<T> {
     // eslint-disable-next-line react/function-component-definition
     return function ThemeComponent(props) {
-        return <Consumer>{(theme: Theme) => <Component {...props} theme={theme} />}</Consumer>;
+        return (
+            <Consumer>{({theme, updateTheme}) => <Component {...props} theme={theme} />}</Consumer>
+        );
     };
 }
 
-export function useTheme(): Theme {
+export function useTheme(): WithThemeProps {
     return React.useContext(ThemeContext);
 }

@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {Switch} from 'react-native-switch';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import TouchableWithFeedback from '@components/touchable_with_feedback';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
@@ -18,6 +17,9 @@ import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 import OptionIcon from './option_icon';
 import RadioItem, {RadioItemProps} from './radio_item';
 
+import CheckIcon from '@assets/svg/check.svg';
+import ChevronRight from '@assets/svg/chevron_right.svg';
+import CloseCircleIcon from '@assets/svg/close_circle.svg';
 import {useTheme} from '@context/theme';
 
 const TouchableOptionTypes = {
@@ -144,7 +146,7 @@ const OptionItem = ({
     value,
     onLayout,
 }: OptionItemProps) => {
-    const theme = useTheme();
+    const {theme} = useTheme();
     const styles = getStyleSheet(theme);
 
     const isInLine = inline && Boolean(description);
@@ -170,9 +172,7 @@ const OptionItem = ({
     let actionComponent;
     let radioComponent;
     if (type === OptionType.SELECT && selected) {
-        actionComponent = (
-            <Icon color="#1C58D9" name="check" size={24} testID={`${testID}.selected`} />
-        );
+        actionComponent = <CheckIcon color="#1C58D9" width={24} height={24} />;
     } else if (type === OptionType.RADIO) {
         const radioComponentTestId = selected ? `${testID}.selected` : `${testID}.not_selected`;
         radioComponent = (
@@ -205,10 +205,10 @@ const OptionItem = ({
         );
     } else if (type === OptionType.ARROW) {
         actionComponent = (
-            <Icon
+            <ChevronRight
                 color={changeOpacity('#3f4350', 0.32)}
-                name="chevron-right"
-                size={24}
+                height={24}
+                width={24}
                 style={arrowStyle}
             />
         );
@@ -220,7 +220,7 @@ const OptionItem = ({
                 style={[styles.iconContainer]}
                 type="opacity"
                 testID={`${testID}.remove.button`}>
-                <Icon name="close" size={18} color={changeOpacity('#3f4350', 0.64)} />
+                <CloseCircleIcon width={18} height={18} color={changeOpacity('#3f4350', 0.64)} />
             </TouchableWithFeedback>
         );
     }

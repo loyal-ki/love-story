@@ -1,1 +1,2 @@
-export * from './counter.selector';
+export * from './locale/locale.selector';
+export * from './post/post.selector';

@@ -1,10 +1,12 @@
 import {AnyAction, combineReducers} from 'redux';
 
-import {counterReducer} from './reducers';
+import {localeReducer} from './reducers';
 import {postReducer} from './reducers/post/post.reducer';
+import {themeReducer} from './reducers/theme/theme.reducer';
 
 const appReducer = combineReducers({
-    counter: counterReducer,
+    locale: localeReducer,
+    theme: themeReducer,
     post: postReducer,
 });
 

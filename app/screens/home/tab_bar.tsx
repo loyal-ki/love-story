@@ -4,13 +4,14 @@ import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {Shadow} from 'react-native-shadow-2';
-import IconAntDesign from 'react-native-vector-icons/AntDesign';
-import IconOcticons from 'react-native-vector-icons/Octicons';
 
 import {Events, Screens, Navigation as NavigationConstants} from '@app/constants';
 import {BOTTOM_TAB_HEIGHT, BOTTOM_TAB_ICON_SIZE} from '@app/constants/view';
 import NavigationHandler from '@app/navigation/navigation.handler';
 import {changeOpacity, makeStyleSheetFromTheme} from '@app/utils';
+
+import StoryIcon from '@assets/svg/story.svg';
+import SettingIcon from '@assets/svg/setting.svg';
 
 import type {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 
@@ -60,22 +61,22 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
 const Story = ({isFocused, theme}: Props) => {
     return (
         <View>
-            <IconOcticons
-                size={BOTTOM_TAB_ICON_SIZE}
-                name="feed-repo"
-                color={isFocused ? '#1C58D9' : changeOpacity('#3f4350', 0.48)}
+            <StoryIcon
+                width={BOTTOM_TAB_ICON_SIZE}
+                height={BOTTOM_TAB_ICON_SIZE}
+                stroke={isFocused ? '#1C58D9' : changeOpacity('#3f4350', 0.48)}
             />
         </View>
     );
 };
 
-const Account = ({isFocused, theme}: Props) => {
+const Settings = ({isFocused, theme}: Props) => {
     return (
         <View>
-            <IconAntDesign
-                size={BOTTOM_TAB_ICON_SIZE}
-                name="setting"
-                color={isFocused ? '#1C58D9' : changeOpacity('#3f4350', 0.48)}
+            <SettingIcon
+                width={BOTTOM_TAB_ICON_SIZE}
+                height={BOTTOM_TAB_ICON_SIZE}
+                stroke={isFocused ? '#1C58D9' : changeOpacity('#3f4350', 0.48)}
             />
         </View>
     );
@@ -84,7 +85,7 @@ const Account = ({isFocused, theme}: Props) => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const TabComponents: Record<string, any> = {
     Story,
-    Account,
+    Settings,
 };
 
 const TabBar = ({state, descriptors, navigation, theme}: BottomTabBarProps & {theme: Theme}) => {

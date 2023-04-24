@@ -1,10 +1,10 @@
 import React, {useCallback, useMemo, useState} from 'react';
 import FastImage from 'react-native-fast-image';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 import {isValidUrl} from '@utils/url';
 
+import WifiOffIcon from '@assets/svg/wifi_off.svg';
 import {useTheme} from '@context/theme';
 
 type OptionIconProps = {
@@ -24,7 +24,7 @@ const getStyleSheet = makeStyleSheetFromTheme(() => {
 });
 
 const OptionIcon = ({icon, iconColor, destructive}: OptionIconProps) => {
-    const theme = useTheme();
+    const {theme} = useTheme();
     const styles = getStyleSheet(theme);
 
     const [failedToLoadImage, setFailedToLoadImage] = useState(false);
@@ -40,12 +40,11 @@ const OptionIcon = ({icon, iconColor, destructive}: OptionIconProps) => {
         return <FastImage source={iconAsSource} style={styles.icon} onError={onErrorLoadingIcon} />;
     }
 
-    const iconName = failedToLoadImage ? 'power-plugin-outline' : icon;
     return (
-        <Icon
-            name={iconName}
-            size={24}
-            color={iconColor || (destructive ? '#ff3333' : changeOpacity('#3f4350', 0.64))}
+        <WifiOffIcon
+            height={24}
+            width={24}
+            stroke={iconColor || (destructive ? '#ff3333' : changeOpacity('#3f4350', 0.64))}
         />
     );
 };

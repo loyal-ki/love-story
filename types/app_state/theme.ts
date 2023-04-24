@@ -1,0 +1,3 @@
+type IThemeState = {
+    theme: Theme;
+};

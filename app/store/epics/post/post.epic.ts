@@ -15,9 +15,9 @@ import {
 import {isActionOf} from 'typesafe-actions';
 
 import {APIServiceManager} from '@app/services/apis';
+import {postActions} from '@app/store/actions/post/post.action';
 
 import {IPostActionType} from '@store/actions/actions.types';
-import {postActions} from '@store/actions/post.action';
 import {ReduxAppState} from '@store/rootReducer';
 
 const requestPostIfNeededEpic: Epic<IPostActionType, IPostActionType, ReduxAppState> = (
