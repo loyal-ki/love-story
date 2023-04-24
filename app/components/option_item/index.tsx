@@ -14,7 +14,6 @@ import {Switch} from 'react-native-switch';
 import TouchableWithFeedback from '@components/touchable_with_feedback';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 
-import OptionIcon from './option_icon';
 import RadioItem, {RadioItemProps} from './radio_item';
 
 import CheckIcon from '@assets/svg/check.svg';
@@ -107,10 +106,10 @@ export type OptionItemProps = {
         | ((value: string | boolean) => void);
     arrowStyle?: StyleProp<ViewStyle>;
     containerStyle?: StyleProp<ViewStyle>;
+    iconContainerStyle?: StyleProp<ViewStyle>;
     description?: string;
     destructive?: boolean;
-    icon?: string;
-    iconColor?: string;
+    iconLeft?: React.ReactNode;
     info?: string;
     inline?: boolean;
     label: string;
@@ -131,8 +130,8 @@ const OptionItem = ({
     containerStyle,
     description,
     destructive,
-    icon,
-    iconColor,
+    iconContainerStyle,
+    iconLeft,
     info,
     inline = false,
     label,
@@ -187,7 +186,7 @@ const OptionItem = ({
             <Switch
                 onValueChange={action}
                 value={selected}
-                backgroundActive="#1C58D9"
+                backgroundActive={theme.primary}
                 backgroundInactive="#D5D5D5"
                 circleBorderActiveColor="#FFFFFF"
                 circleBorderInactiveColor="#FFFFFF"
@@ -195,10 +194,10 @@ const OptionItem = ({
                 renderInActiveText={false}
                 circleActiveColor="#FFFFFF"
                 circleInActiveColor="#FFFFFF"
-                circleSize={30}
+                circleSize={24}
                 switchLeftPx={2.2}
                 switchRightPx={2.2}
-                barHeight={32.4}
+                barHeight={26.4}
                 innerCircleStyle={{alignItems: 'center', justifyContent: 'center', padding: 10}}
                 switchWidthMultiplier={2}
             />
@@ -233,14 +232,8 @@ const OptionItem = ({
         <View testID={testID} style={[styles.container, containerStyle]} onLayout={onLayout}>
             <View style={styles.row}>
                 <View style={styles.labelContainer}>
-                    {Boolean(icon) && (
-                        <View style={styles.iconContainer}>
-                            <OptionIcon
-                                icon={icon!}
-                                iconColor={iconColor}
-                                destructive={destructive}
-                            />
-                        </View>
+                    {iconLeft && (
+                        <View style={[styles.iconContainer, iconContainerStyle]}>{iconLeft}</View>
                     )}
                     {type === OptionType.RADIO && radioComponent}
                     <View style={labelStyle}>

@@ -15,7 +15,6 @@ import type {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import SettingIcon from '@assets/svg/setting.svg';
 import StoryIcon from '@assets/svg/story.svg';
 
-
 const shadowSides = {top: true, bottom: false, end: false, start: false};
 const shadowOffset: [x: number | string, y: number | string] = [0, -0.5];
 
@@ -65,7 +64,7 @@ const Story = ({isFocused, theme}: Props) => {
             <StoryIcon
                 width={BOTTOM_TAB_ICON_SIZE}
                 height={BOTTOM_TAB_ICON_SIZE}
-                stroke={isFocused ? '#1C58D9' : changeOpacity('#3f4350', 0.48)}
+                stroke={isFocused ? theme.primary : changeOpacity('#3f4350', 0.48)}
             />
         </View>
     );
@@ -77,7 +76,7 @@ const Settings = ({isFocused, theme}: Props) => {
             <SettingIcon
                 width={BOTTOM_TAB_ICON_SIZE}
                 height={BOTTOM_TAB_ICON_SIZE}
-                stroke={isFocused ? '#1C58D9' : changeOpacity('#3f4350', 0.48)}
+                stroke={isFocused ? theme.primary : changeOpacity('#3f4350', 0.48)}
             />
         </View>
     );

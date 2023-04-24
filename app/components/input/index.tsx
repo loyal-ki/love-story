@@ -46,12 +46,12 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
         borderWidth: 1,
     },
     errorIcon: {
-        color: '#ff3333',
+        color: theme.error,
         marginRight: 3,
         top: 3,
     },
     errorText: {
-        color: '#ff3333',
+        color: theme.error,
         fontSize: 12,
         lineHeight: 16,
         paddingVertical: 5,
@@ -66,7 +66,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
     },
     label: {
         position: 'absolute',
-        color: changeOpacity('#3f4350', 0.64),
+        color: changeOpacity(theme.text, 0.64),
         left: 16,
         fontSize: 16,
         zIndex: 10,
@@ -84,11 +84,11 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
         paddingTop: 12,
         paddingBottom: 12,
         paddingHorizontal: 16,
-        color: '#3f4350',
-        borderColor: changeOpacity('#3f4350', 0.16),
+        color: theme.text,
+        borderColor: changeOpacity(theme.text, 0.16),
         borderRadius: 4,
         borderWidth: BORDER_DEFAULT_WIDTH,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: theme.background,
     },
 }));
 
@@ -230,9 +230,9 @@ const FloatingInput = forwardRef<FloatingInputRef, FloatingInputProps>(
             });
 
             if (focused) {
-                res.push({borderColor: '#07457E'});
+                res.push({borderColor: theme.primary});
             } else if (shouldShowError) {
-                res.push({borderColor: '#ff3333'});
+                res.push({borderColor: theme.error});
             }
 
             res.push(textInputStyle);
@@ -272,15 +272,15 @@ const FloatingInput = forwardRef<FloatingInputRef, FloatingInputProps>(
             // eslint-disable-next-line prefer-destructuring
             let color = styles.label.color;
             if (shouldShowError) {
-                color = '#ff3333';
+                color = theme.error;
             } else if (focused) {
-                color = '#07457E';
+                color = theme.primary;
             }
 
             return {
                 top: withTiming(toValue, {duration: 100, easing: Easing.linear}),
                 fontSize: withTiming(toSize, {duration: 100, easing: Easing.linear}),
-                backgroundColor: focusedLabel || inputText ? '#FFFFFF' : 'transparent',
+                backgroundColor: focusedLabel || inputText ? theme.background : 'transparent',
                 paddingHorizontal: focusedLabel || inputText ? 4 : 0,
                 color,
             };
@@ -320,7 +320,7 @@ const FloatingInput = forwardRef<FloatingInputRef, FloatingInputProps>(
                                 <WarningCircle
                                     width={20}
                                     height={20}
-                                    fill="#ff3333"
+                                    fill={theme.error}
                                     style={styles.errorIcon}
                                 />
                             )}

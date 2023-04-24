@@ -1,17 +1,35 @@
 import React, {useState} from 'react';
 import {useIntl} from 'react-intl';
-import {StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 
 import SettingOption from '@app/components/options';
+import {useTheme} from '@app/context/theme';
+import {useMemoizedCallback} from '@app/hooks';
+import {makeStyleSheetFromTheme} from '@app/utils';
 
 import type {BaseScreens} from '@typings/screens/navigation';
 
-const styles = StyleSheet.create({
+import DarkModeIcon from '@assets/svg/dark_mode.svg';
+
+const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
     container: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: theme.background,
     },
-});
+    iconContainerStyle: {
+        width: 32,
+        height: 32,
+        backgroundColor: theme.primary,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 16,
+    },
+    labelOptionStyle: {
+        color: theme.text,
+        fontSize: 16,
+        fontWeight: '600',
+    },
+}));
 
 export interface SettingsScreenProps {
     componentId: BaseScreens;
@@ -19,21 +37,34 @@ export interface SettingsScreenProps {
 
 export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
     const intl = useIntl();
-    const [isEnabled, setIsEnabled] = useState(false);
+
+    const {theme, updateTheme} = useTheme();
+
+    const styles = getStyleSheet(theme);
+
+    const [isEnabled, setIsEnabled] = useState(theme.type === 'dark');
+
+    const useChangeThemeMode = useMemoizedCallback(() => {
+        if (theme.type === 'dark') {
+            updateTheme('light');
+        } else {
+            updateTheme('dark');
+        }
+
+        setIsEnabled(!isEnabled);
+    }, [isEnabled, theme.type, updateTheme]);
 
     return (
         <View style={styles.container}>
             <SettingOption
-                action={setIsEnabled}
-                label="Toggle"
+                iconContainerStyle={styles.iconContainerStyle}
+                iconLeft={<DarkModeIcon width={20} height={20} fill="#FFFFFF" />}
+                action={useChangeThemeMode}
+                optionLabelTextStyle={styles.labelOptionStyle}
+                label="Dark Mode"
                 selected={isEnabled}
                 type="toggle"
             />
-            <SettingOption action={() => {}} label="Select" type="select" />
-            <SettingOption action={setIsEnabled} label="Radio" selected={isEnabled} type="radio" />
-
-            <SettingOption action={() => {}} label="Arrow" type="arrow" />
-            <SettingOption action={() => {}} label="Remove" type="remove" />
         </View>
     );
 };

@@ -6,7 +6,7 @@ import {themeActions} from '@app/store/actions/theme/theme.action';
 import {IThemeActionType} from '@store/actions/actions.types';
 
 export const initState: IThemeState = {
-    theme: Themes.dark,
+    theme: Themes.light,
 };
 
 export const themeReducer = createReducer<IThemeState, IThemeActionType>(initState)

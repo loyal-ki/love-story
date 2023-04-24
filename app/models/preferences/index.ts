@@ -1,3 +1,4 @@
+import { Themes } from '@app/constants/themes';
 import {DEFAULT_LOCALE} from '@app/localization';
 import {safeGet} from '@app/utils';
 
@@ -23,7 +24,7 @@ export class PreferencesModel implements IPreferences {
         return {
             id: 0,
             locale: DEFAULT_LOCALE,
-            persistedTheme: undefined,
+            persistedTheme: Themes.light,
             isFirstInstall: false,
         };
     };
