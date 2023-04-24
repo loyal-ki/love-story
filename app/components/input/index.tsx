@@ -30,7 +30,7 @@ import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 
 import {getLabelPositions, onExecution} from './utils';
 
-import WarningCircle from '@assets/svg/warning_circle.svg';
+// import WarningCircle from '@assets/svg/warning_circle.svg';
 
 const DEFAULT_INPUT_HEIGHT = 48;
 const BORDER_DEFAULT_WIDTH = 1;
@@ -316,14 +316,14 @@ const FloatingInput = forwardRef<FloatingInputRef, FloatingInputProps>(
                     </View>
                     {Boolean(error) && (
                         <View style={styles.errorContainer}>
-                            {showErrorIcon && errorIcon && (
+                            {/* {showErrorIcon && errorIcon && (
                                 <WarningCircle
                                     width={20}
                                     height={20}
                                     fill={theme.error}
                                     style={styles.errorIcon}
                                 />
-                            )}
+                            )} */}
                             <Text style={styles.errorText} testID={`${testID}.error`}>
                                 {error}
                             </Text>

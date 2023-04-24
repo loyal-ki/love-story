@@ -1,18 +1,19 @@
-import React, {useState} from 'react';
-import {useIntl} from 'react-intl';
+import React from 'react';
 import {View} from 'react-native';
 
+import {BlankSpacer} from '@app/components/alias';
 import SettingOption from '@app/components/options';
-import {useTheme} from '@app/context/theme';
-import {useMemoizedCallback} from '@app/hooks';
 import {makeStyleSheetFromTheme} from '@app/utils';
 
-import {showLanguageOptionsBottomSheet} from './advanced';
+import {useViewModel} from './settings.view_model';
 
 import type {BaseScreens} from '@typings/screens/navigation';
 
 import DarkModeIcon from '@assets/svg/dark_mode.svg';
-import {useUserLocale} from '@app/context/locale';
+import LanguageIcon from '@assets/svg/language.svg';
+import NotificationIcon from '@assets/svg/notification.svg';
+
+const kIconColor = ['#7F669D', '#ECA869', '#FFE15D'];
 
 const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
     container: {
@@ -20,12 +21,12 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
         backgroundColor: theme.background,
     },
     iconContainerStyle: {
-        width: 32,
-        height: 32,
+        width: 36,
+        height: 36,
         backgroundColor: theme.primary,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 16,
+        borderRadius: 18,
     },
     labelOptionStyle: {
         color: theme.text,
@@ -44,62 +45,42 @@ export interface SettingsScreenProps {
 }
 
 export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
-    const intl = useIntl();
-    const {formatMessage} = intl;
+    const viewModel = useViewModel();
 
-    const {theme, updateTheme} = useTheme();
-    const {locale, updateLocale} = useUserLocale();
+    const {formatMessage} = viewModel.intl;
 
-    const styles = getStyleSheet(theme);
-
-    const [isEnabled, setIsEnabled] = useState(theme.type === 'dark');
-
-    const [language, setLanguage] = useState(locale);
-
-    const useChangeThemeMode = useMemoizedCallback(() => {
-        if (theme.type === 'dark') {
-            updateTheme('light');
-        } else {
-            updateTheme('dark');
-        }
-
-        setIsEnabled(!isEnabled);
-    }, [isEnabled, theme.type, updateTheme]);
-
-    const openLanguageBottomSelect = useMemoizedCallback(() => {
-        showLanguageOptionsBottomSheet({
-            theme,
-            title: '',
-            intl,
-            langSelected: locale,
-            onSelectedLanguage(lang) {
-                updateLocale(lang);
-                setLanguage(lang);
-            },
-        });
-    }, [intl, locale, theme, updateLocale]);
+    const styles = getStyleSheet(viewModel.theme);
 
     return (
         <View style={styles.container}>
+            <BlankSpacer height={12} />
             <SettingOption
-                iconContainerStyle={styles.iconContainerStyle}
+                iconContainerStyle={[styles.iconContainerStyle, {backgroundColor: kIconColor[0]}]}
                 iconLeft={<DarkModeIcon width={20} height={20} fill="#FFFFFF" />}
-                action={useChangeThemeMode}
+                action={viewModel.useChangeThemeMode}
                 optionLabelTextStyle={styles.labelOptionStyle}
-                label="Dark Mode"
-                selected={isEnabled}
+                label={formatMessage({id: 'common.theme_mode'})}
+                selected={viewModel.state.isDarkModeEnable}
                 type="toggle"
             />
-
+            <BlankSpacer height={12} />
             <SettingOption
-                action={openLanguageBottomSelect}
-                iconContainerStyle={styles.iconContainerStyle}
-                iconLeft={<DarkModeIcon width={20} height={20} fill="#FFFFFF" />}
+                action={viewModel.openLanguageBottomSelect}
+                iconContainerStyle={[styles.iconContainerStyle, {backgroundColor: kIconColor[1]}]}
+                iconLeft={<LanguageIcon width={20} height={20} fill="#FFFFFF" />}
                 optionLabelTextStyle={styles.labelOptionStyle}
                 optionDescriptionTextStyle={styles.descriptionOptionStyle}
-                label="Language"
-                description={formatMessage({id: `common.language.${language}`})}
-                selected={isEnabled}
+                label={formatMessage({id: 'common.language'})}
+                description={formatMessage({id: `common.language.${viewModel.state.settingLocale}`})}
+                type="arrow"
+            />
+            <BlankSpacer height={12} />
+            <SettingOption
+                iconContainerStyle={[styles.iconContainerStyle, {backgroundColor: kIconColor[2]}]}
+                iconLeft={<NotificationIcon width={20} height={20} fill="#FFFFFF" />}
+                optionLabelTextStyle={styles.labelOptionStyle}
+                optionDescriptionTextStyle={styles.descriptionOptionStyle}
+                label={formatMessage({id: 'common.notification'})}
                 type="arrow"
             />
         </View>

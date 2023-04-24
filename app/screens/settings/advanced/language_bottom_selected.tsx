@@ -13,7 +13,6 @@ import CheckIcon from '@assets/svg/check.svg';
 const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
     container: {
         flex: 1,
-        backgroundColor: theme.background,
     },
     title: {
         fontSize: 16,

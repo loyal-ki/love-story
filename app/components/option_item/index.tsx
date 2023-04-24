@@ -98,8 +98,8 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
             flexDirection: 'row',
         },
         arrowContainer: {
-            width: 40,
-            height: 40,
+            width: 46,
+            height: 46,
             backgroundColor: '#EAE9E9',
             borderRadius: 8,
             alignItems: 'center',
@@ -215,8 +215,8 @@ const OptionItem = ({
             <View style={styles.arrowContainer}>
                 <ChevronRight
                     fill={changeOpacity(theme.primary, 0.72)}
-                    height={24}
-                    width={24}
+                    height={28}
+                    width={28}
                     style={arrowStyle}
                 />
             </View>
