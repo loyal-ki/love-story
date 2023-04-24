@@ -8,7 +8,6 @@ import {IPostByIdState} from './post.types';
 import {IPostActionType} from '@store/actions/actions.types';
 import {NetworkLoadingStatusTypes} from '@typings/utils/enums';
 
-
 const isFetchingReducer = createReducer<NetworkLoadingStatusTypes, IPostActionType>(
     NetworkLoadingStatusTypes.Loading
 )

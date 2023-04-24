@@ -10,10 +10,11 @@ import {BOTTOM_TAB_HEIGHT, BOTTOM_TAB_ICON_SIZE} from '@app/constants/view';
 import NavigationHandler from '@app/navigation/navigation.handler';
 import {changeOpacity, makeStyleSheetFromTheme} from '@app/utils';
 
-import StoryIcon from '@assets/svg/story.svg';
-import SettingIcon from '@assets/svg/setting.svg';
-
 import type {BottomTabBarProps} from '@react-navigation/bottom-tabs';
+
+import SettingIcon from '@assets/svg/setting.svg';
+import StoryIcon from '@assets/svg/story.svg';
+
 
 const shadowSides = {top: true, bottom: false, end: false, start: false};
 const shadowOffset: [x: number | string, y: number | string] = [0, -0.5];

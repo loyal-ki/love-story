@@ -81,7 +81,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
     snapPoints = [1, '50%', '80%'],
     testID,
 }) => {
-    const theme = useTheme();
+    const {theme} = useTheme();
     const styles = getStyleSheet(theme);
     const sheetRef = useRef<BottomSheetM>(null);
     const interaction = useRef<Handle>();

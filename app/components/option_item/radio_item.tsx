@@ -18,6 +18,7 @@ const getStyleSheet = makeStyleSheetFromTheme(theme => {
             borderColor: '#FFFFFF',
             alignItems: 'center',
             justifyContent: 'center',
+            marginBottom: RADIO_SIZE / 6,
         },
         inActive: {
             borderColor: changeOpacity('#3f4350', 0.56),

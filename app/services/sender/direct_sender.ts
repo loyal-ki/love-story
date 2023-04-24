@@ -6,7 +6,6 @@ import {RequestMessageModel} from '@models/request/request_message';
 import {GeneralError} from '@services/errors/general_error';
 import {AppErrorCode} from '@services/errors/type';
 
-
 export const sendMessage = async (message: RequestMessageModel<unknown>): Promise<unknown> => {
     APISender.baseUrl = 'https://jsonplaceholder.typicode.com';
 

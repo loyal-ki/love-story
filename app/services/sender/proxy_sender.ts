@@ -7,7 +7,6 @@ import {GeneralError} from '@services/errors/general_error';
 import {AppErrorCode} from '@services/errors/type';
 import {BackendMethodService} from '@typings/services/method';
 
-
 /// This method is only used for development.
 export const sendMessage = async (message: RequestMessageModel<unknown>): Promise<unknown> => {
     APISender.baseUrl = 'https://jsonplaceholder.typicode.com';

@@ -15,8 +15,7 @@ export const reducer = createReducer<IHomeState, HomeActionType>(initialState).h
         return {
             ...state,
             email: action.payload.email,
-            emailError: validateEmailContact(action.payload.email)
-                .errorMessage,
+            emailError: validateEmailContact(action.payload.email).errorMessage,
         };
     }
 );
