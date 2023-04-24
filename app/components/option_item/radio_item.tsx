@@ -2,8 +2,8 @@ import React, {useCallback} from 'react';
 import {View} from 'react-native';
 
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
-import CheckIcon from '@assets/svg/check.svg';
 
+import CheckIcon from '@assets/svg/check.svg';
 import {useTheme} from '@context/theme';
 
 const RADIO_SIZE = 24;
