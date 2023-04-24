@@ -1,5 +1,5 @@
 import merge from 'deepmerge';
-import {Alert, Platform} from 'react-native';
+import {Alert, DeviceEventEmitter, Platform} from 'react-native';
 import {
     Navigation,
     Options,
@@ -7,7 +7,7 @@ import {
     ScreenPoppedEvent,
 } from 'react-native-navigation';
 
-import {Screens} from '@app/constants';
+import {Events, Screens} from '@app/constants';
 import {formatLog, logInfo} from '@app/utils';
 
 import {bottomSheetModalOptions, defaultOptions} from './default.options';
@@ -304,6 +304,11 @@ export async function bottomSheet({
         },
         bottomSheetModalOptions()
     );
+}
+
+export async function dismissBottomSheet(alternativeScreen: BaseScreens = Screens.BOTTOM_SHEET) {
+    DeviceEventEmitter.emit(Events.CLOSE_BOTTOM_SHEET);
+    await NavigationHandler.waitUntilScreensIsRemoved(alternativeScreen);
 }
 
 export async function dismissModalIfShowing(options?: Options & {componentId: BaseScreens}) {

@@ -12,6 +12,7 @@ import {showLanguageOptionsBottomSheet} from './advanced';
 import type {BaseScreens} from '@typings/screens/navigation';
 
 import DarkModeIcon from '@assets/svg/dark_mode.svg';
+import {useUserLocale} from '@app/context/locale';
 
 const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
     container: {
@@ -44,12 +45,16 @@ export interface SettingsScreenProps {
 
 export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
     const intl = useIntl();
+    const {formatMessage} = intl;
 
     const {theme, updateTheme} = useTheme();
+    const {locale, updateLocale} = useUserLocale();
 
     const styles = getStyleSheet(theme);
 
     const [isEnabled, setIsEnabled] = useState(theme.type === 'dark');
+
+    const [language, setLanguage] = useState(locale);
 
     const useChangeThemeMode = useMemoizedCallback(() => {
         if (theme.type === 'dark') {
@@ -62,8 +67,17 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
     }, [isEnabled, theme.type, updateTheme]);
 
     const openLanguageBottomSelect = useMemoizedCallback(() => {
-        showLanguageOptionsBottomSheet({theme, title: '', intl});
-    }, [intl, theme]);
+        showLanguageOptionsBottomSheet({
+            theme,
+            title: '',
+            intl,
+            langSelected: locale,
+            onSelectedLanguage(lang) {
+                updateLocale(lang);
+                setLanguage(lang);
+            },
+        });
+    }, [intl, locale, theme, updateLocale]);
 
     return (
         <View style={styles.container}>
@@ -84,7 +98,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = () => {
                 optionLabelTextStyle={styles.labelOptionStyle}
                 optionDescriptionTextStyle={styles.descriptionOptionStyle}
                 label="Language"
-                description="English"
+                description={formatMessage({id: `common.language.${language}`})}
                 selected={isEnabled}
                 type="arrow"
             />

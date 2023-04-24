@@ -1,11 +1,14 @@
 import React from 'react';
 import {IntlShape} from 'react-intl';
 import {FlatList, Text, View} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import {BlankSpacer} from '@app/components/alias';
 import languages from '@app/localization/languages';
-import {bottomSheet} from '@app/navigation/navigation';
+import {bottomSheet, dismissBottomSheet} from '@app/navigation/navigation';
 import {makeStyleSheetFromTheme} from '@app/utils';
+
+import CheckIcon from '@assets/svg/check.svg';
 
 const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
     container: {
@@ -17,7 +20,10 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
         textAlign: 'center',
     },
     item: {
+        flexDirection: 'row',
         marginBottom: 12,
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     languageItem: {
         fontSize: 14,
@@ -27,20 +33,32 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
 export interface LanguageBottomSelectedProps {
     title: string;
     theme: Theme;
+    langSelected: string;
+    onSelectedLanguage: (lang: string) => void;
     intl: IntlShape;
 }
 
-export const showLanguageOptionsBottomSheet = ({theme, intl}: LanguageBottomSelectedProps) => {
+export const showLanguageOptionsBottomSheet = ({
+    theme,
+    intl,
+    langSelected,
+    onSelectedLanguage,
+}: LanguageBottomSelectedProps) => {
     const {formatMessage} = intl;
 
     const styles = getStyleSheet(theme);
+    const onUpdateLanguage = (lang: string) => {
+        onSelectedLanguage(lang);
+        dismissBottomSheet();
+    };
 
     const renderItem = ({item}: {item: string}) => (
-        <View style={styles.item}>
+        <TouchableOpacity style={styles.item} onPress={() => onUpdateLanguage(item)}>
             <Text style={styles.languageItem}>
                 {formatMessage({id: `common.language.${item}`})}
             </Text>
-        </View>
+            {langSelected === item && <CheckIcon width={24} height={24} stroke={theme.primary} />}
+        </TouchableOpacity>
     );
 
     const renderContent = () => (
