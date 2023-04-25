@@ -1,4 +1,9 @@
-import {StyleSheet} from 'react-native';
+import merge from 'deepmerge';
+import {StatusBar, StyleSheet} from 'react-native';
+import {Options} from 'react-native-navigation';
+
+// eslint-disable-next-line import/no-cycle
+import {mergeNavigationOptions} from '@utils/navigation';
 
 import {NamedStyles} from '@typings/utils/styles';
 
@@ -64,4 +69,36 @@ export function changeOpacity(oldColor: string, opacity: number): string {
     const {red, green, blue, alpha} = getComponents(oldColor);
 
     return `rgba(${red},${green},${blue},${alpha * opacity})`;
+}
+
+export function setNavigatorStyles(
+    componentId: string,
+    theme: Theme,
+    additionalOptions: Options = {},
+    statusBarColor?: string
+) {
+    const isDark = theme.type === 'dark';
+
+    const options: Options = {
+        topBar: {
+            title: {
+                color: theme.topBarHeaderTextColor,
+            },
+            background: {
+                color: theme.topBarBackground,
+            },
+            leftButtonColor: theme.background,
+            rightButtonColor: theme.background,
+        },
+        statusBar: {
+            backgroundColor: theme.primary,
+            style: isDark ? 'light' : 'dark',
+        },
+    };
+
+    StatusBar.setBarStyle(isDark ? 'light-content' : 'dark-content');
+
+    const mergeOptions = merge(options, additionalOptions);
+
+    mergeNavigationOptions(componentId, mergeOptions);
 }

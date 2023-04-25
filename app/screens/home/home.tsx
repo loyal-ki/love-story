@@ -40,12 +40,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({componentId}) => {
             theme={{
                 dark: false,
                 colors: {
-                    primary: '#3f4350',
+                    primary: theme.primary,
                     background: 'transparent',
-                    card: '#ffffff',
-                    text: '#3f4350',
-                    border: 'white',
-                    notification: '#7ff0f0',
+                    card: theme.primary,
+                    text: theme.background,
+                    border: theme.background,
+                    notification: theme.background,
                 },
             }}>
             <Tab.Navigator

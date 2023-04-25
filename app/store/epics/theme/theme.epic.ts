@@ -1,10 +1,11 @@
 import {Epic, ActionsObservable} from 'redux-observable';
 import {defer} from 'rxjs';
-import {map, switchMap, filter} from 'rxjs/operators';
+import {map, switchMap, filter, tap} from 'rxjs/operators';
 import {isActionOf} from 'typesafe-actions';
 
 import {Themes} from '@app/constants/themes';
 import {DatabaseLocal} from '@app/database';
+import { updateThemeTopBarNavigation } from '@app/navigation/navigation';
 import {IThemeActionType} from '@app/store/actions/actions.types';
 import {themeActions} from '@app/store/actions/theme/theme.action';
 
@@ -31,7 +32,11 @@ const requestSetThemeEpic: Epic<IThemeActionType, IThemeActionType, ReduxAppStat
         switchMap(action => {
             return defer(() =>
                 DatabaseLocal.preferencesRepository().setTheme(action.payload.theme)
-            ).pipe(map(_ => themeActions.setThemeToDbSuccess()));
+            ).pipe(map(_ => themeActions.setThemeToDbSuccess()),tap(
+                async _ => {
+                   await updateThemeTopBarNavigation();
+                }
+            ));
         })
     );
 };

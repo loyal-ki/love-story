@@ -19,7 +19,7 @@ export const useViewModel = () => {
         dispatch(settingsActions.setInit(locale, theme.type === 'dark'));
     });
 
-    const useChangeThemeMode = useMemoizedCallback(() => {
+    const useChangeThemeMode = useMemoizedCallback(async () => {
         if (theme.type === 'dark') {
             updateTheme('light');
         } else {

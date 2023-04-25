@@ -7,4 +7,7 @@ type Theme = {
     primary: string;
     text: string;
     error: string;
+    backButton: string;
+    topBarBackground: string;
+    topBarHeaderTextColor: string;
 };

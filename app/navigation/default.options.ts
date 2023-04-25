@@ -1,35 +1,6 @@
 import {Platform} from 'react-native';
 import {Navigation, Options, OptionsModalPresentationStyle} from 'react-native-navigation';
 
-export const defaultOptions: Options = {
-    layout: {
-        componentBackgroundColor: '#FFFFFF',
-    },
-    popGesture: true,
-    sideMenu: {
-        left: {enabled: false},
-        right: {enabled: false},
-    },
-    statusBar: {
-        style: 'light',
-    },
-    topBar: {
-        animate: true,
-        visible: true,
-        backButton: {
-            color: '#371F76',
-            title: '',
-            testID: 'screen.back.button',
-        },
-        background: {
-            color: '#FFFFFF',
-        },
-        title: {
-            color: '#371F76',
-        },
-    },
-};
-
 Navigation.setDefaultOptions({
     animations: {
         setRoot: {
@@ -53,7 +24,7 @@ Navigation.setDefaultOptions({
             enableMenu: false,
         },
         background: {
-            color: '#FFFF00',
+            color: '#FFFFFF',
         },
         subtitle: {
             fontSize: 12,

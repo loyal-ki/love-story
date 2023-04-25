@@ -1,5 +1,5 @@
 import merge from 'deepmerge';
-import {Alert, DeviceEventEmitter, Platform} from 'react-native';
+import {Alert, Appearance, DeviceEventEmitter, Platform} from 'react-native';
 import {
     Navigation,
     Options,
@@ -8,9 +8,12 @@ import {
 } from 'react-native-navigation';
 
 import {Events, Screens} from '@app/constants';
-import {formatLog, logInfo} from '@app/utils';
+import {getDefaultThemeByAppearance} from '@app/context/theme';
+import {DatabaseLocal} from '@app/database';
+import {formatLog, logInfo, setNavigatorStyles} from '@app/utils';
+import {appearanceControlledScreens, mergeNavigationOptions} from '@app/utils/navigation';
 
-import {bottomSheetModalOptions, defaultOptions} from './default.options';
+import {bottomSheetModalOptions} from './default.options';
 import NavigationHandler from './navigation.handler';
 
 import type {NavigationInfo} from './navigation.types';
@@ -77,15 +80,65 @@ export const registerNavigationListeners = () => {
     Navigation.events().registerCommandListener(onCommandListener);
 };
 
-export const onNavigateToInit = () => {
+export async function getThemeFromStorage(): Promise<Theme> {
+    const theme = await DatabaseLocal.preferencesRepository().getTheme();
+    return theme || getDefaultThemeByAppearance();
+}
+
+Appearance.addChangeListener(async () => {
+    const theme = await getThemeFromStorage();
+    const screens = NavigationHandler.getScreensInStack();
+
+    if (screens.includes(Screens.INIT)) {
+        // eslint-disable-next-line no-restricted-syntax
+        for (const screen of screens) {
+            if (appearanceControlledScreens.has(screen)) {
+                Navigation.updateProps(screen, {theme});
+                setNavigatorStyles(screen, theme, {}, theme.background);
+            }
+        }
+    }
+});
+
+export const onNavigateToInit = async () => {
+    const theme = await getThemeFromStorage();
+
     // set init-screen is default (root) when launch app
+    const defaultOptionsFromTheme: Options = {
+        layout: {
+            componentBackgroundColor: theme.background,
+        },
+        popGesture: true,
+        sideMenu: {
+            left: {enabled: false},
+            right: {enabled: false},
+        },
+        statusBar: {
+            style: theme.type === 'dark' ? 'dark' : 'light',
+        },
+        topBar: {
+            animate: true,
+            visible: true,
+            backButton: {
+                color: theme.backButton,
+                title: '',
+            },
+            background: {
+                color: theme.topBarBackground,
+            },
+            title: {
+                color: theme.topBarHeaderTextColor,
+            },
+        },
+    };
+
     const stack = {
         children: [
             {
                 component: {
                     id: Screens.INIT,
                     name: Screens.INIT,
-                    options: defaultOptions,
+                    options: defaultOptionsFromTheme,
                 },
             },
         ],
@@ -119,7 +172,7 @@ function isScreenRegistered(screen: BaseScreens) {
 /* //////////////////////////////////////////////////////////////
                     NAVIGATION COMMAND PUSH
   ////////////////////////////////////////////////////////////// */
-export const onNavigationToScreen = ({screen, params = {}, options = {}}: NavigationInfo) => {
+export const onNavigationToScreen = async ({screen, params = {}, options = {}}: NavigationInfo) => {
     if (!isScreenRegistered(screen)) {
         return '';
     }
@@ -130,12 +183,42 @@ export const onNavigationToScreen = ({screen, params = {}, options = {}}: Naviga
         logInfo(`● [PUSH] TO SCREEN: ${componentId}\n ● [PARAMS]\n${formatLog(params)}`);
     }
 
+    const theme = await getThemeFromStorage();
+
+    const defaultOptionsFromTheme: Options = {
+        layout: {
+            componentBackgroundColor: theme.background,
+        },
+        popGesture: true,
+        sideMenu: {
+            left: {enabled: false},
+            right: {enabled: false},
+        },
+        statusBar: {
+            style: 'light',
+        },
+        topBar: {
+            animate: true,
+            visible: true,
+            backButton: {
+                color: theme.backButton,
+                title: '',
+            },
+            background: {
+                color: theme.topBarBackground,
+            },
+            title: {
+                color: theme.topBarHeaderTextColor,
+            },
+        },
+    };
+
     return Navigation.push(componentId, {
         component: {
             id: screen,
             name: screen,
             passProps: params,
-            options: merge(defaultOptions, options),
+            options: merge(defaultOptionsFromTheme, options),
         },
     });
 };
@@ -365,7 +448,7 @@ export async function dismissOverlay(componentId: BaseScreens) {
     }
 }
 
-export async function dismissAllModals(componentId: BaseScreens) {
+export async function dismissAllModals() {
     if (!NavigationHandler.hasModalsOpened()) {
         return;
     }
@@ -380,4 +463,73 @@ export async function dismissAllModals(componentId: BaseScreens) {
         // RNN returns a promise rejection if there are no modals to
         // dismiss. We'll do nothing in this case.
     }
+}
+
+export async function dismissAllOverlays() {
+    try {
+        await Navigation.dismissAllOverlays();
+    } catch {
+        // do nothing
+    }
+}
+
+export async function updateThemeTopBarNavigation() {
+    const screens = NavigationHandler.getScreensInStack();
+    const theme = await getThemeFromStorage();
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const screen of screens) {
+        if (appearanceControlledScreens.has(screen)) {
+            try {
+                const defaultOptionsFromTheme: Options = {
+                    layout: {
+                        componentBackgroundColor: theme.background,
+                    },
+                    popGesture: true,
+                    sideMenu: {
+                        left: {enabled: false},
+                        right: {enabled: false},
+                    },
+                    statusBar: {
+                        style: theme.type === 'dark' ? 'dark' : 'light',
+                    },
+                    topBar: {
+                        animate: true,
+                        visible: true,
+                        backButton: {
+                            color: theme.backButton,
+                            title: '',
+                        },
+                        background: {
+                            color: theme.topBarBackground,
+                        },
+                        title: {
+                            color: theme.topBarHeaderTextColor,
+                        },
+                    },
+                };
+
+                mergeNavigationOptions(screen, defaultOptionsFromTheme);
+            } catch (error) {
+                // RNN update theme mode all screen by id
+            }
+        }
+    }
+}
+
+export async function popToRootNavigation() {
+    const componentId = NavigationHandler.getVisibleScreen();
+
+    try {
+        await Navigation.popToRoot(componentId);
+    } catch (error) {
+        // RNN returns a promise rejection if there are no screens
+        // atop the root screen to pop. We'll do nothing in this case.
+    }
+}
+
+export async function dismissAllModalsAndPopToRoot() {
+    await dismissAllModals();
+    await dismissAllOverlays();
+    await popToRootNavigation();
 }

@@ -25,7 +25,7 @@ type Props = {
 
 const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
     container: {
-        backgroundColor: '#ffffff',
+        backgroundColor: theme.background,
         alignContent: 'center',
         flexDirection: 'row',
         height: BOTTOM_TAB_HEIGHT,
@@ -37,10 +37,10 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
         justifyContent: 'center',
     },
     separator: {
-        borderTopColor: changeOpacity('##3f4350', 0.08),
+        borderTopColor: changeOpacity(theme.primary, 0.08),
     },
     slider: {
-        backgroundColor: '#1c58d9',
+        backgroundColor: theme.primary,
         borderBottomLeftRadius: 4,
         borderBottomRightRadius: 4,
         width: 56,
@@ -64,7 +64,7 @@ const Story = ({isFocused, theme}: Props) => {
             <StoryIcon
                 width={BOTTOM_TAB_ICON_SIZE}
                 height={BOTTOM_TAB_ICON_SIZE}
-                stroke={isFocused ? theme.primary : changeOpacity('#3f4350', 0.48)}
+                stroke={isFocused ? theme.primary : changeOpacity(theme.text, 0.48)}
             />
         </View>
     );
@@ -76,7 +76,7 @@ const Settings = ({isFocused, theme}: Props) => {
             <SettingIcon
                 width={BOTTOM_TAB_ICON_SIZE}
                 height={BOTTOM_TAB_ICON_SIZE}
-                stroke={isFocused ? theme.primary : changeOpacity('#3f4350', 0.48)}
+                stroke={isFocused ? theme.primary : changeOpacity(theme.text, 0.48)}
             />
         </View>
     );

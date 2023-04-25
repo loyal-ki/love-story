@@ -47,7 +47,7 @@ export const ThemeProvider = ({children}: Props) => {
     const theme = useSelector(selectThemeFromStore);
 
     const reduxDispatch = useDispatch();
-    
+
     const initAppTheme = useMemoizedCallback(() => {
         reduxDispatch(themeActions.fetchThemeFromDbRequest());
     }, [reduxDispatch]);

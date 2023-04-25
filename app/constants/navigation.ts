@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-cycle
 import {keyMirror} from '@app/utils';
 
 const Navigation = keyMirror({
