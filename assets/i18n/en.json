@@ -5,7 +5,9 @@
     "common.action_cancel": "Cancel",
     "common.general_error": "An error occurred. We will record and fix this issue soon.",
     "common.notification": "Notification",
-    "common.theme_mode": "Dark mode",
+    "common.theme_mode": "Theme mode",
+    "common.theme_mode_light": "Light mode",
+    "common.theme_mode_dark": "Dark mode",
     "common.language": "Language",
     "common.language.en": "English",
     "common.language.vi": "Vietnamese",
@@ -13,5 +15,7 @@
     "home.input_email_title": "Email",
     "home.input_email_placeholder": "Input your email",
     "home.input_email_empty": "Please input your email.",
-    "home.floating_input_email_message_error_invalid_email": "Wrong email format."
+    "home.floating_input_email_message_error_invalid_email": "Wrong email format.",
+    "settings.page_title": "Setting",
+    "story.page_title": "Story"
 }

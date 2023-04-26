@@ -106,7 +106,7 @@ export const onNavigateToInit = async () => {
     // set init-screen is default (root) when launch app
     const defaultOptionsFromTheme: Options = {
         layout: {
-            componentBackgroundColor: theme.background,
+            componentBackgroundColor: theme.primary,
         },
         popGesture: true,
         sideMenu: {
@@ -187,7 +187,7 @@ export const onNavigationToScreen = async ({screen, params = {}, options = {}}: 
 
     const defaultOptionsFromTheme: Options = {
         layout: {
-            componentBackgroundColor: theme.background,
+            componentBackgroundColor: theme.primary,
         },
         popGesture: true,
         sideMenu: {
@@ -195,7 +195,8 @@ export const onNavigationToScreen = async ({screen, params = {}, options = {}}: 
             right: {enabled: false},
         },
         statusBar: {
-            style: 'light',
+            style: theme.type === 'dark' ? 'dark' : 'light',
+            backgroundColor: theme.primary,
         },
         topBar: {
             animate: true,
@@ -217,6 +218,61 @@ export const onNavigationToScreen = async ({screen, params = {}, options = {}}: 
         component: {
             id: screen,
             name: screen,
+            passProps: params,
+            options: merge(defaultOptionsFromTheme, options),
+        },
+    });
+};
+
+/* //////////////////////////////////////////////////////////////
+                    NAVIGATION COMMAND PUSH
+  ////////////////////////////////////////////////////////////// */
+export const onNavigationToHomeScreen = async ({
+    screen,
+    params = {},
+    options = {},
+}: NavigationInfo) => {
+    const componentId = NavigationHandler.getVisibleScreen();
+
+    if (__DEV__ && env.LOG_REQUESTS) {
+        logInfo(`● [PUSH] TO SCREEN: ${componentId}\n ● [PARAMS]\n${formatLog(params)}`);
+    }
+
+    const theme = await getThemeFromStorage();
+
+    const defaultOptionsFromTheme: Options = {
+        layout: {
+            componentBackgroundColor: theme.primary,
+        },
+        popGesture: true,
+        sideMenu: {
+            left: {enabled: false},
+            right: {enabled: false},
+        },
+        statusBar: {
+            style: theme.type === 'dark' ? 'dark' : 'light',
+            backgroundColor: theme.primary,
+        },
+        topBar: {
+            visible: false,
+            height: 0,
+            backButton: {
+                visible: false,
+                color: theme.backButton,
+            },
+            background: {
+                color: theme.topBarBackground,
+            },
+            title: {
+                color: theme.topBarHeaderTextColor,
+            },
+        },
+    };
+
+    return Navigation.push(componentId, {
+        component: {
+            id: Screens.HOME,
+            name: Screens.HOME,
             passProps: params,
             options: merge(defaultOptionsFromTheme, options),
         },
@@ -483,7 +539,7 @@ export async function updateThemeTopBarNavigation() {
             try {
                 const defaultOptionsFromTheme: Options = {
                     layout: {
-                        componentBackgroundColor: theme.background,
+                        componentBackgroundColor: theme.primary,
                     },
                     popGesture: true,
                     sideMenu: {
@@ -492,10 +548,9 @@ export async function updateThemeTopBarNavigation() {
                     },
                     statusBar: {
                         style: theme.type === 'dark' ? 'dark' : 'light',
+                        backgroundColor: theme.primary,
                     },
                     topBar: {
-                        animate: true,
-                        visible: true,
                         backButton: {
                             color: theme.backButton,
                             title: '',

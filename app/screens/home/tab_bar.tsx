@@ -25,7 +25,7 @@ type Props = {
 
 const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
     container: {
-        backgroundColor: theme.background,
+        backgroundColor: theme.primary,
         alignContent: 'center',
         flexDirection: 'row',
         height: BOTTOM_TAB_HEIGHT,
@@ -64,7 +64,7 @@ const Story = ({isFocused, theme}: Props) => {
             <StoryIcon
                 width={BOTTOM_TAB_ICON_SIZE}
                 height={BOTTOM_TAB_ICON_SIZE}
-                stroke={isFocused ? theme.primary : changeOpacity(theme.text, 0.48)}
+                stroke={isFocused ? theme.selectedIcon : changeOpacity(theme.unSelectedIcon, 0.48)}
             />
         </View>
     );
@@ -76,7 +76,7 @@ const Settings = ({isFocused, theme}: Props) => {
             <SettingIcon
                 width={BOTTOM_TAB_ICON_SIZE}
                 height={BOTTOM_TAB_ICON_SIZE}
-                stroke={isFocused ? theme.primary : changeOpacity(theme.text, 0.48)}
+                stroke={isFocused ? theme.selectedIcon : changeOpacity(theme.unSelectedIcon, 0.48)}
             />
         </View>
     );
@@ -135,12 +135,12 @@ const TabBar = ({state, descriptors, navigation, theme}: BottomTabBarProps & {th
     return (
         <Animated.View style={[style.container, style.separator, animatedStyle]}>
             <Shadow
-                startColor="rgba(61, 60, 64, 0.08)"
+                startColor={changeOpacity(theme.indicator, 0.2)}
                 distance={4}
                 offset={shadowOffset}
                 style={{
                     position: 'absolute',
-                    borderRadius: 6,
+                    borderRadius: 2,
                     width,
                 }}
                 sides={shadowSides}

@@ -10,4 +10,10 @@ type Theme = {
     backButton: string;
     topBarBackground: string;
     topBarHeaderTextColor: string;
+    arrow: string;
+    indicator: string;
+    selectedIcon: string;
+    unSelectedIcon: string;
+    unSelectedText: string;
+    switchCircle: string;
 };

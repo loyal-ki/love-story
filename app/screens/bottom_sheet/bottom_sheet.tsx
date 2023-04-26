@@ -21,6 +21,8 @@ import {useAndroidHardwareBackHandler} from '@app/hooks';
 import useNavButtonPressed from '@app/hooks/navigation_button_pressed';
 import {hapticFeedback, makeStyleSheetFromTheme} from '@app/utils';
 
+import Indicator from './indicator';
+
 import {dismissModalIfShowing} from '@navigation/navigation';
 import {BaseScreens} from '@typings/screens/navigation';
 
@@ -47,21 +49,24 @@ export const animatedConfig: Omit<WithSpringConfig, 'velocity'> = {
 export const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
     return {
         bottomSheet: {
-            borderTopStartRadius: 24,
-            borderTopEndRadius: 24,
+            backgroundColor: theme.background,
+            borderTopStartRadius: 36,
+            borderTopEndRadius: 36,
             shadowOffset: {
                 width: 0,
                 height: 8,
             },
             shadowOpacity: 0.12,
-            shadowRadius: 24,
+            shadowRadius: 36,
             shadowColor: '#000',
-            elevation: 24,
+            elevation: 36,
         },
-        bottomSheetBackground: {},
+        bottomSheetBackground: {
+            backgroundColor: theme.background,
+        },
         content: {
             flex: 1,
-            paddingHorizontal: 20,
+            paddingHorizontal: 32,
         },
         contentTablet: {},
         separator: {
@@ -91,7 +96,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
         interaction.current = InteractionManager.createInteractionHandle();
     }, []);
 
-    const bottomSheetBackgroundStyle = useMemo(() => [], []);
+    const bottomSheetBackgroundStyle = useMemo(() => [styles.bottomSheetBackground], [styles]);
 
     const close = useCallback(() => {
         dismissModalIfShowing({componentId});
@@ -185,7 +190,8 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
             onAnimate={handleAnimationStart}
             onChange={handleChange}
             animationConfigs={animatedConfig}
-            // handleComponent={Indicator}
+            handleComponent={Indicator}
+            style={styles.bottomSheet}
             backgroundStyle={bottomSheetBackgroundStyle}
             footerComponent={footerComponent}
             keyboardBehavior="extend"

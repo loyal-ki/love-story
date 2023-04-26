@@ -6,6 +6,8 @@
     "common.general_error": "Đã có lỗi xảy ra trong quá trình xử lý. Chúng tôi sẽ ghi nhận và sẽ khắc phục sớm.",
     "common.notification": "Thông báo",
     "common.theme_mode": "Chủ đề",
+    "common.theme_mode_light": "Chủ đề sáng",
+    "common.theme_mode_dark": "Chủ đề tối",
     "common.language": "Ngôn ngữ",
     "common.language.en": "Tiếng Anh",
     "common.language.vi": "Tiếng Việt",
@@ -13,5 +15,7 @@
     "home.input_email_title": "Email",
     "home.input_email_placeholder": "Hãy nhập email",
     "home.input_email_empty": "Vui lòng nhập số điện thoại liên hệ.",
-    "home.floating_input_email_message_error_invalid_email": "Email không đúng định dạng."
+    "home.floating_input_email_message_error_invalid_email": "Email không đúng định dạng.",
+    "settings.page_title": "Cài đặt",
+    "story.page_title": "Câu chuyên"
 }

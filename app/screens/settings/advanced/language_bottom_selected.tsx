@@ -15,7 +15,8 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
         flex: 1,
     },
     title: {
-        fontSize: 16,
+        color: theme.text,
+        fontSize: 18,
         textAlign: 'center',
     },
     item: {
@@ -25,7 +26,8 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
         alignItems: 'center',
     },
     languageItem: {
-        fontSize: 14,
+        color: theme.text,
+        fontSize: 16,
     },
 }));
 
@@ -53,7 +55,13 @@ export const showLanguageOptionsBottomSheet = ({
 
     const renderItem = ({item}: {item: string}) => (
         <TouchableOpacity style={styles.item} onPress={() => onUpdateLanguage(item)}>
-            <Text style={styles.languageItem}>
+            <Text
+                style={[
+                    styles.languageItem,
+                    langSelected === item
+                        ? {color: theme.primary, fontWeight: '600'}
+                        : {color: theme.unSelectedText, fontWeight: '300'},
+                ]}>
                 {formatMessage({id: `common.language.${item}`})}
             </Text>
             {langSelected === item && <CheckIcon width={24} height={24} stroke={theme.primary} />}
@@ -63,7 +71,7 @@ export const showLanguageOptionsBottomSheet = ({
     const renderContent = () => (
         <View style={styles.container}>
             <BlankSpacer height={4} />
-            <Text style={styles.title}>Language</Text>
+            <Text style={styles.title}>{formatMessage({id: 'common.language'})}</Text>
             <BlankSpacer height={10} />
             <FlatList
                 keyExtractor={(item, index) => `${index}-${item}`}

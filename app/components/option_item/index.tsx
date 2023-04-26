@@ -100,7 +100,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
         arrowContainer: {
             width: 46,
             height: 46,
-            backgroundColor: '#EAE9E9',
+            backgroundColor: theme.primary,
             borderRadius: 8,
             alignItems: 'center',
             justifyContent: 'center',
@@ -194,14 +194,14 @@ const OptionItem = ({
             <Switch
                 onValueChange={action}
                 value={selected}
-                backgroundActive={theme.primary}
-                backgroundInactive="#EAE9E9"
-                circleBorderActiveColor="#FFFFFF"
-                circleBorderInactiveColor="#FFFFFF"
+                backgroundActive={theme.switchCircle}
+                backgroundInactive={theme.switchCircle}
+                circleBorderActiveColor={theme.switchCircle}
+                circleBorderInactiveColor={theme.switchCircle}
                 renderActiveText={false}
                 renderInActiveText={false}
-                circleActiveColor="#FFFFFF"
-                circleInActiveColor="#FFFFFF"
+                circleActiveColor={theme.background}
+                circleInActiveColor={theme.primary}
                 circleSize={24}
                 switchLeftPx={2.2}
                 switchRightPx={2.2}
@@ -214,7 +214,7 @@ const OptionItem = ({
         actionComponent = (
             <View style={styles.arrowContainer}>
                 <ChevronRight
-                    fill={changeOpacity(theme.primary, 0.72)}
+                    fill={theme.arrow}
                     height={28}
                     width={28}
                     style={arrowStyle}

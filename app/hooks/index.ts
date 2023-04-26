@@ -9,3 +9,4 @@ export * from './useMount';
 export * from './useConst';
 export * from './useIntervalCallback';
 export * from './useAndroidHardwareBackHandler';
+export * from './freeze';

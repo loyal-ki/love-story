@@ -5,7 +5,7 @@ import {Screens} from '@app/constants';
 
 import type {BaseScreens} from '@typings/screens/navigation';
 
-import {onNavigationToScreen} from '@navigation/navigation';
+import {onNavigationToHomeScreen, onNavigationToScreen} from '@navigation/navigation';
 
 const styles = StyleSheet.create({
     container: {
@@ -24,7 +24,7 @@ export const InitScreen: React.FC<IntroScreenProps> = ({componentId}) => {
             <Button
                 title="Navigation to Home"
                 onPress={async () => {
-                    await onNavigationToScreen({screen: Screens.HOME});
+                    await onNavigationToHomeScreen({screen: Screens.HOME});
                 }}
             />
             <Button
