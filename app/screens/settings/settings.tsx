@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {ScrollView, View} from 'react-native';
+import {View} from 'react-native';
 import {Edge, SafeAreaView} from 'react-native-safe-area-context';
 
 import {BlankSpacer} from '@app/components/alias';
@@ -20,7 +20,7 @@ import NotificationIcon from '@assets/svg/notification.svg';
 
 const kIconColor = ['#7F669D', '#ECA869', '#FFE15D'];
 
-const edges: Edge[] = ['left', 'right'];
+const edges: Edge[] = ['left', 'right', 'bottom'];
 
 const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
     flex: {
@@ -65,8 +65,8 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({componentId}) => 
 
     const containerStyle = useMemo(() => {
         const marginTop = defaultHeight;
-        return {flex: 1, marginTop};
-    }, [defaultHeight]);
+        return {flex: 1, marginTop, backgroundColor: viewModel.theme.background};
+    }, [defaultHeight, viewModel.theme.background]);
 
     const contextStyle = useMemo(
         () => ({
@@ -84,7 +84,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({componentId}) => 
         <FreezeScreen>
             <SafeAreaView edges={edges} style={styles.flex}>
                 <NavigationHeader
-                    showBackButton={false}
+                    showBackButton
                     // onBackPress={onBackPress}
                     title={formatMessage({id: 'settings.page_title'}).toUpperCase()}
                     hasSearch={false}
@@ -93,53 +93,51 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({componentId}) => 
                     <RoundedHeaderContext />
                 </View>
                 <View style={containerStyle}>
-                    <ScrollView style={styles.container}>
-                        <BlankSpacer height={24} />
-                        <SettingOption
-                            iconContainerStyle={[
-                                styles.iconContainerStyle,
-                                {backgroundColor: kIconColor[0]},
-                            ]}
-                            iconLeft={<DarkModeIcon width={20} height={20} fill="#FFFFFF" />}
-                            action={viewModel.useChangeThemeMode}
-                            optionLabelTextStyle={styles.labelOptionStyle}
-                            optionDescriptionTextStyle={styles.descriptionOptionStyle}
-                            label={formatMessage({id: 'common.theme_mode'})}
-                            description={formatMessage({
-                                id: `common.theme_mode_${viewModel.theme.type}`,
-                            })}
-                            selected={viewModel.state.isDarkModeEnable}
-                            type="toggle"
-                        />
-                        <BlankSpacer height={20} />
-                        <SettingOption
-                            action={viewModel.openLanguageBottomSelect}
-                            iconContainerStyle={[
-                                styles.iconContainerStyle,
-                                {backgroundColor: kIconColor[1]},
-                            ]}
-                            iconLeft={<LanguageIcon width={20} height={20} fill="#FFFFFF" />}
-                            optionLabelTextStyle={styles.labelOptionStyle}
-                            optionDescriptionTextStyle={styles.descriptionOptionStyle}
-                            label={formatMessage({id: 'common.language'})}
-                            description={formatMessage({
-                                id: `common.language.${viewModel.state.settingLocale}`,
-                            })}
-                            type="arrow"
-                        />
-                        <BlankSpacer height={24} />
-                        <SettingOption
-                            iconContainerStyle={[
-                                styles.iconContainerStyle,
-                                {backgroundColor: kIconColor[2]},
-                            ]}
-                            iconLeft={<NotificationIcon width={20} height={20} fill="#FFFFFF" />}
-                            optionLabelTextStyle={styles.labelOptionStyle}
-                            optionDescriptionTextStyle={styles.descriptionOptionStyle}
-                            label={formatMessage({id: 'common.notification'})}
-                            type="arrow"
-                        />
-                    </ScrollView>
+                    <BlankSpacer height={24} />
+                    <SettingOption
+                        iconContainerStyle={[
+                            styles.iconContainerStyle,
+                            {backgroundColor: kIconColor[0]},
+                        ]}
+                        iconLeft={<DarkModeIcon width={20} height={20} fill="#FFFFFF" />}
+                        action={viewModel.useChangeThemeMode}
+                        optionLabelTextStyle={styles.labelOptionStyle}
+                        optionDescriptionTextStyle={styles.descriptionOptionStyle}
+                        label={formatMessage({id: 'common.theme_mode'})}
+                        description={formatMessage({
+                            id: `common.theme_mode_${viewModel.theme.type}`,
+                        })}
+                        selected={viewModel.state.isDarkModeEnable}
+                        type="toggle"
+                    />
+                    <BlankSpacer height={20} />
+                    <SettingOption
+                        action={viewModel.openLanguageBottomSelect}
+                        iconContainerStyle={[
+                            styles.iconContainerStyle,
+                            {backgroundColor: kIconColor[1]},
+                        ]}
+                        iconLeft={<LanguageIcon width={20} height={20} fill="#FFFFFF" />}
+                        optionLabelTextStyle={styles.labelOptionStyle}
+                        optionDescriptionTextStyle={styles.descriptionOptionStyle}
+                        label={formatMessage({id: 'common.language'})}
+                        description={formatMessage({
+                            id: `common.language.${viewModel.state.settingLocale}`,
+                        })}
+                        type="arrow"
+                    />
+                    <BlankSpacer height={24} />
+                    <SettingOption
+                        iconContainerStyle={[
+                            styles.iconContainerStyle,
+                            {backgroundColor: kIconColor[2]},
+                        ]}
+                        iconLeft={<NotificationIcon width={20} height={20} fill="#FFFFFF" />}
+                        optionLabelTextStyle={styles.labelOptionStyle}
+                        optionDescriptionTextStyle={styles.descriptionOptionStyle}
+                        label={formatMessage({id: 'common.notification'})}
+                        type="arrow"
+                    />
                 </View>
             </SafeAreaView>
         </FreezeScreen>

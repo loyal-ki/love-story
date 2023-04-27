@@ -12,8 +12,9 @@ import {changeOpacity, makeStyleSheetFromTheme} from '@app/utils';
 
 import type {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 
+import StoryIcon from '@assets/svg/fileboard_love.svg';
 import SettingIcon from '@assets/svg/setting.svg';
-import StoryIcon from '@assets/svg/story.svg';
+import ChatIcon from '@assets/svg/story.svg';
 
 const shadowSides = {top: true, bottom: false, end: false, start: false};
 const shadowOffset: [x: number | string, y: number | string] = [0, -0.5];
@@ -38,12 +39,13 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
     },
     separator: {
         borderTopColor: changeOpacity(theme.primary, 0.08),
+        borderTopWidth: 0.5,
     },
     slider: {
         backgroundColor: theme.primary,
         borderBottomLeftRadius: 4,
         borderBottomRightRadius: 4,
-        width: 56,
+        width: 48,
         height: 4,
     },
     sliderContainer: {
@@ -62,6 +64,18 @@ const Story = ({isFocused, theme}: Props) => {
     return (
         <View>
             <StoryIcon
+                width={BOTTOM_TAB_ICON_SIZE}
+                height={BOTTOM_TAB_ICON_SIZE}
+                fill={isFocused ? theme.selectedIcon : changeOpacity(theme.unSelectedIcon, 0.48)}
+            />
+        </View>
+    );
+};
+
+const Chat = ({isFocused, theme}: Props) => {
+    return (
+        <View>
+            <ChatIcon
                 width={BOTTOM_TAB_ICON_SIZE}
                 height={BOTTOM_TAB_ICON_SIZE}
                 stroke={isFocused ? theme.selectedIcon : changeOpacity(theme.unSelectedIcon, 0.48)}
@@ -85,6 +99,7 @@ const Settings = ({isFocused, theme}: Props) => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const TabComponents: Record<string, any> = {
     Story,
+    Chat,
     Settings,
 };
 
@@ -126,7 +141,7 @@ const TabBar = ({state, descriptors, navigation, theme}: BottomTabBarProps & {th
 
         const height = visible
             ? withTiming(-safeareaInsets.bottom, {duration: 200})
-            : withTiming(52 + safeareaInsets.bottom, {duration: 150});
+            : withTiming(BOTTOM_TAB_HEIGHT + safeareaInsets.bottom, {duration: 150});
         return {
             transform: [{translateY: height}],
         };

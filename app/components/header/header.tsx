@@ -12,8 +12,7 @@ import ArrowLeftIcon from '@assets/svg/chevron_left.svg';
 export type HeaderRightButton = {
     borderless?: boolean;
     buttonType?: 'native' | 'opacity' | 'highlight';
-    color?: string;
-    iconName: string;
+    iconRightComponent?: React.ReactElement;
     onPress: () => void;
     rippleRadius?: number;
     testID?: string;
@@ -193,7 +192,7 @@ const Header = ({
                         type={Platform.select({android: 'native', default: 'opacity'})}
                         hitSlop={hitSlop}>
                         <Animated.View style={styles.leftAction}>
-                            <ArrowLeftIcon stroke={theme.arrow} width={24} height={24} />
+                            <ArrowLeftIcon fill={theme.arrow} width={28} height={28} />
                             {leftComponent}
                         </Animated.View>
                     </TouchableWithFeedback>
@@ -233,7 +232,7 @@ const Header = ({
                 {Boolean(rightButtons?.length) &&
                     rightButtons?.map((r, i) => (
                         <TouchableWithFeedback
-                            key={r.iconName}
+                            key={`key_${r.iconRightComponent}`}
                             borderlessRipple={r.borderless === undefined ? true : r.borderless}
                             hitSlop={rightButtonHitSlop}
                             onPress={r.onPress}
@@ -244,11 +243,7 @@ const Header = ({
                             }
                             style={i > 0 && styles.rightIcon}
                             testID={r.testID}>
-                            {/* <CompassIcon
-                                size={24}
-                                name={r.iconName}
-                                color={r.color || theme.sidebarHeaderTextColor}
-                            /> */}
+                            {r.iconRightComponent && r.iconRightComponent}
                         </TouchableWithFeedback>
                     ))}
             </Animated.View>

@@ -17,5 +17,8 @@
     "home.input_email_empty": "Please input your email.",
     "home.floating_input_email_message_error_invalid_email": "Wrong email format.",
     "settings.page_title": "Setting",
-    "story.page_title": "Story"
+    "story.page_title": "Story",
+    "chat.page_title": "Chat",
+    "message.page_title": "Message",
+    "message.input_text_placeholder": "Your message..."
 }

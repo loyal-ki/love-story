@@ -10,3 +10,4 @@ export * from './useConst';
 export * from './useIntervalCallback';
 export * from './useAndroidHardwareBackHandler';
 export * from './freeze';
+export * from './useKeyBoardShowing';

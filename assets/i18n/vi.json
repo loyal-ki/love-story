@@ -17,5 +17,8 @@
     "home.input_email_empty": "Vui lòng nhập số điện thoại liên hệ.",
     "home.floating_input_email_message_error_invalid_email": "Email không đúng định dạng.",
     "settings.page_title": "Cài đặt",
-    "story.page_title": "Câu chuyên"
+    "story.page_title": "Câu chuyên",
+    "chat.page_title": "Trò chuyện",
+    "message.page_title": "Tin nhắn",
+    "message.input_text_placeholder": "Tin nhắn của bạn..."
 }

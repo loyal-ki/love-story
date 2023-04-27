@@ -5,3 +5,4 @@ export {ExampleSheetScreen} from './bottom_sheet';
 export {AccountScreen} from './account';
 export {StoryScreen} from './story';
 export {SettingsScreen} from './settings';
+export {MessageScreen} from './message';

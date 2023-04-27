@@ -17,6 +17,7 @@ import {
     LoginScreen,
     StoryScreen,
     SettingsScreen,
+    MessageScreen,
 } from '@screens';
 
 /* //////////////////////////////////////////////////////////////
@@ -81,6 +82,9 @@ Navigation.setLazyComponentRegistrator(screenName => {
             break;
         case Screens.STORY:
             screen = withProviderWrapper(StoryScreen);
+            break;
+        case Screens.MESSAGE:
+            screen = withProviderWrapper(MessageScreen);
             break;
         case Screens.EXAMPLE_BOTTOM_SHEET:
             screen = withProviderWrapper(ExampleSheetScreen);
