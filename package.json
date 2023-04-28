@@ -29,6 +29,7 @@
         "preset": "react-native"
     },
     "dependencies": {
+        "@flyerhq/react-native-link-preview": "^1.6.0",
         "@formatjs/intl-datetimeformat": "6.3.1",
         "@formatjs/intl-getcanonicallocales": "2.0.4",
         "@formatjs/intl-locale": "3.0.7",

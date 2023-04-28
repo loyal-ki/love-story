@@ -1,25 +1,26 @@
 import {FlashList} from '@shopify/flash-list';
-import React from 'react';
+import React, {useState} from 'react';
 import {useIntl} from 'react-intl';
 import {
     InputAccessoryView,
     StyleSheet,
-    Text,
     TextInput,
     TouchableOpacity,
     View,
 } from 'react-native';
 import {Edge, SafeAreaView} from 'react-native-safe-area-context';
 
+import {Message} from '@app/components/message/message';
 import {useTheme} from '@app/context/theme';
 import {useMemoizedCallback} from '@app/hooks';
+import {MessageType} from '@app/models/message/message';
+import {messageList} from '@app/models/mock/messages';
+import { user1 } from '@app/models/mock/users';
 import {changeOpacity, makeStyleSheetFromTheme} from '@app/utils';
 
 import type {BaseScreens} from '@typings/screens/navigation';
 
 import SendIcon from '@assets/svg/send.svg';
-
-const DATA = Array.from(Array(100).keys());
 
 const edges: Edge[] = ['left', 'right', 'bottom'];
 
@@ -65,18 +66,26 @@ export const MessageScreen: React.FC<MessageScreenProps> = ({componentId}) => {
     const {theme} = useTheme();
     const styles = getStyleSheet(theme);
 
+    const [messages, setMessages] = useState(messageList as MessageType.DerivedText[]);
+
     const renderListEmptyComponent = useMemoizedCallback(() => <View />, []);
 
     const renderListFooterComponent = useMemoizedCallback(() => <View />, []);
 
     const handleEndReached = useMemoizedCallback(() => {}, []);
 
+    const renderItem = useMemoizedCallback(({item, index}) => {
+
+        // return <Text>{item.text}</Text>;
+        return <Message theme={theme} message={item} currentUser={user1} />;
+    }, [theme]);
+
     return (
         <SafeAreaView style={styles.flex} edges={edges}>
             <View style={styles.container}>
                 <FlashList
-                    data={DATA}
-                    renderItem={({item}) => <Text>{item}</Text>}
+                    data={messages}
+                    renderItem={renderItem}
                     estimatedItemSize={200}
                     ListHeaderComponent={<View />}
                     ListEmptyComponent={renderListEmptyComponent}
@@ -99,6 +108,7 @@ export const MessageScreen: React.FC<MessageScreenProps> = ({componentId}) => {
                             style={styles.input}
                             underlineColorAndroid="transparent"
                             multiline
+                            selectionColor="#FFFFFF"
                             placeholderTextColor={changeOpacity(theme.unSelectedIcon, 0.8)}
                             placeholder={formatMessage({id: 'message.input_text_placeholder'})}
                         />
