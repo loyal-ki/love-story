@@ -6,10 +6,9 @@ import {enableFreeze, enableScreens} from 'react-native-screens';
 
 import {Screens} from '@app/constants';
 import {useTheme} from '@app/context/theme';
+import {ChatScreen} from '@screens/chat';
 import {SettingsScreen} from '@screens/settings';
 import {StoryScreen} from '@screens/story';
-
-import { ChatScreen } from '../chat';
 
 import TabBar from './tab_bar';
 
@@ -54,8 +53,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({componentId}) => {
                 screenOptions={{headerShown: false, unmountOnBlur: false, lazy: true}}
                 backBehavior="none"
                 // eslint-disable-next-line react/no-unstable-nested-components
-                tabBar={(tabProps: BottomTabBarProps) => <TabBar {...tabProps} theme={theme} />}
-                >
+                tabBar={(tabProps: BottomTabBarProps) => <TabBar {...tabProps} theme={theme} />}>
                 <Tab.Screen
                     name={Screens.STORY}
                     component={StoryScreen}

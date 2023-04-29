@@ -1,9 +1,10 @@
 import _ from 'lodash';
 
-import APISender from './base_sender';
+import {GeneralError} from '@app/services/errors/general-error';
+
+import APISender from './base-sender';
 
 import {RequestMessageModel} from '@models/request/request_message';
-import {GeneralError} from '@services/errors/general_error';
 import {AppErrorCode} from '@services/errors/type';
 import {BackendMethodService} from '@typings/services/method';
 

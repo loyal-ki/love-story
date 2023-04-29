@@ -1,7 +1,11 @@
 import React from 'react';
-import {Button, StyleSheet, View} from 'react-native';
+import {useIntl} from 'react-intl';
+import {Button, StyleSheet} from 'react-native';
 
+import {Screen} from '@app/components/screen';
 import {Screens} from '@app/constants';
+import {useTheme} from '@app/context/theme';
+import {useDefaultHeaderHeight} from '@app/hooks';
 
 import type {BaseScreens} from '@typings/screens/navigation';
 
@@ -19,8 +23,18 @@ export interface IntroScreenProps {
 }
 
 export const InitScreen: React.FC<IntroScreenProps> = ({componentId}) => {
+    const intl = useIntl();
+    const {theme, updateTheme} = useTheme();
+    const defaultHeight = useDefaultHeaderHeight();
+    const {formatMessage} = intl;
+
     return (
-        <View style={styles.container}>
+        <Screen
+            title={formatMessage({id: 'chat.page_title'}).toUpperCase()}
+            theme={theme}
+            defaultHeight={defaultHeight}
+            componentId={componentId}
+            showBackButton={false}>
             <Button
                 title="Navigation to Home"
                 onPress={async () => {
@@ -33,6 +47,6 @@ export const InitScreen: React.FC<IntroScreenProps> = ({componentId}) => {
                     await onNavigationToScreen({screen: Screens.LOGIN});
                 }}
             />
-        </View>
+        </Screen>
     );
 };

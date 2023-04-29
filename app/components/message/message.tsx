@@ -7,9 +7,9 @@ import {UserModel} from '@app/models';
 import {MessageType} from '@app/models/message/message';
 import {makeStyleSheetFromTheme} from '@app/utils';
 
-import {MessageIconStatus} from './message_icon_status';
-import {MessageImage} from './message_image';
-import {MessageText} from './message_text';
+import {MessageIconStatus} from './message-icon_status';
+import {MessageImage} from './message-image';
+import {MessageText} from './message-text';
 
 const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) =>
     StyleSheet.create({

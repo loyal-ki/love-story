@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {DeviceEventEmitter, TouchableOpacity, View, useWindowDimensions} from 'react-native';
 import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {Edge, SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {Shadow} from 'react-native-shadow-2';
 
@@ -23,6 +23,7 @@ type Props = {
     isFocused: boolean;
     theme: Theme;
 };
+const edgesBottom: Edge[] = ['bottom'];
 
 const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
     container: {
@@ -134,89 +135,83 @@ const TabBar = ({state, descriptors, navigation, theme}: BottomTabBarProps & {th
         };
     }, [state.index, tabWidth]);
 
-    const animatedStyle = useAnimatedStyle(() => {
-        if (visible === undefined) {
-            return {transform: [{translateY: -safeareaInsets.bottom}]};
-        }
-
-        const height = visible
-            ? withTiming(-safeareaInsets.bottom, {duration: 200})
-            : withTiming(BOTTOM_TAB_HEIGHT + safeareaInsets.bottom, {duration: 150});
-        return {
-            transform: [{translateY: height}],
-        };
-    }, [visible, safeareaInsets.bottom]);
-
     return (
-        <Animated.View style={[style.container, style.separator, animatedStyle]}>
-            <Shadow
-                startColor={changeOpacity(theme.indicator, 0.2)}
-                distance={4}
-                offset={shadowOffset}
-                style={{
-                    position: 'absolute',
-                    borderRadius: 2,
-                    width,
-                }}
-                sides={shadowSides}
-            />
-            <Animated.View style={[style.sliderContainer, {width: tabWidth - 20}, transform]}>
-                <View style={style.slider} />
+        <>
+            <Animated.View style={[style.container, style.separator]}>
+                <Shadow
+                    startColor={changeOpacity(theme.indicator, 0.2)}
+                    distance={4}
+                    offset={shadowOffset}
+                    style={{
+                        position: 'absolute',
+                        borderRadius: 2,
+                        width,
+                    }}
+                    sides={shadowSides}
+                />
+                <Animated.View style={[style.sliderContainer, {width: tabWidth - 20}, transform]}>
+                    <View style={style.slider} />
+                </Animated.View>
+
+                {state.routes.map((route, index) => {
+                    const {options} = descriptors[route.key];
+
+                    const isFocused = state.index === index;
+
+                    const onPress = () => {
+                        const lastTab = state.history[state.history.length - 1];
+                        const lastIndex = state.routes.findIndex(r => r.key === lastTab.key);
+                        const direction = lastIndex < index ? 'right' : 'left';
+                        const event = navigation.emit({
+                            type: 'tabPress',
+                            target: route.key,
+                            canPreventDefault: true,
+                        });
+
+                        DeviceEventEmitter.emit('tabPress');
+                        if (!isFocused && !event.defaultPrevented) {
+                            navigation.navigate({
+                                params: {direction},
+                                name: route.name,
+                                merge: false,
+                            });
+                            NavigationHandler.setVisibleTap(route.name);
+                        }
+                    };
+
+                    const onLongPress = () => {
+                        navigation.emit({
+                            type: 'tabLongPress',
+                            target: route.key,
+                        });
+                    };
+
+                    const renderOption = () => {
+                        const Component = TabComponents[route.name];
+                        const props = {isFocused, theme};
+                        if (Component) {
+                            return <Component {...props} />;
+                        }
+
+                        return null;
+                    };
+
+                    return (
+                        <TouchableOpacity
+                            key={route.name}
+                            accessibilityRole="button"
+                            accessibilityState={isFocused ? {selected: true} : {}}
+                            accessibilityLabel={options.tabBarAccessibilityLabel}
+                            onPress={onPress}
+                            onLongPress={onLongPress}
+                            style={style.item}>
+                            {renderOption()}
+                        </TouchableOpacity>
+                    );
+                })}
             </Animated.View>
-
-            {state.routes.map((route, index) => {
-                const {options} = descriptors[route.key];
-
-                const isFocused = state.index === index;
-
-                const onPress = () => {
-                    const lastTab = state.history[state.history.length - 1];
-                    const lastIndex = state.routes.findIndex(r => r.key === lastTab.key);
-                    const direction = lastIndex < index ? 'right' : 'left';
-                    const event = navigation.emit({
-                        type: 'tabPress',
-                        target: route.key,
-                        canPreventDefault: true,
-                    });
-
-                    DeviceEventEmitter.emit('tabPress');
-                    if (!isFocused && !event.defaultPrevented) {
-                        navigation.navigate({params: {direction}, name: route.name, merge: false});
-                        NavigationHandler.setVisibleTap(route.name);
-                    }
-                };
-
-                const onLongPress = () => {
-                    navigation.emit({
-                        type: 'tabLongPress',
-                        target: route.key,
-                    });
-                };
-
-                const renderOption = () => {
-                    const Component = TabComponents[route.name];
-                    const props = {isFocused, theme};
-                    if (Component) {
-                        return <Component {...props} />;
-                    }
-
-                    return null;
-                };
-
-                return (
-                    <TouchableOpacity
-                        key={route.name}
-                        accessibilityRole="button"
-                        accessibilityState={isFocused ? {selected: true} : {}}
-                        accessibilityLabel={options.tabBarAccessibilityLabel}
-                        onPress={onPress}
-                        onLongPress={onLongPress}
-                        style={style.item}>
-                        {renderOption()}
-                    </TouchableOpacity>
-                );
-            })}
-        </Animated.View>
+            <SafeAreaView edges={edgesBottom} style={{flex: 0, backgroundColor: theme.primary}} />
+        </>
     );
 };
 

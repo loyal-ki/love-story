@@ -1,16 +1,14 @@
-import React, {useMemo} from 'react';
-import {View} from 'react-native';
-import {Edge, SafeAreaView} from 'react-native-safe-area-context';
+import React from 'react';
+import {Edge} from 'react-native-safe-area-context';
 
 import {BlankSpacer} from '@app/components/alias';
 import FreezeScreen from '@app/components/freeze';
-import NavigationHeader from '@app/components/header';
 import SettingOption from '@app/components/options';
-import RoundedHeaderContext from '@app/components/rounded_header_context';
+import {Screen} from '@app/components/screen';
 import {useDefaultHeaderHeight} from '@app/hooks/header';
 import {makeStyleSheetFromTheme} from '@app/utils';
 
-import {useViewModel} from './settings.view_model';
+import {useViewModel} from './settings.view-model';
 
 import type {BaseScreens} from '@typings/screens/navigation';
 
@@ -63,83 +61,61 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({componentId}) => 
 
     const defaultHeight = useDefaultHeaderHeight();
 
-    const containerStyle = useMemo(() => {
-        const marginTop = defaultHeight;
-        return {flex: 1, marginTop, backgroundColor: viewModel.theme.background};
-    }, [defaultHeight, viewModel.theme.background]);
-
-    const contextStyle = useMemo(
-        () => ({
-            top: defaultHeight,
-        }),
-        [defaultHeight]
-    );
-
-    // const onBackPress = useMemoizedCallback(() => {
-    //     Keyboard.dismiss();
-    //     popScreen(componentId);
-    // }, [componentId]);
-
     return (
         <FreezeScreen>
-            <SafeAreaView edges={edges} style={styles.flex}>
-                <NavigationHeader
-                    showBackButton
-                    // onBackPress={onBackPress}
-                    title={formatMessage({id: 'settings.page_title'}).toUpperCase()}
-                    hasSearch={false}
+            <Screen
+                title={formatMessage({id: 'settings.page_title'}).toUpperCase()}
+                theme={viewModel.theme}
+                showBackButton={false}
+                showEdgesBottom={false}
+                defaultHeight={defaultHeight}
+                componentId={componentId}>
+                <BlankSpacer height={24} />
+                <SettingOption
+                    iconContainerStyle={[
+                        styles.iconContainerStyle,
+                        {backgroundColor: kIconColor[0]},
+                    ]}
+                    iconLeft={<DarkModeIcon width={20} height={20} fill="#FFFFFF" />}
+                    action={viewModel.useChangeThemeMode}
+                    optionLabelTextStyle={styles.labelOptionStyle}
+                    optionDescriptionTextStyle={styles.descriptionOptionStyle}
+                    label={formatMessage({id: 'common.theme_mode'})}
+                    description={formatMessage({
+                        id: `common.theme_mode_${viewModel.theme.type}`,
+                    })}
+                    selected={viewModel.state.isDarkModeEnable}
+                    type="toggle"
                 />
-                <View style={contextStyle}>
-                    <RoundedHeaderContext />
-                </View>
-                <View style={containerStyle}>
-                    <BlankSpacer height={24} />
-                    <SettingOption
-                        iconContainerStyle={[
-                            styles.iconContainerStyle,
-                            {backgroundColor: kIconColor[0]},
-                        ]}
-                        iconLeft={<DarkModeIcon width={20} height={20} fill="#FFFFFF" />}
-                        action={viewModel.useChangeThemeMode}
-                        optionLabelTextStyle={styles.labelOptionStyle}
-                        optionDescriptionTextStyle={styles.descriptionOptionStyle}
-                        label={formatMessage({id: 'common.theme_mode'})}
-                        description={formatMessage({
-                            id: `common.theme_mode_${viewModel.theme.type}`,
-                        })}
-                        selected={viewModel.state.isDarkModeEnable}
-                        type="toggle"
-                    />
-                    <BlankSpacer height={20} />
-                    <SettingOption
-                        action={viewModel.openLanguageBottomSelect}
-                        iconContainerStyle={[
-                            styles.iconContainerStyle,
-                            {backgroundColor: kIconColor[1]},
-                        ]}
-                        iconLeft={<LanguageIcon width={20} height={20} fill="#FFFFFF" />}
-                        optionLabelTextStyle={styles.labelOptionStyle}
-                        optionDescriptionTextStyle={styles.descriptionOptionStyle}
-                        label={formatMessage({id: 'common.language'})}
-                        description={formatMessage({
-                            id: `common.language.${viewModel.state.settingLocale}`,
-                        })}
-                        type="arrow"
-                    />
-                    <BlankSpacer height={24} />
-                    <SettingOption
-                        iconContainerStyle={[
-                            styles.iconContainerStyle,
-                            {backgroundColor: kIconColor[2]},
-                        ]}
-                        iconLeft={<NotificationIcon width={20} height={20} fill="#FFFFFF" />}
-                        optionLabelTextStyle={styles.labelOptionStyle}
-                        optionDescriptionTextStyle={styles.descriptionOptionStyle}
-                        label={formatMessage({id: 'common.notification'})}
-                        type="arrow"
-                    />
-                </View>
-            </SafeAreaView>
+                <BlankSpacer height={20} />
+                <SettingOption
+                    action={viewModel.openLanguageBottomSelect}
+                    iconContainerStyle={[
+                        styles.iconContainerStyle,
+                        {backgroundColor: kIconColor[1]},
+                    ]}
+                    iconLeft={<LanguageIcon width={20} height={20} fill="#FFFFFF" />}
+                    optionLabelTextStyle={styles.labelOptionStyle}
+                    optionDescriptionTextStyle={styles.descriptionOptionStyle}
+                    label={formatMessage({id: 'common.language'})}
+                    description={formatMessage({
+                        id: `common.language.${viewModel.state.settingLocale}`,
+                    })}
+                    type="arrow"
+                />
+                <BlankSpacer height={24} />
+                <SettingOption
+                    iconContainerStyle={[
+                        styles.iconContainerStyle,
+                        {backgroundColor: kIconColor[2]},
+                    ]}
+                    iconLeft={<NotificationIcon width={20} height={20} fill="#FFFFFF" />}
+                    optionLabelTextStyle={styles.labelOptionStyle}
+                    optionDescriptionTextStyle={styles.descriptionOptionStyle}
+                    label={formatMessage({id: 'common.notification'})}
+                    type="arrow"
+                />
+            </Screen>
         </FreezeScreen>
     );
 };

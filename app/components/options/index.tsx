@@ -1,7 +1,7 @@
 import React from 'react';
 import {Platform} from 'react-native';
 
-import OptionItem, {OptionItemProps} from '@components/option_item';
+import OptionItem, {OptionItemProps} from '@app/components/option-item';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 
 import {useTheme} from '@context/theme';

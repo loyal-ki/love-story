@@ -13,6 +13,7 @@
         "git-pull-rebase": "git config --local pull.rebase true",
         "git-smudge": "git config --local filter.turnOfDebugging.smudge 'sed \"s/= true/= false/\"'",
         "git-unhide": "git update-index --no-skip-worktree packages/core/services/sender/getUrlForPath.ts",
+        "postinstall": "patch-package",
         "ios": "react-native run-ios",
         "ios-14": "react-native run-ios --simulator=\"iPhone 14 \"",
         "ios-gems": "cd ios && bundle install",
@@ -22,8 +23,7 @@
         "start": "react-native start",
         "test": "jest",
         "test-no-cache": "jest --no-cache",
-        "visualize": "./node_modules/.bin/react-native-bundle-visualizer",
-        "postinstall": "patch-package"
+        "visualize": "./node_modules/.bin/react-native-bundle-visualizer"
     },
     "jest": {
         "preset": "react-native"

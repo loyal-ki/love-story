@@ -1,3 +1,3 @@
-import * as APIServiceManager from './api_managers';
+import * as APIServiceManager from './api-managers';
 
 export {APIServiceManager};

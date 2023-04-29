@@ -1,4 +1,4 @@
-import { Themes } from '@app/constants/themes';
+import {Themes} from '@app/constants/themes';
 import {DEFAULT_LOCALE} from '@app/localization';
 import {safeGet} from '@app/utils';
 

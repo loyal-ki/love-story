@@ -4,11 +4,11 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Navigation} from 'react-native-navigation';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-import {withProviderWrapper} from '@app/components/provider_wrapper';
+import {withProviderWrapper} from '@app/components/provider-wrapper';
 import {Screens} from '@app/constants';
 import {Alert} from '@app/screens/alert/alert';
-import {ExampleSheetScreen} from '@app/screens/bottom_sheet';
-import {BottomSheet} from '@app/screens/bottom_sheet/bottom_sheet';
+import {ExampleSheetScreen} from '@app/screens/bottom-sheet';
+import {BottomSheet} from '@app/screens/bottom-sheet/bottom-sheet';
 
 import {
     AccountScreen,

@@ -11,10 +11,10 @@ import {
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {Switch} from 'react-native-switch';
 
-import TouchableWithFeedback from '@components/touchable_with_feedback';
+import TouchableWithFeedback from '@app/components/touchable-with-feedback';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 
-import RadioItem, {RadioItemProps} from './radio_item';
+import RadioItem, {RadioItemProps} from './radio-item';
 
 import CheckIcon from '@assets/svg/check.svg';
 import ChevronRight from '@assets/svg/chevron_right.svg';
@@ -213,12 +213,7 @@ const OptionItem = ({
     } else if (type === OptionType.ARROW) {
         actionComponent = (
             <View style={styles.arrowContainer}>
-                <ChevronRight
-                    fill={theme.arrow}
-                    height={28}
-                    width={28}
-                    style={arrowStyle}
-                />
+                <ChevronRight fill={theme.arrow} height={28} width={28} style={arrowStyle} />
             </View>
         );
     } else if (type === OptionType.REMOVE) {

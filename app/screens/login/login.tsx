@@ -5,9 +5,11 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {BlankSpacer} from '@app/components/alias';
 import FloatingInput from '@app/components/input';
+import {Screen} from '@app/components/screen';
+import {useDefaultHeaderHeight} from '@app/hooks';
 import {makeStyleSheetFromTheme} from '@app/utils';
 
-import {useViewModel} from './login.view_model';
+import {useViewModel} from './login.view-model';
 
 import {BaseScreens} from '@typings/screens/navigation';
 
@@ -38,18 +40,21 @@ export interface LoginScreenProps {
 
 const AnimatedSafeArea = Animated.createAnimatedComponent(SafeAreaView);
 
-export const LoginScreen: React.FC<LoginScreenProps> = () => {
+export const LoginScreen: React.FC<LoginScreenProps> = ({componentId}) => {
     const intl = useIntl();
-
-    const {formatMessage} = intl;
-
-    const keyboardAwareRef = useRef<KeyboardAwareScrollView>(null);
-
     const viewModel = useViewModel();
     const styles = getStyleSheet(viewModel.theme);
+    const defaultHeight = useDefaultHeaderHeight();
+    const keyboardAwareRef = useRef<KeyboardAwareScrollView>(null);
+    const {formatMessage} = intl;
 
     return (
-        <View style={styles.container}>
+        <Screen
+            title={formatMessage({id: 'chat.page_title'}).toUpperCase()}
+            theme={viewModel.theme}
+            showBackButton
+            defaultHeight={defaultHeight}
+            componentId={componentId}>
             <AnimatedSafeArea style={[styles.container]}>
                 <KeyboardAwareScrollView
                     bounces
@@ -91,6 +96,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = () => {
                     </View>
                 </KeyboardAwareScrollView>
             </AnimatedSafeArea>
-        </View>
+        </Screen>
     );
 };
