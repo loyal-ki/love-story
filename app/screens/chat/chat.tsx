@@ -1,11 +1,10 @@
 import React, {useMemo} from 'react';
 import {useIntl} from 'react-intl';
-import {Button, View} from 'react-native';
-import {Edge, SafeAreaView} from 'react-native-safe-area-context';
+import {Button} from 'react-native';
+import {Edge} from 'react-native-safe-area-context';
 
 import FreezeScreen from '@app/components/freeze';
-import NavigationHeader from '@app/components/header';
-import RoundedHeaderContext from '@app/components/rounded_header_context';
+import {Screen} from '@app/components/screen';
 import {Screens} from '@app/constants';
 import {useTheme} from '@app/context/theme';
 import {useDefaultHeaderHeight} from '@app/hooks/header';
@@ -13,8 +12,6 @@ import {onNavigationToScreen} from '@app/navigation/navigation';
 import {makeStyleSheetFromTheme} from '@app/utils';
 
 import type {BaseScreens} from '@typings/screens/navigation';
-
-const DATA = Array.from(Array(100).keys());
 
 const edges: Edge[] = ['left', 'right', 'bottom'];
 
@@ -72,25 +69,21 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({componentId}) => {
 
     return (
         <FreezeScreen>
-            <SafeAreaView edges={edges} style={styles.flex}>
-                <NavigationHeader
-                    showBackButton={false}
-                    title={formatMessage({id: 'chat.page_title'}).toUpperCase()}
-                    hasSearch={false}
+            <Screen
+                title={formatMessage({id: 'settings.page_title'}).toUpperCase()}
+                theme={theme}
+                showEdgesBottom={false}
+                showBackButton={false}
+                defaultHeight={defaultHeight}
+                componentId={componentId}>
+                <Button
+                    title="Navigation to Message"
+                    color={theme.primary}
+                    onPress={async () => {
+                        await onNavigationToScreen({screen: Screens.MESSAGE, title: 'Message'});
+                    }}
                 />
-                <View style={contextStyle}>
-                    <RoundedHeaderContext />
-                </View>
-                <View style={containerStyle}>
-                    <Button
-                        title="Navigation to Message"
-                        color={theme.primary}
-                        onPress={async () => {
-                            await onNavigationToScreen({screen: Screens.MESSAGE});
-                        }}
-                    />
-                </View>
-            </SafeAreaView>
+            </Screen>
         </FreezeScreen>
     );
 };

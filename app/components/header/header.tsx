@@ -3,8 +3,8 @@ import {Platform, Text, View} from 'react-native';
 import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
+import TouchableWithFeedback from '@app/components/touchable-with-feedback';
 import {LARGE_HEADER_TITLE_HEIGHT} from '@app/constants/view';
-import TouchableWithFeedback from '@components/touchable_with_feedback';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 
 import ArrowLeftIcon from '@assets/svg/chevron_left.svg';

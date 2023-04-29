@@ -4,7 +4,7 @@ import {EmitterSubscription} from 'react-native/types';
 
 import {RequestMessageModel} from '@app/models/request/request_message';
 
-import {defaultAxiosOptions, initializationAxios} from './axios_setup';
+import {defaultAxiosOptions, initializationAxios} from './axios-setup';
 import {APIClientErrorEventHandler, APISenderInterface} from './type';
 
 /* //////////////////////////////////////////////////////////////

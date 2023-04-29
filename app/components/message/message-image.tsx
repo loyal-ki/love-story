@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import FastImage, {ImageStyle} from 'react-native-fast-image';
 
 import {useMemoizedCallback} from '@app/hooks';
@@ -46,6 +46,7 @@ export const MessageImage = React.memo(({theme, message, isCurrentUser}: Message
                 accessibilityRole="image"
                 resizeMode="cover"
                 source={{uri: message.uri}}
+                fallback={Platform.OS === 'android'}
             />
         );
     }, [message.uri, imageContextStyle]);

@@ -17,6 +17,7 @@ Navigation.setDefaultOptions({
     },
     topBar: {
         title: {
+            alignment: 'center',
             fontSize: 18,
             fontWeight: '600',
         },
