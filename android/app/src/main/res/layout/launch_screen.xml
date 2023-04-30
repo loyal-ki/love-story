@@ -7,5 +7,10 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
+        android:paddingHorizontal="12dp"
+        android:background="#F2E5E5"
+        android:contentDescription="@string/splash_screen"
+        android:scaleType="fitCenter"
+        android:src="@drawable/launch_screen" />
+
 </RelativeLayout>

@@ -1,5 +1,5 @@
 <div align="center">
-  <h1 align="center"><a href="https://lovestory.com/">LOVE STORY</a> </h1>
+  <img src="./docs/images/splash_screen.png" alt="animated" />
   <h3 align="center">This is a Beta Version</h3>
 
 </div>

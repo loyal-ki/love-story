@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">love_story_typescript</string>
+    <string name="splash_screen">SplashScreen</string>
 </resources>
