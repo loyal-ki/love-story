@@ -24,7 +24,8 @@
     "start": "react-native start",
     "test": "jest",
     "test-no-cache": "jest --no-cache",
-    "visualize": "./node_modules/.bin/react-native-bundle-visualizer"
+    "visualize": "./node_modules/.bin/react-native-bundle-visualizer",
+    "prepare": "husky install"
   },
   "jest": {
     "preset": "react-native"
@@ -150,22 +151,5 @@
     "assets": [
       "resources/fonts"
     ]
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --quiet",
-      "prettier --write",
-      "git add"
-    ],
-    "*.{json,md}": [
-      "prettier --write",
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsc && lint-staged",
-      "pre-push": "npm run lint"
-    }
   }
 }
