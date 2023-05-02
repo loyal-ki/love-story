@@ -51,3 +51,22 @@ jest.doMock('react-native', () => {
     );
 });
 jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
+
+jest.mock('@screens/navigation', () => ({
+    onNavigateToInit: jest.fn(),
+    onNavigationToScreen: jest.fn(),
+    onNavigationToHomeScreen: jest.fn(),
+    popScreen: jest.fn(),
+    popAllToRoot: jest.fn(),
+    showModalAsScreen: jest.fn(),
+    showOverlayModal: jest.fn(),
+    bottomSheet: jest.fn(),
+    dismissBottomSheet: jest.fn(),
+    dismissModalIfShowing: jest.fn(),
+    showOverlay: jest.fn(),
+    showReviewOverlay: jest.fn(),
+    dismissOverlay: jest.fn(),
+    dismissAllModals: jest.fn(),
+    dismissAllOverlays: jest.fn(),
+    dismissAllModalsAndPopToRoot: jest.fn(),
+}));
