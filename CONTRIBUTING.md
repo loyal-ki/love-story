@@ -198,7 +198,7 @@ $ adb -s <device name> reverse tcp:8081 tcp:8081
 
 2. Open the project in Xcode
 
-    Navigate to the $\textcolor{magenta}{\textsf{ios}}$ folder in your love_story project, then open the file love_story_typescript.xcworkspace in Xcode.
+    Navigate to the ```ios``` folder in your love_story project, then open the file love_story_typescript.xcworkspace in Xcode.
 
 3. Configure code signing and capabilities
 

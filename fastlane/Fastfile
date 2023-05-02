@@ -1,19 +1,93 @@
 fastlane_version '2.71.0'
 fastlane_require 'json'
+fastlane_require 'pathname'
 
 skip_docs
 
 lane :build_icon do
-    appicon(
-      appicon_image_file: 'assets/release/ios/app_icon.png',
-      appicon_devices: %i[iphone ios_marketing],
-      appicon_path: 'ios/Images.xcassets'
-    )
+  appicon(
+    appicon_image_file: 'assets/release/ios/app_icon.png',
+    appicon_devices: %i[iphone ios_marketing],
+    appicon_path: 'ios/Images.xcassets'
+  )
 
-    android_appicon(
-        appicon_image_file: 'assets/release/android/app_icon.png',
-        appicon_icon_types: [:launcher],
-        appicon_path: 'android/app/src/main/res/mipmap'
-      )
+  android_appicon(
+    appicon_image_file: 'assets/release/android/app_icon.png',
+    appicon_icon_types: [:launcher],
+    appicon_path: 'android/app/src/main/res/mipmap'
+  )
 end
 
+desc 'Increment version number for app'
+lane :update_app_version do
+
+  # TODO (Test version number)
+  version_number = "0.0.1"
+
+  # Increment version for package.json 
+  package = load_config_json('../package.json')
+  package['version'] = version_number
+  save_json_as_file('../package.json', package)
+
+  # Increment android version
+  android_set_version_name(
+    gradle_file: 'android/app/build.gradle',
+    version_name: version_number
+  )
+
+  # Increment ios version
+  increment_version_number(
+    xcodeproj: 'ios/love_story_typescript.xcodeproj',
+    version_number: version_number
+  )
+end
+
+desc 'Increment build number for app'
+lane :update_build_number do
+  build_number = "1"
+  increment_build_number(
+    xcodeproj: 'ios/love_story_typescript.xcodeproj',
+    build_number: build_number
+  )
+
+  android_set_version_code(
+    gradle_file: 'android/app/build.gradle',
+    version_code: build_number
+  )
+end
+
+platform :ios do
+  lane :update_identifiers do
+    # Set the name for the app ios
+    app_name =  'Love Story'
+    update_info_plist(
+      xcodeproj: 'ios/love_story_typescript.xcodeproj',
+      plist_path: 'love_story_typescript/Info.plist',
+      display_name: app_name
+    )
+  end
+end
+
+platform :android do
+  lane :update_identifiers do
+    # Set the name for the app android
+    app_name =  'Love Story'
+    android_change_string_app_name(
+      newName: app_name,
+      stringsFile: 'android/app/src/main/res/values/strings.xml'
+    )
+  end
+end
+
+
+def load_config_json(json_path)
+  config_file = File.read(json_path)
+  JSON.parse(config_file)
+end
+
+def save_json_as_file(json_path, json)
+  File.open(json_path, 'w') do |f|
+    f.write(JSON.pretty_generate(json))
+    f.write("\n")
+  end
+end

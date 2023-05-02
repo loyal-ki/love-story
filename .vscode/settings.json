@@ -11,5 +11,11 @@
     "files.exclude": {
         "**/node_modules/**": true
     },
-    "cSpell.words": ["Nilable", "Unmount"]
+    "cSpell.words": [
+        "Nilable",
+        "Unmount"
+    ],
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    }
 }

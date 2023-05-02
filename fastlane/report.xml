@@ -5,17 +5,12 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: Verifying fastlane version" time="0.00023">
+      <testcase classname="fastlane.lanes" name="0: Verifying fastlane version" time="0.000333">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: appicon" time="1.472471">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="2: android_appicon" time="4.339748">
+      <testcase classname="fastlane.lanes" name="1: android_change_string_app_name" time="0.002043">
         
       </testcase>
     

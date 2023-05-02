@@ -1,4 +1,5 @@
+<?xml version="1.0"?>
 <resources>
-    <string name="app_name">love_story_typescript</string>
+    <string name="app_name">Love Story</string>
     <string name="splash_screen">SplashScreen</string>
 </resources>
