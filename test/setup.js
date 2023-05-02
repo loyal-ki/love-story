@@ -1,5 +1,3 @@
-/* eslint-disable react/no-multi-comp */
-
 import * as ReactNative from 'react-native';
 import mockSafeAreaContext from 'react-native-safe-area-context/jest/mock';
 
@@ -27,9 +25,7 @@ jest.doMock('react-native', () => {
     const Linking = {
         ...RNLinking,
         openURL: jest.fn(),
-        addEventListener: jest.fn(() => {
-            return {remove: jest.fn()};
-        }),
+        addEventListener: jest.fn(() => ({remove: jest.fn()})),
     };
 
     return Object.setPrototypeOf(

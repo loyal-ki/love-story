@@ -1,5 +1,5 @@
 module.exports = {
-    env: {browser: true, es6: true, node: true},
+    env: {browser: true, es6: true, node: true, jest: true},
     extends: [
         'airbnb',
         'airbnb/hooks',
@@ -16,7 +16,7 @@ module.exports = {
             jsx: true,
         },
     },
-    plugins: ['@babel', 'react', 'prettier', 'unused-imports', 'jsx-a11y'],
+    plugins: ['@babel', 'react', 'prettier', 'unused-imports', 'jsx-a11y', 'jest'],
     settings: {
         react: {version: 'detect'},
         'import/resolver': {
@@ -92,7 +92,7 @@ module.exports = {
     overrides: [
         {
             files: ['**/*.ts', '**/*.tsx'],
-            env: {browser: true, es6: true, node: true},
+            env: {browser: true, es6: true, node: true, jest: true},
             extends: [
                 'airbnb-typescript',
                 'airbnb/hooks',
