@@ -150,5 +150,22 @@
     "assets": [
       "resources/fonts"
     ]
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --quiet",
+      "prettier --write",
+      "git add"
+    ],
+    "*.{json,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsc && lint-staged",
+      "pre-push": "npm run lint"
+    }
   }
 }
