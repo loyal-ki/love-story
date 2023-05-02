@@ -43,10 +43,10 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
         borderTopWidth: 0.5,
     },
     slider: {
-        backgroundColor: theme.primary,
+        backgroundColor: theme.selectedIcon,
         borderBottomLeftRadius: 4,
         borderBottomRightRadius: 4,
-        width: 48,
+        width: 60,
         height: 4,
     },
     sliderContainer: {
