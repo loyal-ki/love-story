@@ -4,7 +4,7 @@ import {View, StyleSheet} from 'react-native';
 import {MessageType} from '@app/models/message/message';
 import {makeStyleSheetFromTheme} from '@app/utils';
 
-import ErrorIcon from '@assets/svg/error_send.svg';
+import ErrorIcon from '@assets/svg/error.svg';
 import SeenIcon from '@assets/svg/seen.svg';
 import SendingIcon from '@assets/svg/sending.svg';
 import SentIcon from '@assets/svg/sent.svg';
