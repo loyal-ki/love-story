@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable no-console */
-// @ts-nocheck
 import stringifyObject from 'stringify-object';
 
 const prefixFormat = '%s\x1b[0m';
@@ -34,7 +32,7 @@ export function logDebug(...args: any[]) {
     console.debug(colours.cyan, ...args);
 }
 
-export function formatLog(value) {
+export function formatLog(value: unknown) {
     return stringifyObject(value, {
         indent: '  ',
         singleQuotes: false,

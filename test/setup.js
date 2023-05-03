@@ -52,7 +52,7 @@ jest.doMock('react-native', () => {
 });
 jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
 
-jest.mock('@screens/navigation', () => ({
+jest.mock('@navigation/navigation', () => ({
     onNavigateToInit: jest.fn(),
     onNavigationToScreen: jest.fn(),
     onNavigationToHomeScreen: jest.fn(),
@@ -70,3 +70,29 @@ jest.mock('@screens/navigation', () => ({
     dismissAllOverlays: jest.fn(),
     dismissAllModalsAndPopToRoot: jest.fn(),
 }));
+
+jest.mock('react-native-reanimated', () => {
+    // eslint-disable-next-line global-require
+    const {View} = require('react-native');
+    return {
+        Value: jest.fn(),
+        event: jest.fn(),
+        add: jest.fn(),
+        eq: jest.fn(),
+        set: jest.fn(),
+        cond: jest.fn(),
+        interpolate: jest.fn(),
+        View,
+        Extrapolate: {CLAMP: jest.fn()},
+        Transition: {
+            Together: 'Together',
+            Out: 'Out',
+            In: 'In',
+        },
+        Easing: {
+            in: jest.fn(),
+            out: jest.fn(),
+            inOut: jest.fn(),
+        },
+    };
+});
