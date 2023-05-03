@@ -26,6 +26,10 @@ const {Consumer, Provider} = UserLocaleContext;
 // eslint-disable-next-line import/no-mutable-exports
 export let globalLocale: string = DEFAULT_LOCALE;
 
+
+/* //////////////////////////////////////////////////////////////
+                    LOCALE CONFIGURATION 
+  ////////////////////////////////////////////////////////////// */
 export const UserLocaleProvider = ({children}: Props) => {
     const locale = useSelector(selectLocaleFromStore);
     globalLocale = locale;
