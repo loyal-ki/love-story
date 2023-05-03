@@ -19,7 +19,7 @@
     "ios-14": "react-native run-ios --simulator=\"iPhone 14 \"",
     "ios-gems": "cd ios && bundle install",
     "kill": "kill $(lsof -ti:8081)",
-    "lint": "tsc && eslint --quiet --ext js,jsx,ts,tsx src && jest",
+    "lint": "tsc && eslint --quiet --ext js,jsx,ts,tsx app && jest",
     "sort": "npx sort-package-json",
     "start": "react-native start",
     "test": "jest",
