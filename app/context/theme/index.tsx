@@ -43,6 +43,9 @@ const getTheme = (): Theme => {
     return defaultTheme;
 };
 
+/* //////////////////////////////////////////////////////////////
+                    THEME CONFIGURATION 
+  ////////////////////////////////////////////////////////////// */
 export const ThemeProvider = ({children}: Props) => {
     const theme = useSelector(selectThemeFromStore);
 
