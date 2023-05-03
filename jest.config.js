@@ -1,22 +1,49 @@
+const {defaults: tsjPreset} = require('ts-jest/presets');
+
 module.exports = {
+    ...tsjPreset,
     preset: 'react-native',
-    verbose: true,
+    moduleFileExtensions: ['ts', 'tsx', 'android.js', 'ios.js', 'js', 'jsx', 'json', 'node'],
+    setupFiles: ['./node_modules/react-native-gesture-handler/jestSetup.js', './jest/setup.js'],
+    testPathIgnorePatterns: ['/node_modules/'],
+    moduleNameMapper: {
+        '^@app/(.*)': '<rootDir>/app/$1',
+        '^@database/(.*)': '<rootDir>/app/database/$1',
+        '^@components/(.*)': '<rootDir>/app/components/$1',
+        '^@constants/(.*)': '<rootDir>/app/constants/$1',
+        '^@context/(.*)': '<rootDir>/app/context/$1',
+        '^@hooks/(.*)': '<rootDir>/app/hooks/$1',
+        '^@initialize/(.*)': '<rootDir>/app/initialize/$1',
+        '^@localization/(.*)': '<rootDir>/app/localization/$1',
+        '^@managers/(.*)': '<rootDir>/app/managers/$1',
+        '^@models/(.*)': '<rootDir>/app/models/$1',
+        '^@navigation/(.*)': '<rootDir>/app/navigation/$1',
+        '^@services/(.*)': '<rootDir>/app/services/$1',
+        '^@utils/(.*)': '<rootDir>/app/utils/$1',
+        '^@store/(.*)': '<rootDir>/app/store/$1',
+        '^@screens/(.*)': '<rootDir>/app/screens/$1',
+    },
+    transform: {
+        ...tsjPreset.transform,
+        '\\.js$': '<rootDir>/node_modules/react-native/jest/preprocessor.js',
+        '^.+\\.(ts|tsx)$': 'ts-jest',
+    },
+    moduleDirectories: ['typings', 'node_modules'],
     globals: {
         'ts-jest': {
-            tsConfigFile: 'tsconfig.test.json',
+            babelConfig: true,
+            diagnostics: {
+                warnOnly: true,
+                pathRegex: '\\.(spec|test)\\.ts$',
+            },
+            tsconfig: 'tsconfig.json',
         },
-    },
-    moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-    clearMocks: true,
-    setupFilesAfterEnv: ['<rootDir>/test/setup.ts'],
-    collectCoverageFrom: ['app/**/*.{js,jsx,ts,tsx}'],
-    coverageReporters: ['lcov', 'text-summary'],
-    testPathIgnorePatterns: ['/node_modules/'],
-    transform: {
-        '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
-            '<rootDir>/test/file_transformer.js',
+        __DEV__: true,
     },
     transformIgnorePatterns: [
-        'node_modules/(?!(@react-native|react-native)|jail-monkey|@sentry/react-native|react-clone-referenced-element|@react-native-community|react-navigation|@react-navigation/.*|validator|react-syntax-highlighter/.*|hast-util-from-selector|hastscript|property-information|hast-util-parse-selector|space-separated-tokens|comma-separated-tokens)',
+        'node_modules/(?!(jest-)?react-native|react-native-navigation|react-navigation-redux-helpers|@react-native-community|@react-native-navigation)',
     ],
+    testRegex: '(/__tests__/hooks/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
+    cacheDirectory: '.jest/cache',
+    testEnvironment: 'node',
 };
