@@ -1,11 +1,15 @@
 import {StyleSheet} from 'react-native';
 
 import {formatSize, makeStyleSheetFromTheme} from '@app/utils';
+import {typography} from '@app/utils/styles/typography';
 
-export const getButtonMediumStyleConfig = makeStyleSheetFromTheme((theme: Theme) =>
+export const getButtonLargeStyleConfig = makeStyleSheetFromTheme((theme: Theme) =>
     StyleSheet.create({
+        titleStyle: {
+            ...typography.text14Bold,
+        },
         containerStyle: {
-            height: formatSize(40),
+            height: formatSize(52),
             borderRadius: formatSize(8),
         },
         iconStyle: {

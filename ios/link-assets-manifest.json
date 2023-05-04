@@ -1,0 +1,21 @@
+{
+    "migIndex": 1,
+    "data": [
+        {
+            "path": "assets/fonts/Quicksand-Bold.ttf",
+            "sha1": "4f98e9333ad7ea2025b1fb70fbee0d6ce4b49a6c"
+        },
+        {
+            "path": "assets/fonts/Quicksand-Light.ttf",
+            "sha1": "aaf4796e5373097216afa70cff09ab4fb30eddcd"
+        },
+        {
+            "path": "assets/fonts/Quicksand-Regular.ttf",
+            "sha1": "775d31983d9f6f890c21ac0fcf4eab06ce7617fc"
+        },
+        {
+            "path": "assets/fonts/Quicksand-SemiBold.ttf",
+            "sha1": "a493611a183ff93844befaaaf406011b030a2785"
+        }
+    ]
+}

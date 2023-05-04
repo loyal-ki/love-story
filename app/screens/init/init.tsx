@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
-import {useIntl} from 'react-intl';
-import {Button, StyleSheet, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import PaginationDot from 'react-native-animated-pagination-dot';
+import Animated, {useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
 
-import {ButtonMedium} from '@app/components/button/button-medium/button-medium';
+import {ButtonOutlineLarge} from '@app/components/button/button-large/button-outline-large';
+import {Slide, Slider} from '@app/components/liquid';
 import {Screens} from '@app/constants';
 import {useTheme} from '@app/context/theme';
-import {useDefaultHeaderHeight} from '@app/hooks';
-import {onNavigationToHomeScreen, onNavigationToScreen} from '@app/navigation/navigation';
+import {onNavigationToScreen} from '@app/navigation/navigation';
 import {formatSize} from '@app/utils';
 
 import {useViewModel} from './init.view-model';
@@ -20,7 +20,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
     },
     buttonsContainer: {
-        margin: formatSize(12),
+        width: '80%',
+        height: formatSize(60),
+        marginTop: formatSize(32),
+        marginBottom: formatSize(12),
+    },
+    bottom: {
+        width: '100%',
+        position: 'absolute',
+        bottom: 0,
+        marginBottom: formatSize(42),
+        alignItems: 'center',
+        alignSelf: 'center',
     },
 });
 
@@ -29,44 +40,63 @@ export interface IntroScreenProps {
 }
 
 export const InitScreen: React.FC<IntroScreenProps> = ({componentId}) => {
-    const intl = useIntl();
-    const {theme, updateTheme} = useTheme();
-    const defaultHeight = useDefaultHeaderHeight();
-    const {formatMessage} = intl;
+    const {theme} = useTheme();
     const viewModel = useViewModel();
     const [index, setIndex] = useState(0);
     const prev = viewModel.slides[index - 1];
     const next = viewModel.slides[index + 1];
 
+    const buttonOpacity = useSharedValue(0);
+
+    const opacity = useAnimatedStyle(() => {
+        return {
+            opacity: buttonOpacity.value,
+        };
+    });
+
+    useEffect(() => {
+        if (index === viewModel.slides.length - 1) {
+            buttonOpacity.value = withTiming(1, {
+                duration: 1200,
+            });
+        } else {
+            buttonOpacity.value = 0;
+        }
+    }, [buttonOpacity, index, viewModel.slides.length]);
+
     return (
-        <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
-            <View style={styles.container}>
-                {/* <Slider
+        <View style={styles.container}>
+            <Slider
                 key={index}
                 index={index}
                 setIndex={setIndex}
                 prev={prev && <Slide theme={theme} slide={prev} />}
                 next={next && <Slide theme={theme} slide={next} />}>
                 <Slide theme={theme} slide={viewModel.slides[index]} />
-            </Slider> */}
+            </Slider>
 
-                <Button
-                    title="Navigation to Home"
-                    onPress={async () => {
-                        await onNavigationToHomeScreen({screen: Screens.HOME});
-                    }}
+            <View style={styles.bottom}>
+                <PaginationDot
+                    curPage={index}
+                    activeDotColor={theme.background}
+                    inactiveDotColor={theme.indicator}
+                    maxPage={viewModel.slides.length}
+                    sizeRatio={2}
                 />
-                <Button
-                    title="Navigation to Login"
-                    onPress={async () => {
-                        await onNavigationToScreen({screen: Screens.LOGIN});
-                    }}
-                />
-
                 <View style={styles.buttonsContainer}>
-                    <ButtonMedium title="Navigation" onPress={() => {}} theme={theme} />
+                    {index === viewModel.slides.length - 1 && (
+                        <Animated.View style={opacity}>
+                            <ButtonOutlineLarge
+                                title="Navigation to Login"
+                                onPress={async () => {
+                                    await onNavigationToScreen({screen: Screens.LOGIN});
+                                }}
+                                theme={theme}
+                            />
+                        </Animated.View>
+                    )}
                 </View>
             </View>
-        </SafeAreaView>
+        </View>
     );
 };

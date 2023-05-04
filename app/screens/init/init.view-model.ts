@@ -8,22 +8,22 @@ export const useViewModel = () => {
     const slides = useMemo(
         () => [
             {
-                color: '#EEC4C4',
-                title: 'Dessert Recipes',
+                color: '#FF9999',
+                title: 'Title 1',
                 description:
-                    'Hot or cold, our dessert recipes can turn an average meal into a memorable event',
+                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
             },
             {
-                color: '#BEE5D3',
-                title: 'Easy Meal Ideas',
+                color: '#86C8BC',
+                title: 'Title 1',
                 description:
-                    'explore recipes by food type, preparation method, cuisine, country and more',
+                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
             },
             {
-                color: '#9FD8DF',
-                title: '10000+ Recipes',
+                color: '#264E70',
+                title: 'Title 1',
                 description:
-                    'Browse thousands of curated recipes from top chefs, each with detailled cooking instructions',
+                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
             },
         ],
         []

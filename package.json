@@ -57,6 +57,7 @@
         "react-freeze": "^1.0.3",
         "react-intl": "^6.3.2",
         "react-native": "0.71.4",
+        "react-native-animated-pagination-dot": "^0.4.0",
         "react-native-fast-image": "^8.6.3",
         "react-native-gesture-handler": "^2.9.0",
         "react-native-haptic-feedback": "^2.0.3",

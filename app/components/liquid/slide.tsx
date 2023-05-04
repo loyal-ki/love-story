@@ -2,7 +2,8 @@ import React from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import Svg, {RadialGradient, Defs, Rect, Stop} from 'react-native-svg';
 
-import {changeOpacity} from '@app/utils';
+import {changeOpacity, formatSize} from '@app/utils';
+import {FontsEnum} from '@app/utils/styles/fonts-enum';
 
 const {width, height} = Dimensions.get('screen');
 const SIZE = width - 75;
@@ -18,15 +19,17 @@ const styles = StyleSheet.create({
         height: SIZE,
     },
     title: {
-        fontSize: 48,
+        fontSize: formatSize(48),
         color: 'white',
         textAlign: 'center',
         marginBottom: 16,
+        fontFamily: FontsEnum.quicksandBold,
     },
     description: {
-        fontSize: 18,
+        fontSize: formatSize(20),
         color: 'white',
         textAlign: 'center',
+        fontFamily: FontsEnum.quicksandSemiBold,
     },
 });
 

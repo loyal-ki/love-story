@@ -18,4 +18,7 @@ type Theme = {
     unSelectedIcon: string;
     unSelectedText: string;
     switchCircle: string;
+    title: string;
+    subTitle: string;
+    disable: string;
 };
