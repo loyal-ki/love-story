@@ -19,4 +19,5 @@ export enum IconNameEnum {
     LanguageIcon = 'LanguageIcon',
     NotificationIcon = 'NotificationIcon',
     CheckIcon = 'CheckIcon',
+    EraseIcon = 'EraseIcon',
 }

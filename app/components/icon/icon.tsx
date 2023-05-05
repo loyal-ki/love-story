@@ -14,5 +14,5 @@ export const Icon: FC<IconProps> = ({
 }) => {
     const Svg = useMemo(() => iconNameMap[name], [name]);
 
-    return <Svg width={width} height={height} color={color} style={style} testID={testID} />;
+    return <Svg width={width} height={height} stroke={color} style={style} testID={testID} />;
 };

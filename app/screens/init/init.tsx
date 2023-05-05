@@ -78,8 +78,8 @@ export const InitScreen: React.FC<IntroScreenProps> = ({componentId}) => {
             <View style={styles.bottom}>
                 <PaginationDot
                     curPage={index}
-                    activeDotColor={theme.background}
-                    inactiveDotColor={theme.indicator}
+                    activeDotColor={theme.white}
+                    inactiveDotColor={theme.grey}
                     maxPage={viewModel.slides.length}
                     sizeRatio={2}
                 />

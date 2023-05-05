@@ -8,7 +8,6 @@ type Theme = {
     primarySecondary: string;
     text: string;
     textMessage: string;
-    error: string;
     backButton: string;
     topBarBackground: string;
     topBarHeaderTextColor: string;
@@ -21,4 +20,13 @@ type Theme = {
     title: string;
     subTitle: string;
     disable: string;
+    outlineButton: string;
+    success: string;
+    warning: string;
+    info: string;
+    error: string;
+    // Basic color
+    white: string;
+    black: string;
+    grey: string;
 };

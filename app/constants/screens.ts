@@ -9,6 +9,7 @@ export const CHAT = 'Chat';
 export const MESSAGE = 'Message';
 export const ACCOUNT = 'Account';
 export const SETTINGS = 'Settings';
+export const PIN_CODE = 'Pin_Code';
 
 export default {
     INIT,
@@ -22,4 +23,5 @@ export default {
     BOTTOM_SHEET,
     ALERT,
     EXAMPLE_BOTTOM_SHEET,
+    PIN_CODE,
 } as const;

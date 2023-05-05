@@ -12,6 +12,7 @@ import LoveArrowLeftIcon from '@assets/svg/chevron_left.svg';
 import LoveArrowRightIcon from '@assets/svg/chevron_right.svg';
 import CloseCircleIcon from '@assets/svg/close_circle.svg';
 import DarkModeIcon from '@assets/svg/dark_mode.svg';
+import EraseIcon from '@assets/svg/erase.svg';
 import ErrorIcon from '@assets/svg/error.svg';
 import StoryIcon from '@assets/svg/fileboard_love.svg';
 import LanguageIcon from '@assets/svg/language.svg';
@@ -45,4 +46,5 @@ export const iconNameMap: Record<IconNameEnum, FC<SvgProps>> = {
     [IconNameEnum.LanguageIcon]: LanguageIcon,
     [IconNameEnum.NotificationIcon]: NotificationIcon,
     [IconNameEnum.CheckIcon]: CheckIcon,
+    [IconNameEnum.EraseIcon]: EraseIcon,
 };

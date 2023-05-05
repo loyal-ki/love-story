@@ -11,6 +11,8 @@
     "common.language": "Ngôn ngữ",
     "common.language.en": "Tiếng Anh",
     "common.language.vi": "Tiếng Việt",
+    "login.page_title": "Đăng nhập",
+    "pin_code.page_title": "Mã xác thực",
     "home.page_title": "Trang chủ",
     "home.input_email_title": "Email",
     "home.input_email_placeholder": "Hãy nhập email",

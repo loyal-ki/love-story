@@ -6,10 +6,10 @@ import {typography} from '@app/utils/styles/typography';
 export const getButtonLargeStyleConfig = makeStyleSheetFromTheme((theme: Theme) =>
     StyleSheet.create({
         titleStyle: {
-            ...typography.text14Bold,
+            ...typography.text18Bold,
         },
         containerStyle: {
-            height: formatSize(52),
+            height: formatSize(60),
             borderRadius: formatSize(8),
         },
         iconStyle: {

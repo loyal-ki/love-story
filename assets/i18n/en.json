@@ -11,6 +11,8 @@
     "common.language": "Language",
     "common.language.en": "English",
     "common.language.vi": "Vietnamese",
+    "login.page_title": "Login",
+    "pin_code.page_title": "Verification Code",
     "home.page_title": "Home",
     "home.input_email_title": "Email",
     "home.input_email_placeholder": "Input your email",

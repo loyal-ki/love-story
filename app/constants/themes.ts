@@ -4,19 +4,29 @@ export enum AppThemeEnum {
     system = 'system',
 }
 
+export const BasicColor = {
+    success: '#50C19A',
+    warning: '#FFD571',
+    info: '#6DA9E4',
+    error: '#E94560',
+    white: '#FFFFFF',
+    black: '#000000',
+    grey: '#F9F5EB',
+};
+
 export const Themes = {
     dark: {
+        ...BasicColor,
         type: 'dark',
         background: '#282A3A',
         primary: '#F2E5E5',
         primarySecondary: '#6B728E',
         text: '#F2E5E5',
         textMessage: '#354259',
-        error: '#E94560',
-        backButton: '#282A3A',
+        backButton: '#F2E5E5',
         topBarBackground: '#F2E5E5',
         topBarHeaderTextColor: '#282A3A',
-        arrow: '#282A3A',
+        arrow: '#F2E5E5',
         indicator: '#F2E5E5',
         selectedIcon: '#282A3A',
         unSelectedIcon: '#354259',
@@ -25,16 +35,17 @@ export const Themes = {
         title: '#282A3A',
         subTitle: '#282A3A',
         disable: '#EEF1FF',
+        outlineButton: '#FFFFFF',
     },
     light: {
+        ...BasicColor,
         type: 'light',
         background: '#FFFFFF',
         primary: '#9182C4',
         primarySecondary: '#BCCEF8',
         text: '#0A1D37',
         textMessage: '#FFFFFF',
-        error: '#E94560',
-        backButton: '#FFFFFF',
+        backButton: '#0A1D37',
         topBarBackground: '#9182C4',
         topBarHeaderTextColor: '#FFFFFF',
         arrow: '#FFFFFF',
@@ -46,5 +57,6 @@ export const Themes = {
         title: '#FFFFFF',
         subTitle: '#F1F1F1',
         disable: '#EEF1FF',
+        outlineButton: '#FFFFFF',
     },
 } as Record<ThemeKey, Theme>;

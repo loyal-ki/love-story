@@ -14,6 +14,7 @@ import {BaseScreens} from '@typings/screens/navigation';
 
 interface Props {
     title: string;
+    subTitle?: string;
     theme: Theme;
     children?: React.ReactNode;
     componentId: BaseScreens;
@@ -38,6 +39,7 @@ export const Screen = React.memo(
         children,
         componentId,
         title,
+        subTitle,
         theme,
         defaultHeight,
         showBackButton = false,
@@ -69,6 +71,7 @@ export const Screen = React.memo(
                         showBackButton={showBackButton}
                         onBackPress={onBackPress}
                         title={title}
+                        subtitle={subTitle}
                         hasSearch={false}
                     />
                     <View style={contextStyle}>

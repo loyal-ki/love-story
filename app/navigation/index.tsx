@@ -18,6 +18,7 @@ import {
     StoryScreen,
     SettingsScreen,
     MessageScreen,
+    PinCodeScreen,
 } from '@screens';
 
 /* //////////////////////////////////////////////////////////////
@@ -70,6 +71,9 @@ Navigation.setLazyComponentRegistrator(screenName => {
     switch (screenName) {
         case Screens.LOGIN:
             screen = withProviderWrapper(LoginScreen);
+            break;
+        case Screens.PIN_CODE:
+            screen = withProviderWrapper(PinCodeScreen);
             break;
         case Screens.HOME:
             screen = withProviderWrapper(HomeScreen);

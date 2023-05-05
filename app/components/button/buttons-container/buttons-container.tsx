@@ -7,6 +7,6 @@ interface Props {
     children?: React.ReactNode;
 }
 
-export const ButtonsContainer: FC = ({children}: Props) => (
+export const ButtonsContainer: FC<Props> = ({children}: Props) => (
     <View style={ButtonsContainerStyles.container}>{children}</View>
 );

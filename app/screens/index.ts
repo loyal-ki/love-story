@@ -6,3 +6,4 @@ export {AccountScreen} from './account';
 export {StoryScreen} from './story';
 export {SettingsScreen} from './settings';
 export {MessageScreen} from './message';
+export {PinCodeScreen} from './pin-code';

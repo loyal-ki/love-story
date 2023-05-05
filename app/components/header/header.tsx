@@ -1,13 +1,13 @@
 import React, {useMemo} from 'react';
-import {Platform, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View} from 'react-native';
 import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import TouchableWithFeedback from '@app/components/touchable-with-feedback';
 import {LARGE_HEADER_TITLE_HEIGHT} from '@app/constants/view';
+import {FontsEnum} from '@app/utils/styles/fonts-enum';
+import {Icon, IconNameEnum} from '@components/icon';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
-
-import ArrowLeftIcon from '@assets/svg/chevron_left.svg';
 
 export type HeaderRightButton = {
     borderless?: boolean;
@@ -39,87 +39,97 @@ type Props = {
 const hitSlop = {top: 20, bottom: 20, left: 20, right: 20};
 const rightButtonHitSlop = {top: 20, bottom: 5, left: 5, right: 5};
 
-const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
-    centered: {
-        alignItems: Platform.select({android: 'flex-start', ios: 'center'}),
-    },
-    container: {
-        alignItems: 'center',
-        backgroundColor: theme.primary,
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        paddingHorizontal: 16,
-        zIndex: 10,
-    },
-    subtitleContainer: {
-        flexDirection: 'row',
-        justifyContent: Platform.select({android: 'flex-start', ios: 'center'}),
-        left: Platform.select({ios: undefined, default: 3}),
-    },
-    subtitle: {
-        color: changeOpacity(theme.text, 0.72),
-        lineHeight: 12,
-        marginBottom: 8,
-        marginTop: 2,
-        height: 13,
-    },
-    titleContainer: {
-        alignItems: Platform.select({android: 'flex-start', ios: 'center'}),
-        justifyContent: 'center',
-        flex: 3,
-        height: '100%',
-        paddingHorizontal: 8,
-        ...Platform.select({
-            ios: {
-                paddingHorizontal: 60,
-                flex: undefined,
-                width: '100%',
-                position: 'absolute',
-                left: 16,
-                bottom: 0,
-                zIndex: 1,
-            },
-        }),
-    },
-    leftAction: {
-        alignItems: 'center',
-        flexDirection: 'row',
-    },
-    leftContainer: {
-        height: '100%',
-        justifyContent: 'center',
-        ...Platform.select({
-            ios: {
-                paddingLeft: 16,
-                zIndex: 5,
-                position: 'absolute',
-                bottom: 0,
-            },
-        }),
-    },
-    rightContainer: {
-        alignItems: 'center',
-        flexDirection: 'row',
-        height: '100%',
-        justifyContent: 'flex-end',
-        ...Platform.select({
-            ios: {
-                right: 16,
-                bottom: 0,
-                position: 'absolute',
-                zIndex: 2,
-            },
-        }),
-    },
-    rightIcon: {
-        marginLeft: 10,
-    },
-    title: {
-        fontSize: 16,
-        color: theme.background,
-        fontWeight: '600',
-    },
-}));
+const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) =>
+    StyleSheet.create({
+        centered: {
+            alignItems: Platform.select({android: 'flex-start', ios: 'center'}),
+        },
+        container: {
+            alignItems: 'center',
+            backgroundColor: theme.background,
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            paddingHorizontal: 16,
+            zIndex: 10,
+        },
+        subtitleContainer: {
+            flexDirection: 'row',
+            justifyContent: Platform.select({android: 'flex-start', ios: 'center'}),
+            left: Platform.select({ios: undefined, default: 3}),
+        },
+        subtitle: {
+            color: changeOpacity(theme.text, 0.72),
+            fontFamily: FontsEnum.quicksandSemiBold,
+            fontSize: 14,
+            marginBottom: 8,
+            marginTop: 2,
+        },
+        titleContainer: {
+            alignItems: Platform.select({android: 'flex-start', ios: 'center'}),
+            justifyContent: 'center',
+            flex: 3,
+            height: '100%',
+            paddingHorizontal: 8,
+            ...Platform.select({
+                ios: {
+                    paddingHorizontal: 60,
+                    flex: undefined,
+                    width: '100%',
+                    position: 'absolute',
+                    left: 16,
+                    bottom: 0,
+                    zIndex: 1,
+                },
+            }),
+        },
+        leftAction: {
+            alignItems: 'center',
+            flexDirection: 'row',
+        },
+        borderIcon: {
+            padding: 12,
+            marginLeft: 8,
+            borderWidth: 1,
+            borderColor: theme.text,
+            borderRadius: 12,
+        },
+        leftContainer: {
+            height: '100%',
+            justifyContent: 'center',
+            ...Platform.select({
+                ios: {
+                    paddingLeft: 16,
+                    zIndex: 5,
+                    position: 'absolute',
+                    bottom: 0,
+                },
+            }),
+        },
+        rightContainer: {
+            alignItems: 'center',
+            flexDirection: 'row',
+            height: '100%',
+            justifyContent: 'flex-end',
+            ...Platform.select({
+                ios: {
+                    right: 16,
+                    bottom: 0,
+                    position: 'absolute',
+                    zIndex: 2,
+                },
+            }),
+        },
+        rightIcon: {
+            marginLeft: 10,
+        },
+        title: {
+            fontSize: 18,
+            color: theme.text,
+            fontFamily: FontsEnum.quicksandBold,
+            fontWeight: '600',
+        },
+    })
+);
 
 const Header = ({
     defaultHeight,
@@ -192,7 +202,13 @@ const Header = ({
                         type={Platform.select({android: 'native', default: 'opacity'})}
                         hitSlop={hitSlop}>
                         <Animated.View style={styles.leftAction}>
-                            <ArrowLeftIcon fill={theme.arrow} width={28} height={28} />
+                            <View style={styles.borderIcon}>
+                                <Icon
+                                    name={IconNameEnum.ArrowLeft}
+                                    size={16}
+                                    color={theme.backButton}
+                                />
+                            </View>
                             {leftComponent}
                         </Animated.View>
                     </TouchableWithFeedback>

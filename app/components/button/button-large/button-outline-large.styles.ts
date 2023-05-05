@@ -15,12 +15,12 @@ export const getButtonOutlineLargeStyleConfig = makeStyleSheetFromTheme((theme: 
             borderStyle: 'dashed',
         },
         iconStyle: {
-            size: formatSize(24),
+            size: formatSize(20),
             marginRight: formatSize(2),
         },
         activeColorConfig: {
-            titleColor: theme.title,
-            borderColor: theme.title,
+            titleColor: theme.outlineButton,
+            borderColor: theme.outlineButton,
             backgroundColor: '',
         },
         disabledColorConfig: {

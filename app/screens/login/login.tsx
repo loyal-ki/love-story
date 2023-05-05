@@ -4,9 +4,14 @@ import {Animated, SafeAreaView, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {BlankSpacer} from '@app/components/alias';
+import {ButtonLargePrimary} from '@app/components/button/button-large/button-large-primary';
+import {ButtonsContainer} from '@app/components/button/buttons-container';
 import FloatingInput from '@app/components/input';
 import {Screen} from '@app/components/screen';
+import {Screens} from '@app/constants';
+import {useTheme} from '@app/context/theme';
 import {useDefaultHeaderHeight} from '@app/hooks';
+import {onNavigationToScreen} from '@app/navigation/navigation';
 import {makeStyleSheetFromTheme} from '@app/utils';
 
 import {useViewModel} from './login.view-model';
@@ -42,6 +47,8 @@ const AnimatedSafeArea = Animated.createAnimatedComponent(SafeAreaView);
 
 export const LoginScreen: React.FC<LoginScreenProps> = ({componentId}) => {
     const intl = useIntl();
+    const {theme} = useTheme();
+
     const viewModel = useViewModel();
     const styles = getStyleSheet(viewModel.theme);
     const defaultHeight = useDefaultHeaderHeight();
@@ -50,52 +57,62 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({componentId}) => {
 
     return (
         <Screen
-            title={formatMessage({id: 'chat.page_title'}).toUpperCase()}
+            title={formatMessage({id: 'login.page_title'}).toUpperCase()}
             theme={viewModel.theme}
             showBackButton
             defaultHeight={defaultHeight}
             componentId={componentId}>
-            <AnimatedSafeArea style={[styles.container]}>
-                <KeyboardAwareScrollView
-                    bounces
-                    contentContainerStyle={[styles.innerContainer]}
-                    enableAutomaticScroll
-                    enableOnAndroid={false}
-                    enableResetScrollToCoords
-                    extraScrollHeight={0}
-                    keyboardDismissMode="interactive"
-                    keyboardShouldPersistTaps="handled"
-                    ref={keyboardAwareRef}
-                    scrollToOverflowEnabled
-                    style={styles.flex}>
-                    <View style={styles.centered}>
-                        <BlankSpacer height={20} />
-                        <FloatingInput
-                            theme={viewModel.theme}
-                            autoCorrect={false}
-                            autoCapitalize="none"
-                            blurOnSubmit={false}
-                            disableFullscreenUI
-                            placeholder={formatMessage({id: 'home.input_email_placeholder'})}
-                            enablesReturnKeyAutomatically
-                            onChangeText={viewModel.onLoginChange}
-                            onSubmitEditing={viewModel.focusLogin}
-                            error={
-                                viewModel.state.emailError
-                                    ? formatMessage({id: viewModel.state.emailError})
-                                    : ''
-                            }
-                            keyboardType="email-address"
-                            label={formatMessage({id: 'home.input_email_title'})}
-                            ref={viewModel.loginRef}
-                            value={viewModel.state.email}
-                            returnKeyType="next"
-                            showErrorIcon
-                            spellCheck={false}
+            <KeyboardAwareScrollView
+                bounces
+                contentContainerStyle={[styles.innerContainer]}
+                enableAutomaticScroll
+                enableOnAndroid={false}
+                enableResetScrollToCoords
+                extraScrollHeight={0}
+                keyboardDismissMode="interactive"
+                keyboardShouldPersistTaps="handled"
+                ref={keyboardAwareRef}
+                scrollToOverflowEnabled
+                style={styles.flex}>
+                <View style={styles.centered}>
+                    <BlankSpacer height={80} />
+                    <FloatingInput
+                        theme={viewModel.theme}
+                        autoCorrect={false}
+                        autoCapitalize="none"
+                        blurOnSubmit={false}
+                        disableFullscreenUI
+                        placeholder={formatMessage({id: 'home.input_email_placeholder'})}
+                        enablesReturnKeyAutomatically
+                        onChangeText={viewModel.onLoginChange}
+                        onSubmitEditing={viewModel.focusLogin}
+                        error={
+                            viewModel.state.emailError
+                                ? formatMessage({id: viewModel.state.emailError})
+                                : ''
+                        }
+                        keyboardType="email-address"
+                        label={formatMessage({id: 'home.input_email_title'})}
+                        ref={viewModel.loginRef}
+                        value={viewModel.state.email}
+                        returnKeyType="next"
+                        showErrorIcon
+                        spellCheck={false}
+                    />
+
+                    <BlankSpacer height={20} />
+
+                    <ButtonsContainer>
+                        <ButtonLargePrimary
+                            title="Go Home"
+                            onPress={async () => {
+                                await onNavigationToScreen({screen: Screens.PIN_CODE});
+                            }}
+                            theme={theme}
                         />
-                    </View>
-                </KeyboardAwareScrollView>
-            </AnimatedSafeArea>
+                    </ButtonsContainer>
+                </View>
+            </KeyboardAwareScrollView>
         </Screen>
     );
 };
