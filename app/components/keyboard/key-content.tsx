@@ -38,7 +38,7 @@ export const BackspaceKeyContent = React.memo((props: TouchableOpacityProps) => 
 
     return (
         <TouchableOpacity {...props} style={styles.button}>
-            <Icon name={IconNameEnum.EraseIcon} size={36} color={theme.black} />
+            <Icon name={IconNameEnum.EraseIcon} size={36} color={theme.text} />
         </TouchableOpacity>
     );
 });

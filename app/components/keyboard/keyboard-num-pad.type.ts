@@ -12,7 +12,7 @@ export interface IKeyNumPad {
     key: string;
     render: Element | React.ReactNode | React.ReactNode[];
     type: KeyNumPadTypes;
-    value?: number | undefined;
+    value?: number | undefined | null;
 }
 
 export const EmptyKey: IKeyNumPad = {

@@ -15,13 +15,13 @@ export const useViewModel = () => {
             },
             {
                 color: '#86C8BC',
-                title: 'Title 1',
+                title: 'Title 2',
                 description:
                     'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
             },
             {
                 color: '#264E70',
-                title: 'Title 1',
+                title: 'Title 3',
                 description:
                     'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
             },

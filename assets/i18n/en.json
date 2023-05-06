@@ -13,6 +13,8 @@
     "common.language.vi": "Vietnamese",
     "login.page_title": "Login",
     "pin_code.page_title": "Verification Code",
+    "pin_code.did_not_receive_label": "Didn't receive?",
+    "pin_code.resend_label": "Resend in {time}",
     "home.page_title": "Home",
     "home.input_email_title": "Email",
     "home.input_email_placeholder": "Input your email",

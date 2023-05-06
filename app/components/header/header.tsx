@@ -5,8 +5,8 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import TouchableWithFeedback from '@app/components/touchable-with-feedback';
 import {LARGE_HEADER_TITLE_HEIGHT} from '@app/constants/view';
-import {FontsEnum} from '@app/utils/styles/fonts-enum';
 import {Icon, IconNameEnum} from '@components/icon';
+import {FontsEnum, typography} from '@utils/styles';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 
 export type HeaderRightButton = {
@@ -123,10 +123,8 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) =>
             marginLeft: 10,
         },
         title: {
-            fontSize: 18,
+            ...typography.text16Bold,
             color: theme.text,
-            fontFamily: FontsEnum.quicksandBold,
-            fontWeight: '600',
         },
     })
 );
