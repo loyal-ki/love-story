@@ -12,6 +12,14 @@
 
 ## ✨ Features
 
+## 📔 Naming Conventions
+
+-   [Basic rules](./docs/basic.md)
+
+-   [Advanced rules](./docs/advanced.md)
+
+-   [Coding Standards in React Native App](./docs/folder-and-file-naming.md)
+
 ## 🔥 Contributing
 
 Are you a dev and would like to help? Found a bug that you would like to report or a missing feature that you would like to work on? Great! We have written down a [Contribution guide](https://github.com/loyal-ki/love-story/blob/main/CONTRIBUTING.md) so you can start easily.
