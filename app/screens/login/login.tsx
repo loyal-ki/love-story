@@ -106,7 +106,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({componentId}) => {
                         <ButtonLargePrimary
                             title="Go Home"
                             onPress={async () => {
-                                await onNavigationToScreen({screen: Screens.PIN_CODE});
+                                await onNavigationToScreen({screen: Screens.HOME});
                             }}
                             theme={theme}
                         />

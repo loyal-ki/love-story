@@ -23,6 +23,9 @@
     "settings.page_title": "Cài đặt",
     "story.page_title": "Câu chuyên",
     "chat.page_title": "Trò chuyện",
+    "chat.tab_active_title": "Hoạt động",
+    "chat.search_label": "Tìm kiếm cuộc trò chuyện",
+    "chat.tab_archived_title": "Lưu trữ",
     "message.page_title": "Tin nhắn",
     "message.input_text_placeholder": "Tin nhắn của bạn..."
 }

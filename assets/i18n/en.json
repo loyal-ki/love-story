@@ -23,6 +23,9 @@
     "settings.page_title": "Setting",
     "story.page_title": "Story",
     "chat.page_title": "Chat",
+    "chat.tab_active_title": "Active",
+    "chat.tab_archived_title": "Archived",
+    "chat.search_label": "Search conversation",
     "message.page_title": "Message",
     "message.input_text_placeholder": "Your message..."
 }

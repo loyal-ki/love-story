@@ -90,7 +90,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) =>
             padding: 12,
             marginLeft: 8,
             borderWidth: 1,
-            borderColor: theme.text,
+            borderColor: theme.primary,
             borderRadius: 12,
         },
         leftContainer: {
@@ -124,7 +124,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) =>
         },
         title: {
             ...typography.text16Bold,
-            color: theme.text,
+            color: theme.primary,
         },
     })
 );
@@ -191,27 +191,27 @@ const Header = ({
 
     return (
         <Animated.View style={containerStyle}>
-            {showBackButton && (
-                <Animated.View style={styles.leftContainer}>
-                    <TouchableWithFeedback
-                        borderlessRipple
-                        onPress={onBackPress}
-                        rippleRadius={20}
-                        type={Platform.select({android: 'native', default: 'opacity'})}
-                        hitSlop={hitSlop}>
-                        <Animated.View style={styles.leftAction}>
+            <Animated.View style={styles.leftContainer}>
+                <TouchableWithFeedback
+                    borderlessRipple
+                    onPress={showBackButton && onBackPress}
+                    rippleRadius={20}
+                    type={Platform.select({android: 'native', default: 'opacity'})}
+                    hitSlop={hitSlop}>
+                    <Animated.View style={styles.leftAction}>
+                        {showBackButton && (
                             <View style={styles.borderIcon}>
                                 <Icon
                                     name={IconNameEnum.ArrowLeft}
                                     size={16}
-                                    color={theme.backButton}
+                                    color={theme.primary}
                                 />
                             </View>
-                            {leftComponent}
-                        </Animated.View>
-                    </TouchableWithFeedback>
-                </Animated.View>
-            )}
+                        )}
+                    </Animated.View>
+                </TouchableWithFeedback>
+                {leftComponent}
+            </Animated.View>
             <Animated.View style={[styles.titleContainer, additionalTitleStyle]}>
                 <TouchableWithFeedback
                     disabled={!onTitlePress}

@@ -57,7 +57,7 @@ export interface PinCodeScreenProps {
     componentId: BaseScreens;
 }
 
-const CODE_LENGTH = 6;
+const CODE_LENGTH = 4;
 
 export const PinCodeScreen: React.FC<PinCodeScreenProps> = ({componentId}) => {
     const intl = useIntl();

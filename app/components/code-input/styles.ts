@@ -4,8 +4,8 @@ import {StyleSheet} from 'react-native';
 import {makeStyleSheetFromTheme} from '@app/utils';
 import {typography} from '@app/utils/styles/typography';
 
-const percentByNumOfColumns = 1 / 6;
-const sizeBox = WINDOW_WIDTH * percentByNumOfColumns;
+const percentByNumOfColumns = 1 / 4;
+const sizeBox = WINDOW_WIDTH * percentByNumOfColumns - 12;
 
 export const getCodeInputNumberStyleSheet = makeStyleSheetFromTheme((theme: Theme) =>
     StyleSheet.create({
@@ -14,9 +14,8 @@ export const getCodeInputNumberStyleSheet = makeStyleSheetFromTheme((theme: Them
             borderStyle: 'dashed',
             borderWidth: 2,
             borderRadius: 4,
-            margin: 4,
+            margin: 8,
             flex: 1,
-            width: sizeBox,
             height: sizeBox,
             justifyContent: 'center',
             alignItems: 'center',

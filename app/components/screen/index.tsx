@@ -6,6 +6,7 @@ import {Edge, SafeAreaView} from 'react-native-safe-area-context';
 import {useMemoizedCallback} from '@app/hooks';
 import {popScreen} from '@app/navigation/navigation';
 import {makeStyleSheetFromTheme} from '@app/utils';
+import {HeaderRightButton} from '@components/header/header';
 
 import NavigationHeader from '../header';
 import RoundedHeaderContext from '../rounded_header_context';
@@ -21,6 +22,8 @@ interface Props {
     defaultHeight: number;
     showBackButton?: boolean;
     showEdgesBottom?: boolean;
+    leftComponent?: React.ReactElement;
+    rightButtons?: HeaderRightButton[];
 }
 const edgesHorizontal: Edge[] = ['left', 'right'];
 const edgesBottom: Edge[] = ['bottom'];
@@ -44,6 +47,8 @@ export const Screen = React.memo(
         defaultHeight,
         showBackButton = false,
         showEdgesBottom = true,
+        leftComponent,
+        rightButtons,
     }: Props) => {
         const styles = getStyleSheet(theme);
 
@@ -71,6 +76,8 @@ export const Screen = React.memo(
                         showBackButton={showBackButton}
                         onBackPress={onBackPress}
                         title={title}
+                        rightButtons={rightButtons}
+                        leftComponent={leftComponent}
                         subtitle={subTitle}
                         hasSearch={false}
                     />

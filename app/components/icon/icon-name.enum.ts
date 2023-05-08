@@ -11,6 +11,7 @@ export enum IconNameEnum {
     SentIcon = 'SentIcon',
     CloseCircleIcon = 'CloseCircleIcon',
     WifiOffIcon = 'WifiOffIcon',
+    WifiOnlineIcon = 'WifiOnlineIcon',
     StoryIcon = 'StoryIcon',
     SettingIcon = 'SettingIcon',
     ChatIcon = 'ChatIcon',
@@ -20,4 +21,7 @@ export enum IconNameEnum {
     NotificationIcon = 'NotificationIcon',
     CheckIcon = 'CheckIcon',
     EraseIcon = 'EraseIcon',
+    ClockTimeIcon = 'ClockTimeIcon',
+    MenuIcon = 'MenuIcon',
+    SearchIcon = 'SearchIcon',
 }

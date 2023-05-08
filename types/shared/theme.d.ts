@@ -21,6 +21,8 @@ type Theme = {
     subTitle: string;
     disable: string;
     outlineButton: string;
+    backgroundInput: string;
+    textInput: string;
     success: string;
     warning: string;
     info: string;

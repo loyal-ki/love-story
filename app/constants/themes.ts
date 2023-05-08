@@ -32,9 +32,11 @@ export const Themes = {
         unSelectedIcon: '#354259',
         unSelectedText: '#968C83',
         switchCircle: '#F2E5E5',
+        textInput: '#282A3A',
         title: '#282A3A',
         subTitle: '#282A3A',
         disable: '#EEF1FF',
+        backgroundInput: '#EEF1FF',
         outlineButton: '#FFFFFF',
     },
     light: {
@@ -55,8 +57,10 @@ export const Themes = {
         unSelectedText: '#968C83',
         switchCircle: '#DDE7F2',
         title: '#FFFFFF',
+        textInput: '#282A3A',
         subTitle: '#F1F1F1',
         disable: '#EEF1FF',
         outlineButton: '#FFFFFF',
+        backgroundInput: '#EEF1FF',
     },
 } as Record<ThemeKey, Theme>;

@@ -10,19 +10,23 @@ import ArrowUpIcon from '@assets/svg/arrow-up.svg';
 import CheckIcon from '@assets/svg/check.svg';
 import LoveArrowLeftIcon from '@assets/svg/chevron_left.svg';
 import LoveArrowRightIcon from '@assets/svg/chevron_right.svg';
+import ClockTimeIcon from '@assets/svg/clock-time.svg';
 import CloseCircleIcon from '@assets/svg/close_circle.svg';
 import DarkModeIcon from '@assets/svg/dark_mode.svg';
 import EraseIcon from '@assets/svg/erase.svg';
 import ErrorIcon from '@assets/svg/error.svg';
 import StoryIcon from '@assets/svg/fileboard_love.svg';
 import LanguageIcon from '@assets/svg/language.svg';
+import MenuIcon from '@assets/svg/menu.svg';
 import NotificationIcon from '@assets/svg/notification.svg';
+import SearchIcon from '@assets/svg/search.svg';
 import SeenIcon from '@assets/svg/seen.svg';
 import SendIcon from '@assets/svg/send.svg';
 import SendingIcon from '@assets/svg/sending.svg';
 import SentIcon from '@assets/svg/sent.svg';
 import SettingIcon from '@assets/svg/setting.svg';
 import ChatIcon from '@assets/svg/story.svg';
+import WifiOnlineIcon from '@assets/svg/wifi_connected.svg';
 import WifiOffIcon from '@assets/svg/wifi_off.svg';
 
 export const iconNameMap: Record<IconNameEnum, FC<SvgProps>> = {
@@ -38,6 +42,7 @@ export const iconNameMap: Record<IconNameEnum, FC<SvgProps>> = {
     [IconNameEnum.SentIcon]: SentIcon,
     [IconNameEnum.CloseCircleIcon]: CloseCircleIcon,
     [IconNameEnum.WifiOffIcon]: WifiOffIcon,
+    [IconNameEnum.WifiOnlineIcon]: WifiOnlineIcon,
     [IconNameEnum.StoryIcon]: StoryIcon,
     [IconNameEnum.SettingIcon]: SettingIcon,
     [IconNameEnum.ChatIcon]: ChatIcon,
@@ -47,4 +52,7 @@ export const iconNameMap: Record<IconNameEnum, FC<SvgProps>> = {
     [IconNameEnum.NotificationIcon]: NotificationIcon,
     [IconNameEnum.CheckIcon]: CheckIcon,
     [IconNameEnum.EraseIcon]: EraseIcon,
+    [IconNameEnum.MenuIcon]: MenuIcon,
+    [IconNameEnum.ClockTimeIcon]: ClockTimeIcon,
+    [IconNameEnum.SearchIcon]: SearchIcon,
 };
