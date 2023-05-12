@@ -1,6 +1,6 @@
 import {useRef} from 'react';
 
-import useEffectOnce from './useEffectOnce';
+import useEffectOnce from './use-effect-once';
 
 export const useUnmount = (fn: () => any): void => {
     const fnRef = useRef(fn);

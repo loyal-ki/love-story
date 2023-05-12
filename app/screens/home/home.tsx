@@ -7,6 +7,7 @@ import {enableFreeze, enableScreens} from 'react-native-screens';
 import {Screens} from '@app/constants';
 import {useTheme} from '@app/context/theme';
 import {ChatScreen} from '@screens/chat';
+import {ProfileScreen} from '@screens/profile';
 import {SettingsScreen} from '@screens/settings';
 import {StoryScreen} from '@screens/story';
 
@@ -62,6 +63,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({componentId}) => {
                 <Tab.Screen
                     name={Screens.CHAT}
                     component={ChatScreen}
+                    options={{freezeOnBlur: true, lazy: true}}
+                />
+                <Tab.Screen
+                    name={Screens.PROFILE}
+                    component={ProfileScreen}
                     options={{freezeOnBlur: true, lazy: true}}
                 />
                 <Tab.Screen

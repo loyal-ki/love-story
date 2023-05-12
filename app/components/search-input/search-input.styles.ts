@@ -8,7 +8,7 @@ export const getSearchInputStyleSheet = makeStyleSheetFromTheme((theme: Theme) =
         container: {
             backgroundColor: theme.backgroundInput,
             borderRadius: formatSize(8),
-            paddingVertical: formatSize(16),
+            paddingVertical: formatSize(10),
             paddingHorizontal: formatSize(12),
             marginVertical: formatSize(8),
             marginHorizontal: formatSize(16),

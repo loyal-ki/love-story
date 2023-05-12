@@ -18,7 +18,7 @@ import {WithSpringConfig} from 'react-native-reanimated';
 import {Events} from '@app/constants';
 import {useTheme} from '@app/context/theme';
 import {useAndroidHardwareBackHandler} from '@app/hooks';
-import useNavButtonPressed from '@app/hooks/navigation_button_pressed';
+import useNavButtonPressed from '@app/hooks/navigation-button-pressed';
 import {hapticFeedback, makeStyleSheetFromTheme} from '@app/utils';
 
 import Indicator from './indicator';

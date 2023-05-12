@@ -18,6 +18,8 @@ type ConversationItemProps = {
     theme: Theme;
 };
 
+const ITEM_SIZE = 100;
+
 const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) =>
     StyleSheet.create({
         container: {
@@ -25,7 +27,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) =>
             backgroundColor: theme.background,
         },
         itemContainer: {
-            height: 100,
+            height: ITEM_SIZE,
             width: '90%',
             backgroundColor: theme.background,
             alignSelf: 'center',
@@ -85,6 +87,7 @@ export const ConversationItem: React.FC<ConversationItemProps> = React.memo(
                         theme={theme}
                         size={56}
                     />
+
                     <BlankSpacer width={Spacing16} />
                     <View style={styles.itemMessageDirector}>
                         <Label label="Susan" theme={theme} labelStyle={styles.name} />

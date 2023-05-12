@@ -1,25 +1,36 @@
 import React, {useMemo} from 'react';
-import FastImage from 'react-native-fast-image';
+import {StyleProp} from 'react-native';
+import FastImage, {ResizeMode, ImageStyle} from 'react-native-fast-image';
 
 type Props = {
-    forwardRef?: React.RefObject<any>;
+    style?: StyleProp<ImageStyle>;
     size: number;
     uri: string;
     theme: Theme;
+    resizeMode?: ResizeMode;
 };
 
-export const Avatar = React.memo(({forwardRef, size, uri, theme}: Props) => {
+export const Avatar = React.memo(({style, size, uri, theme, resizeMode}: Props) => {
     const fIStyle = useMemo(
-        () => ({
-            borderRadius: size / 2,
-            backgroundColor: theme.backgroundInput,
-            height: size,
-            width: size,
-        }),
-        [size, theme.backgroundInput]
+        () => [
+            {
+                borderRadius: size / 2,
+                backgroundColor: theme.backgroundInput,
+                height: size,
+                width: size,
+            },
+            style,
+        ],
+        [size, style, theme.backgroundInput]
     );
 
-    return <FastImage style={fIStyle} source={{uri}} resizeMode={FastImage.resizeMode.contain} />;
+    return (
+        <FastImage
+            style={fIStyle}
+            source={{uri}}
+            resizeMode={resizeMode ?? FastImage.resizeMode.contain}
+        />
+    );
 });
 
 Avatar.displayName = 'Avatar';

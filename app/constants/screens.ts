@@ -6,6 +6,7 @@ export const ALERT = 'Alert';
 export const EXAMPLE_BOTTOM_SHEET = 'Example_Bottom_Sheet';
 export const STORY = 'Story';
 export const CHAT = 'Chat';
+export const PROFILE = 'Profile';
 export const MESSAGE = 'Message';
 export const ACCOUNT = 'Account';
 export const SETTINGS = 'Settings';
@@ -18,6 +19,7 @@ export default {
     CHAT,
     STORY,
     MESSAGE,
+    PROFILE,
     ACCOUNT,
     SETTINGS,
     BOTTOM_SHEET,

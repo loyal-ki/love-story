@@ -13,6 +13,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) =>
             borderColor: theme.background,
             backgroundColor: theme.background,
             shadowOpacity: 0,
+            elevation: 0,
             height: TOP_TAB_HEIGHT,
         },
         labelStyle: {

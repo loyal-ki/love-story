@@ -1,4 +1,4 @@
-import useEffectOnce from './useEffectOnce';
+import useEffectOnce from './use-effect-once';
 
 export const useMount = (fn: () => void) => {
     useEffectOnce(() => {

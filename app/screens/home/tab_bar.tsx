@@ -5,6 +5,7 @@ import {Edge, SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-cont
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {Shadow} from 'react-native-shadow-2';
 
+import {Icon, IconNameEnum} from '@app/components/icon';
 import {Events, Screens, Navigation as NavigationConstants} from '@app/constants';
 import {BOTTOM_TAB_HEIGHT, BOTTOM_TAB_ICON_SIZE} from '@app/constants/view';
 import NavigationHandler from '@app/navigation/navigation.handler';
@@ -85,6 +86,18 @@ const Chat = ({isFocused, theme}: Props) => {
     );
 };
 
+const Profile = ({isFocused, theme}: Props) => {
+    return (
+        <View>
+            <Icon
+                name={IconNameEnum.ProfileIcon}
+                size={BOTTOM_TAB_ICON_SIZE}
+                color={isFocused ? theme.selectedIcon : changeOpacity(theme.unSelectedIcon, 0.48)}
+            />
+        </View>
+    );
+};
+
 const Settings = ({isFocused, theme}: Props) => {
     return (
         <View>
@@ -101,6 +114,7 @@ const Settings = ({isFocused, theme}: Props) => {
 const TabComponents: Record<string, any> = {
     Story,
     Chat,
+    Profile,
     Settings,
 };
 

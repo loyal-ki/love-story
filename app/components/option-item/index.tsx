@@ -2,6 +2,7 @@ import React, {useCallback, useMemo} from 'react';
 import {
     LayoutChangeEvent,
     StyleProp,
+    StyleSheet,
     Text,
     TextStyle,
     TouchableOpacity,
@@ -12,12 +13,12 @@ import {
 import {Switch} from 'react-native-switch';
 
 import TouchableWithFeedback from '@app/components/touchable-with-feedback';
+import {Icon, IconNameEnum} from '@components/icon';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 
 import RadioItem, {RadioItemProps} from './radio-item';
 
 import CheckIcon from '@assets/svg/check.svg';
-import ChevronRight from '@assets/svg/chevron_right.svg';
 import CloseCircleIcon from '@assets/svg/close_circle.svg';
 import {useTheme} from '@context/theme';
 
@@ -41,8 +42,8 @@ type OptionType = (typeof OptionType)[keyof typeof OptionType];
 export const ITEM_HEIGHT = 48;
 
 const hitSlop = {top: 11, bottom: 11, left: 11, right: 11};
-const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
-    return {
+export const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) =>
+    StyleSheet.create({
         actionContainer: {
             flexDirection: 'row',
             alignItems: 'center',
@@ -98,15 +99,17 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
             flexDirection: 'row',
         },
         arrowContainer: {
-            width: 46,
-            height: 46,
-            backgroundColor: theme.primary,
+            width: 42,
+            height: 42,
+            borderColor: theme.primary,
+            borderWidth: 1.2,
             borderRadius: 8,
+            borderStyle: 'dashed',
             alignItems: 'center',
             justifyContent: 'center',
         },
-    };
-});
+    })
+);
 
 export type OptionItemProps = {
     action?:
@@ -213,7 +216,12 @@ const OptionItem = ({
     } else if (type === OptionType.ARROW) {
         actionComponent = (
             <View style={styles.arrowContainer}>
-                <ChevronRight fill={theme.arrow} height={28} width={28} style={arrowStyle} />
+                <Icon
+                    name={IconNameEnum.ArrowRight}
+                    size={16}
+                    style={arrowStyle}
+                    color={theme.primary}
+                />
             </View>
         );
     } else if (type === OptionType.REMOVE) {

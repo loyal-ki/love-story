@@ -43,7 +43,7 @@ export const FriendListActive: React.FC = () => {
                         <ConversationItem theme={theme} item={item} viewableItems={viewableItems} />
                     );
                 }}
-                estimatedItemSize={200}
+                estimatedItemSize={10}
             />
         </View>
     );

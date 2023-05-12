@@ -24,4 +24,5 @@ export enum IconNameEnum {
     ClockTimeIcon = 'ClockTimeIcon',
     MenuIcon = 'MenuIcon',
     SearchIcon = 'SearchIcon',
+    ProfileIcon = 'ProfileIcon',
 }

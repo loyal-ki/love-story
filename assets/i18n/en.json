@@ -26,6 +26,7 @@
     "chat.tab_active_title": "Active",
     "chat.tab_archived_title": "Archived",
     "chat.search_label": "Search conversation",
+    "profile.page_title": "Profile",
     "message.page_title": "Message",
     "message.input_text_placeholder": "Your message..."
 }

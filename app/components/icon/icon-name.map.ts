@@ -19,6 +19,7 @@ import StoryIcon from '@assets/svg/fileboard_love.svg';
 import LanguageIcon from '@assets/svg/language.svg';
 import MenuIcon from '@assets/svg/menu.svg';
 import NotificationIcon from '@assets/svg/notification.svg';
+import ProfileIcon from '@assets/svg/profile.svg';
 import SearchIcon from '@assets/svg/search.svg';
 import SeenIcon from '@assets/svg/seen.svg';
 import SendIcon from '@assets/svg/send.svg';
@@ -55,4 +56,5 @@ export const iconNameMap: Record<IconNameEnum, FC<SvgProps>> = {
     [IconNameEnum.MenuIcon]: MenuIcon,
     [IconNameEnum.ClockTimeIcon]: ClockTimeIcon,
     [IconNameEnum.SearchIcon]: SearchIcon,
+    [IconNameEnum.ProfileIcon]: ProfileIcon,
 };
