@@ -13,6 +13,7 @@ import {
     View,
     ViewStyle,
 } from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {WithSpringConfig} from 'react-native-reanimated';
 
 import {Events} from '@app/constants';
@@ -48,6 +49,9 @@ export const animatedConfig: Omit<WithSpringConfig, 'velocity'> = {
 
 export const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
     return {
+        flex: {
+            flex: 1,
+        },
         bottomSheet: {
             backgroundColor: theme.background,
             borderTopStartRadius: 36,
@@ -181,23 +185,25 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
     );
 
     return (
-        <BottomSheetM
-            ref={sheetRef}
-            index={initialSnapIndex}
-            snapPoints={snapPoints}
-            animateOnMount
-            backdropComponent={renderBackdrop}
-            onAnimate={handleAnimationStart}
-            onChange={handleChange}
-            animationConfigs={animatedConfig}
-            handleComponent={Indicator}
-            style={styles.bottomSheet}
-            backgroundStyle={bottomSheetBackgroundStyle}
-            footerComponent={footerComponent}
-            keyboardBehavior="extend"
-            keyboardBlurBehavior="restore"
-            onClose={close}>
-            {renderContainerContent()}
-        </BottomSheetM>
+        <GestureHandlerRootView style={styles.flex}>
+            <BottomSheetM
+                ref={sheetRef}
+                index={initialSnapIndex}
+                snapPoints={snapPoints}
+                animateOnMount
+                backdropComponent={renderBackdrop}
+                onAnimate={handleAnimationStart}
+                onChange={handleChange}
+                animationConfigs={animatedConfig}
+                handleComponent={Indicator}
+                style={styles.bottomSheet}
+                backgroundStyle={bottomSheetBackgroundStyle}
+                footerComponent={footerComponent}
+                keyboardBehavior="extend"
+                keyboardBlurBehavior="restore"
+                onClose={close}>
+                {renderContainerContent()}
+            </BottomSheetM>
+        </GestureHandlerRootView>
     );
 };

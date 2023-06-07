@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, StyleProp, ViewStyle} from 'react-native';
+import {StyleProp, ViewStyle} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Navigation} from 'react-native-navigation';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -26,15 +26,11 @@ import {
   ////////////////////////////////////////////////////////////// */
 export const withGestures = (Screen: React.ComponentType, styles: StyleProp<ViewStyle>) => {
     return function gestureHOC(props: any) {
-        if (Platform.OS === 'android') {
-            return (
-                <GestureHandlerRootView style={[{flex: 1}, styles]}>
-                    <Screen {...props} />
-                </GestureHandlerRootView>
-            );
-        }
-
-        return <Screen {...props} />;
+        return (
+            <GestureHandlerRootView style={[{flex: 1}, styles]}>
+                <Screen {...props} />
+            </GestureHandlerRootView>
+        );
     };
 };
 
