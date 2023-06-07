@@ -1,5 +1,5 @@
 import {useReducer} from 'react';
-import {useIntl} from 'react-intl';
+import {IntlShape} from 'react-intl';
 
 import {useUserLocale} from '@app/context/locale';
 import {useTheme} from '@app/context/theme';
@@ -9,15 +9,16 @@ import {showLanguageOptionsBottomSheet} from './advanced';
 import {settingsActions} from './settings.actions';
 import {initialState, reducer} from './settings.reducer';
 
-export const useViewModel = () => {
-    const intl = useIntl();
+export const useViewModel = (intl: IntlShape) => {
     const {locale, updateLocale} = useUserLocale();
     const {theme, updateTheme} = useTheme();
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    useMount(() => {
+    const initViewModel = useMemoizedCallback(() => {
         dispatch(settingsActions.setInit(locale, theme.type === 'dark'));
-    });
+    }, [locale, theme.type]);
+
+    useMount(initViewModel);
 
     const useChangeThemeMode = useMemoizedCallback(async () => {
         if (theme.type === 'dark') {
@@ -46,8 +47,9 @@ export const useViewModel = () => {
         state,
         locale,
         theme,
-        intl,
+        updateLocale,
         useChangeThemeMode,
         openLanguageBottomSelect,
+        initViewModel,
     };
 };

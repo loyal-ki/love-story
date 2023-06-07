@@ -1,5 +1,5 @@
 import React from 'react';
-import {Edge} from 'react-native-safe-area-context';
+import {useIntl} from 'react-intl';
 
 import {BlankSpacer} from '@app/components/alias';
 import FreezeScreen from '@app/components/freeze';
@@ -17,8 +17,6 @@ import LanguageIcon from '@assets/svg/language.svg';
 import NotificationIcon from '@assets/svg/notification.svg';
 
 const kIconColor = ['#7F669D', '#ECA869', '#FFE15D'];
-
-const edges: Edge[] = ['left', 'right', 'bottom'];
 
 const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
     flex: {
@@ -53,9 +51,11 @@ export interface SettingsScreenProps {
 }
 
 export const SettingsScreen: React.FC<SettingsScreenProps> = ({componentId}) => {
-    const viewModel = useViewModel();
+    const intl = useIntl();
 
-    const {formatMessage} = viewModel.intl;
+    const viewModel = useViewModel(intl);
+
+    const {formatMessage} = intl;
 
     const styles = getStyleSheet(viewModel.theme);
 

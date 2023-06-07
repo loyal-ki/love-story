@@ -91,7 +91,7 @@ module.exports = {
     },
     overrides: [
         {
-            files: ['**/*.ts', '**/*.tsx'],
+            files: ['**/*.ts', '**/*.tsx', '*.test.js', '*.test.jsx'],
             env: {browser: true, es6: true, node: true, jest: true},
             extends: [
                 'airbnb-typescript',

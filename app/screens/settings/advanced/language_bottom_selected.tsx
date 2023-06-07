@@ -1,7 +1,6 @@
 import React from 'react';
 import {IntlShape} from 'react-intl';
-import {FlatList, Text, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 
 import {BlankSpacer} from '@app/components/alias';
 import languages from '@app/localization/languages';

@@ -160,7 +160,8 @@
   "include": [
     "app/**/*",
     "jest/**/*",
-    "types/**/*"
+    "types/**/*",
+    "test/**/*",
   ],
   "exclude": [
     "node_modules",

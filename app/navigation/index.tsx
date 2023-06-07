@@ -24,7 +24,7 @@ import {
 /* //////////////////////////////////////////////////////////////
                     GESTURE HANDLER WRAPPER
   ////////////////////////////////////////////////////////////// */
-const withGestures = (Screen: React.ComponentType, styles: StyleProp<ViewStyle>) => {
+export const withGestures = (Screen: React.ComponentType, styles: StyleProp<ViewStyle>) => {
     return function gestureHOC(props: any) {
         if (Platform.OS === 'android') {
             return (
@@ -41,7 +41,7 @@ const withGestures = (Screen: React.ComponentType, styles: StyleProp<ViewStyle>)
 /* //////////////////////////////////////////////////////////////
                     SAFE AREA WRAPPER
   ////////////////////////////////////////////////////////////// */
-const withSafeAreaInsets = (Screen: React.ComponentType) => {
+export const withSafeAreaInsets = (Screen: React.ComponentType) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, react/function-component-definition
     return function SafeAreaInsets(props: any) {
         return (

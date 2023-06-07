@@ -134,10 +134,13 @@ const TabBar = ({state, descriptors, navigation, theme}: BottomTabBarProps & {th
     }, []);
 
     useEffect(() => {
-        const listner = DeviceEventEmitter.addListener(NavigationConstants.NAVIGATION_HOME, () => {
-            NavigationHandler.setVisibleTap(Screens.HOME);
-            navigation.navigate(Screens.HOME);
-        });
+        const listner = DeviceEventEmitter.addListener(
+            NavigationConstants().NAVIGATION_HOME,
+            () => {
+                NavigationHandler.setVisibleTap(Screens.HOME);
+                navigation.navigate(Screens.HOME);
+            }
+        );
 
         return () => listner.remove();
     });

@@ -16,6 +16,7 @@ module.exports = {
         },
         __DEV__: true,
     },
+    collectCoverageFrom: ['app/**/*.{js,jsx,ts,tsx}'],
     moduleFileExtensions: ['ts', 'tsx', 'android.js', 'ios.js', 'js', 'jsx', 'json', 'node'],
     moduleNameMapper: {
         '^@app/(.*)': '<rootDir>/app/$1',
@@ -37,7 +38,6 @@ module.exports = {
     moduleDirectories: ['typings', 'node_modules'],
     clearMocks: true,
     setupFilesAfterEnv: ['<rootDir>/test/setup.js'],
-    collectCoverageFrom: ['app/**/*.{js,jsx,ts,tsx}'],
     coverageReporters: ['lcov', 'text-summary'],
     testPathIgnorePatterns: ['/node_modules/'],
     transform: {
@@ -47,7 +47,7 @@ module.exports = {
             '<rootDir>/test/file_transformer.js',
     },
     transformIgnorePatterns: [
-        'node_modules/(?!(@react-native|react-native)|@sentry/react-native|react-clone-referenced-element|@react-native-community|react-navigation|@react-navigation/.*|validator|react-syntax-highlighter/.*|hast-util-from-selector|hastscript|property-information|hast-util-parse-selector|space-separated-tokens|comma-separated-tokens)',
+        'node_modules/(?!(@react-native|react-native)|@sentry/react-native|react-native-localize|react-clone-referenced-element|@react-native-community|react-navigation|@react-navigation/.*|validator|react-syntax-highlighter/.*|hast-util-from-selector|hastscript|property-information|hast-util-parse-selector|space-separated-tokens|comma-separated-tokens)',
     ],
     testRegex: '(/__tests__/hooks/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
     testEnvironment: 'node',

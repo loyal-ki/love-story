@@ -1,0 +1,10 @@
+version: 2.1
+orbs:
+  owasp: entur/owasp@0.0.10
+  node: circleci/node@5.0.3
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - test

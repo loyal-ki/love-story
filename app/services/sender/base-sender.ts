@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {AxiosRequestConfig, AxiosHeaders} from 'axios';
 import merge from 'deepmerge';
 import {EmitterSubscription} from 'react-native/types';
