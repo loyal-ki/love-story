@@ -1,13 +1,13 @@
 package com.love_story_typescript;
 
-import android.app.Application;
 import com.facebook.react.PackageList;
 import com.reactnativenavigation.NavigationApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
-import com.facebook.soloader.SoLoader;
+import com.love_story_typescript.flipper.ReactNativeFlipper;
+
 import java.util.List;
 
 public class MainApplication extends NavigationApplication {

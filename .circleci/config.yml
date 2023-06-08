@@ -3,8 +3,243 @@ orbs:
   owasp: entur/owasp@0.0.10
   node: circleci/node@5.0.3
 
+executors:
+  android:
+    parameters:
+      resource_class:
+        default: xlarge
+        type: string
+    environment:
+      NODE_OPTIONS: --max_old_space_size=12000
+      NODE_ENV: production
+      BABEL_ENV: production
+    docker:
+      - image: cimg/android:2022.09.2-node
+    working_directory: ~/love-story
+    resource_class: <<parameters.resource_class>>
+
+  ios:
+    parameters:
+      resource_class:
+        default: medium
+        type: string
+    environment:
+      NODE_OPTIONS: --max_old_space_size=12000
+      NODE_ENV: production
+      BABEL_ENV: production
+    macos:
+      xcode: "14.2.0"
+    working_directory: ~/love-story
+    shell: /bin/bash --login -o pipefail
+    resource_class: <<parameters.resource_class>>
+
+commands:
+  fastlane-dependencies:
+    description: "Get Fastlane dependencies"
+    parameters:
+      for:
+        type: string
+    steps:
+      - restore_cache:
+          name: Restore Fastlane cache
+          key: v1-gems-<< parameters.for >>-{{ checksum "fastlane/Gemfile.lock" }}-{{ arch }}
+      - run:
+          working_directory: fastlane
+          name: Download Fastlane dependencies
+          command: bundle install --path vendor/bundle
+      - save_cache:
+          name: Save Fastlane cache
+          key: v1-gems-<< parameters.for >>-{{ checksum "fastlane/Gemfile.lock" }}-{{ arch }}
+          paths:
+            - fastlane/vendor/bundle
+
+  gradle-dependencies:
+    description: "Get Gradle dependencies"
+    steps:
+      - restore_cache:
+          name: Restore Gradle cache
+          key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+      - run:
+          working_directory: android
+          name: Download Gradle dependencies
+          command: ./gradlew dependencies
+      - save_cache:
+          name: Save Gradle cache
+          paths:
+            - ~/.gradle
+          key: v1-gradle-{{ checksum "android/build.gradle" }}-{{ checksum  "android/app/build.gradle" }}
+
+  npm-dependencies:
+    description: "Get JavaScript dependencies"
+    steps:
+      - node/install:
+          node-version: "v20.2.0"
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --immutable
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - .yarn/cache
+            - .yarn/unplugged
+      - run:
+          name: "Patch dependencies"
+          command: npx patch-package
+
+  pods-dependencies:
+    description: "Get cocoapods dependencies"
+    steps:
+      - restore_cache:
+          name: Restore cocoapods specs and pods
+          key: v1-cocoapods-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
+      - run:
+          name: iOS gems
+          command: npm run ios-gems
+      - run:
+          name: Getting cocoapods dependencies
+          command: npm run pod-install
+      - save_cache:
+          name: Save cocoapods specs and pods cache
+          key: v1-cocoapods-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
+          paths:
+            - ios/Pods
+            - ~/.cocoapods
+
+  persist:
+    description: "Persist love-story directory"
+    steps:
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - love-story*
+
+  save:
+    description: "Save binaries artifacts"
+    parameters:
+      filename:
+        type: string
+    steps:
+      - run:
+          name: Copying artifacts
+          command: |
+            mkdir /tmp/artifacts;
+            cp ~/love-story/<<parameters.filename>> /tmp/artifacts;
+      - store_artifacts:
+          path: /tmp/artifacts
+
+jobs:
+  test:
+    working_directory: ~/love-story
+    docker:
+      - image: cimg/node:16.14.2
+    steps:
+      - checkout:
+          path: ~/love-story
+      - npm-dependencies
+      - run:
+          name: Running Tests
+          command: npm test
+
+  github-release:
+    executor:
+      name: android
+      resource_class: medium
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Create GitHub release
+          working_directory: fastlane
+          command: bundle exec fastlane github
+
+  # //////////////////////////////////////////////////////////////
+  #                    BUILD ANDROID
+  # //////////////////////////////////////////////////////////////
+  build-android-unsigned:
+    executor: android
+    steps:
+      - checkout:
+          path: ~/love-story
+      - npm-dependencies
+      - fastlane-dependencies:
+          for: android
+      - gradle-dependencies
+      - run:
+          name: Jetify Android libraries
+          command: ./node_modules/.bin/jetify
+      - run:
+          working_directory: fastlane
+          name: Run fastlane to build unsigned android
+          no_output_timeout: 30m
+          command: bundle exec fastlane android unsigned
+      - persist
+      - save:
+          filename: "*.apk"
+
+  # //////////////////////////////////////////////////////////////
+  #                    BUILD IOS
+  # //////////////////////////////////////////////////////////////
+  build-ios-unsigned:
+    executor: ios
+    steps:
+      - checkout:
+          path: ~/love-story
+      - npm-dependencies
+      - pods-dependencies
+      - fastlane-dependencies:
+          for: ios
+      - run:
+          working_directory: fastlane
+          name: Run fastlane to build unsigned iOS
+          no_output_timeout: 30m
+          command: |
+            HOMEBREW_NO_AUTO_UPDATE=1 brew install watchman
+            bundle exec fastlane ios unsigned
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - love-story/*.ipa
+      - save:
+          filename: "*.ipa"
+
+  # //////////////////////////////////////////////////////////////
+  #                    WORKFLOWS
+  # //////////////////////////////////////////////////////////////
 workflows:
   version: 2
   build:
     jobs:
       - test
+      - build-android-unsigned:
+          context: love-story-unsigned
+          requires:
+            - test
+          filters:
+            tags:
+              only: /^v(\d+\.)(\d+\.)(\d+)(.*)?$/
+            branches:
+              only: unsigned
+      - build-ios-unsigned:
+          context: love-story-unsigned
+          requires:
+            - test
+          filters:
+            tags:
+              only: /^v(\d+\.)(\d+\.)(\d+)(.*)?$/
+            branches:
+              only: unsigned
+      - github-release:
+          context: love-story-unsigned
+          requires:
+            - build-android-unsigned
+            - build-ios-unsigned
+          filters:
+            tags:
+              only: /^v(\d+\.)(\d+\.)(\d+)(.*)?$/
+            branches:
+              only: unsigned

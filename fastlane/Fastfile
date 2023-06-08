@@ -57,24 +57,139 @@ lane :update_build_number do
 end
 
 platform :ios do
+  desc 'Build iOS app'
+  lane :build do
+    update_identifiers
+    # build_ios
+  end
+
+  lane :unsigned do
+    UI.success('Building unsigned iOS app')
+
+    ENV['APP_NAME'] = 'LoveStory'
+    ENV['REPLACE_ASSETS'] = 'true'
+    ENV['BUILD_FOR_RELEASE'] = 'true'
+    ENV['APP_SCHEME'] = 'lovestory'
+
+    update_identifiers
+
+    build_ios_unsigned_or_simulator(
+      more_xc_args: "-sdk iphoneos CODE_SIGNING_ALLOWED=NO",
+      rel_build_dir: "Release-iphoneos",
+      output_file: "LoveStory-unsigned.ipa",
+    )
+  end
+
   lane :update_identifiers do
     # Set the name for the app ios
-    app_name =  'Love Story'
+    app_name =  'LoveStory'
     update_info_plist(
       xcodeproj: 'ios/love_story_typescript.xcodeproj',
       plist_path: 'love_story_typescript/Info.plist',
       display_name: app_name
     )
+
+    # Set the app bundle id
+    app_bundle_id = ENV['MAIN_APP_IDENTIFIER'] || 'com.loyalki.lovestory'
+    update_app_identifier(
+        xcodeproj: './ios/love_story_typescript.xcodeproj',
+        plist_path: 'love_story_typescript/Info.plist',
+        app_identifier: app_bundle_id
+    )
+
+    # find_replace_string(
+    #   path_to_file: './ios/love_story_typescript.xcodeproj/project.pbxproj',
+    #   old_string: 'com.loyalki.lovestory',
+    #   new_string: app_bundle_id
+    # )
+  end
+
+  def build_ios_unsigned_or_simulator(more_xc_args:, rel_build_dir:, output_file:)
+    root_dir = Dir[File.expand_path('..')].first
+    ios_build_dir = "#{root_dir}/ios/Build/Products"
+
+    ENV['APP_NAME'] = 'LoveStory'
+    ENV['REPLACE_ASSETS'] = 'true'
+    ENV['BUILD_FOR_RELEASE'] = 'true'
+    ENV['APP_SCHEME'] = 'lovestory'
+
+    update_identifiers
+
+    sh "rm -rf #{ios_build_dir}/"
+    sh "cd #{root_dir}/ios && xcodebuild -workspace love_story_typescript.xcworkspace -scheme love_story_typescript -configuration Release -parallelizeTargets CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED=NO SYMROOT='#{ios_build_dir}' #{more_xc_args} "
+    sh "cd #{ios_build_dir}/#{rel_build_dir} && zip -r #{output_file} LoveStory.app"
+    sh "mv #{ios_build_dir}/#{rel_build_dir}/#{output_file} #{root_dir}"
   end
 end
 
 platform :android do
+  desc 'Build an unsigned apk'
+  lane :unsigned do
+    UI.success('Building unsigned Android app')
+
+    ENV['APP_NAME'] = 'LoveStory'
+    ENV['REPLACE_ASSETS'] = 'true'
+    ENV['BUILD_FOR_RELEASE'] = 'true'
+    ENV['APP_SCHEME'] = 'lovestory'
+
+    gradle(
+      task: 'assemble',
+      build_type: 'Unsigned',
+      project_dir: 'android/'
+    )
+
+    sh "mv #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} #{Pathname.new(File.expand_path(File.dirname(__FILE__))).parent.to_s}/LoveStory-unsigned.apk"
+
   lane :update_identifiers do
-    # Set the name for the app android
-    app_name =  'Love Story'
+    app_name =  ENV['APP_NAME'] || 'LoveStory'
+
     android_change_string_app_name(
       newName: app_name,
-      stringsFile: 'android/app/src/main/res/values/strings.xml'
+      stringsFile: './android/app/src/main/res/values/strings.xml'
+    )
+
+    package_id = ENV['MAIN_APP_IDENTIFIER'] || 'com.loyalki.love_story'
+    android_change_package_identifier(newIdentifier: package_id, manifest: './android/app/src/main/AndroidManifest.xml')
+    android_update_application_id(app_folder_name: 'android/app', application_id: package_id)
+    android_update_namespace(app_folder_name: 'android/app', namespace: package_id)
+
+    app_scheme = ENV['APP_SCHEME'] || 'lovestory'
+
+    find_replace_string(
+      path_to_file: "./android/app/src/main/AndroidManifest.xml",
+      old_string: 'scheme="lovestory"',
+      new_string: "scheme=\'#{app_scheme}\'"
+    )
+    end
+  end
+end
+
+desc 'Create GitHub release'
+lane :github do
+  tag = ENV['CIRCLE_TAG'] || ENV['TAG']
+
+  if tag
+    version = android_get_version_name(gradle_file: './android/app/build.gradle')
+    build = android_get_version_code(gradle_file: './android/app/build.gradle')
+    changelog = File.read("metadata/changelog")
+    android = [
+      "    * [LoveStory arm64-v8a](https://releases.lovestory.com/love-story/#{version}/#{build}/LoveStory-arm64-v8a.apk)",
+      "    * [LoveStory armeabi-v7a](https://releases.lovestory.com/love-story/#{version}/#{build}/LoveStory-armeabi-v7a.apk)",
+      "    * [LoveStory Universal](https://releases.lovestory.com/love-story/#{version}/#{build}/LoveStory-universal.apk)",
+      "    * [LoveStory x86](https://releases.lovestory.com/love-story/#{version}/#{build}/LoveStory-x86.apk)",
+      "    * [LoveStory x86_64](https://releases.lovestory.com/love-story/#{version}/#{build}/LoveStory-x86_64.apk)",
+    ]
+    changelog.concat("* Android\n#{android.join("\n")}\n")
+    changelog.concat("* iOS\n    * [LoveStory](https://releases.lovestory.com/love-story/#{version}/#{build}/LoveStory.ipa)")
+
+    github_release = set_github_release(
+      repository_name: "lovestory/love-story",
+      api_token: ENV["GITHUB_TOKEN"],
+      name: "Mobile Version #{version}",
+      tag_name: tag,
+      description: changelog,
+      upload_assets: ["./Lovestory-unsigned.ipa", "./Lovestory-unsigned.apk"],
+      is_draft: true
     )
   end
 end
