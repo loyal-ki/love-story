@@ -1,6 +1,7 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 apply plugin: "com.google.gms.google-services"
+apply plugin: 'kotlin-android'
 
 import com.android.build.OutputFile
 
@@ -39,7 +40,7 @@ react {
     // bundleAssetName = "MyApplication.android.bundle"
     //
     //   The entry file for bundle generation. Default is 'index.android.js' or 'index.js'
-    // entryFile = file("../js/MyApplication.android.js")
+    entryFile = file("../../index.ts")
     //
     //   A list of extra flags to pass to the 'bundle' commands.
     //   See https://github.com/react-native-community/cli/blob/main/docs/commands.md#bundle
@@ -59,7 +60,7 @@ react {
  * use App Bundles (https://developer.android.com/guide/app-bundle/)
  * and want to have separate APKs to upload to the Play Store.
  */
-def enableSeparateBuildPerCPUArchitecture = false
+def enableSeparateBuildPerCPUArchitecture = project.hasProperty('separateApk') ? project.property('separateApk').toBoolean() : false
 
 /**
  * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
@@ -107,7 +108,7 @@ android {
         abi {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
-            universalApk false  // If true, also generate a universal APK
+            universalApk enableSeparateBuildPerCPUArchitecture  // If true, also generate a universal APK
             include (*reactNativeArchitectures())
         }
     }
@@ -129,6 +130,11 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+        unsigned.initWith(buildTypes.release)
+        unsigned {
+            signingConfig null
+            matchingFallbacks = ['release']
         }
     }
 

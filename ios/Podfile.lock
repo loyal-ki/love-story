@@ -489,13 +489,13 @@ PODS:
     - React-perflogger (= 0.71.4)
   - ReactNativeExceptionHandler (2.10.10):
     - React-Core
-  - ReactNativeNavigation (7.33.1):
+  - ReactNativeNavigation (7.34.0):
     - HMSegmentedControl
     - React-Core
     - React-RCTImage
     - React-RCTText
-    - ReactNativeNavigation/Core (= 7.33.1)
-  - ReactNativeNavigation/Core (7.33.1):
+    - ReactNativeNavigation/Core (= 7.34.0)
+  - ReactNativeNavigation/Core (7.34.0):
     - HMSegmentedControl
     - React-Core
     - React-RCTImage
@@ -518,7 +518,7 @@ PODS:
     - RNFBApp
   - RNFlashList (1.4.3):
     - React-Core
-  - RNGestureHandler (2.10.1):
+  - RNGestureHandler (2.11.0):
     - React-Core
   - RNLocalize (2.2.6):
     - React-Core
@@ -531,7 +531,7 @@ PODS:
     - React-Core
   - RNReactNativeHapticFeedback (2.0.3):
     - React-Core
-  - RNReanimated (2.14.4):
+  - RNReanimated (3.1.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -834,19 +834,19 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 8fa50b38df6b992c76537993a2b0553d3b088004
   ReactCommon: 34f9369c376d5f335069dda29552b3e7351b9ec6
   ReactNativeExceptionHandler: b11ff67c78802b2f62eed0e10e75cb1ef7947c60
-  ReactNativeNavigation: 44f6193e4e3550d067c1c272d9aea9214da85b86
+  ReactNativeNavigation: 49a0f0edaf17fe3069da247d826ce0a13e32a63c
   RealmJS: 64ae0907c1f21ce8e74bd480a8503032b19804fd
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
   RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
   RNFBApp: d59efa0872fff4e27de03cca3c528c203a436ae5
   RNFBMessaging: 216693dd5ba4f18ba65fb39fc73a44a23c26190f
   RNFlashList: ade81b4e928ebd585dd492014d40fb8d0e848aab
-  RNGestureHandler: 42ec7c28dd02d540ed6c9159c57a98ff016492dc
+  RNGestureHandler: 026038a97d4c8649ce397a22e162ca58b4e6c230
   RNLocalize: d4b8af4e442d4bcca54e68fc687a2129b4d71a81
   RNNotifee: 05692d7bb42b6c718a3906aeb8431c48ff2e8097
   RNPermissions: 215c54462104b3925b412b0fb3c9c497b21c358b
   RNReactNativeHapticFeedback: afa5bf2794aecbb2dba2525329253da0d66656df
-  RNReanimated: cc5e3aa479cb9170bcccf8204291a6950a3be128
+  RNReanimated: b1220a0e5168745283ff5d53bfc7d2144b2cee1b
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSentry: 4fb2cd7d2d6cb94423c24884488206ef881da136
   RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315

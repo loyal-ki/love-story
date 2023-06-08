@@ -67,7 +67,7 @@ buck-out/
 
 # Lock
 package-lock.json
-yarn.lock
+# yarn.lock
 
 #Vender
 vendor/bundle/
