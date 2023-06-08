@@ -132,6 +132,9 @@ commands:
       - store_artifacts:
           path: /tmp/artifacts
 
+  # //////////////////////////////////////////////////////////////
+  #                    ALL JOB
+  # //////////////////////////////////////////////////////////////
 jobs:
   test:
     working_directory: ~/love-story
