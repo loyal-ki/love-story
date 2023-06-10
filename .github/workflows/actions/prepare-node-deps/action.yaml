@@ -1,0 +1,14 @@
+name: deps
+description: Common deps for mobile repo
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+        cache: 'yarn'
+        
+    - name: Install project dependencies
+      run: yarn
