@@ -1,0 +1,13 @@
+name: prepare-android-build
+description: Action to prepare environment for android build
+
+inputs:
+  sign:
+    description: Flag to enable android package signing
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+    - name: ci/prepare-mobile-build
+      uses: ./.github/actions/prepare-mobile-build
