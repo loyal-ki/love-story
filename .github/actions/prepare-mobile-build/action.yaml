@@ -12,7 +12,7 @@ runs:
       shell: bash
       run: |
         echo "::group::setup-fastlane-dependencies"
-        bundle install
+        bundle --full-index
         echo "::endgroup::"
       working-directory: ./fastlane
 

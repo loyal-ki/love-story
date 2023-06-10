@@ -2,13 +2,12 @@ name: test
 description: Common tests for mobile repo
 
 runs:
-    using: composite
-    steps:
-      - name: ci/prepare-node-deps
-        uses: ./.github/actions/prepare-node-deps
-        
-      - name: ci/run-tests
-        shell: bash
-        run: |
-          yarn test
-  
+  using: composite
+  steps:
+    - name: ci/prepare-node-deps
+      uses: ./.github/actions/prepare-node-deps
+
+    - name: ci/run-tests
+      shell: bash
+      run: |
+        yarn test
