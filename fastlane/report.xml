@@ -5,57 +5,22 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="00: Verifying fastlane version" time="0.000227">
+      <testcase classname="fastlane.lanes" name="0: Verifying fastlane version" time="0.000238">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="01: Switch to ios update_identifiers lane" time="0.000168">
+      <testcase classname="fastlane.lanes" name="1: android_get_version_name" time="0.000952">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="02: update_info_plist" time="0.009564">
+      <testcase classname="fastlane.lanes" name="2: android_get_version_code" time="0.000181">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="03: update_app_identifier" time="0.037782">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="04: Switch to ios update_identifiers lane" time="0.000104">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="05: update_info_plist" time="0.00091">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="06: update_app_identifier" time="0.009913">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="07: rm -rf /Users/lenghia/Documents/love_story_typescript/ios/Build/Products/" time="0.536193">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="08: cd /Users/lenghia/Documents/love_story_typescript/ios &amp;&amp; xcodebuild -workspace love_story_typescript.xcworkspace -scheme love_story_typescript -configuration Release -parallelizeTargets CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED=NO SYMROOT='/Users/lenghia/Documents/love_story_typescript/ios/Build/Products' -sdk iphoneos CODE_SIGNING_ALLOWED=NO " time="107.822918">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="09: cd /Users/lenghia/Documents/love_story_typescript/ios/Build/Products/Release-iphoneos &amp;&amp; zip -r LoveStory-unsigned.ipa love_story_typescript.app" time="12.2663">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="10: mv /Users/lenghia/Documents/love_story_typescript/ios/Build/Products/Release-iphoneos/LoveStory-unsigned.ipa /Users/lenghia/Documents/love_story_typescript" time="0.00394">
+      <testcase classname="fastlane.lanes" name="3: set_github_release" time="14.303315">
         
       </testcase>
     

@@ -166,7 +166,7 @@ end
 
 desc 'Create GitHub release'
 lane :github do
-  tag = ENV['CIRCLE_TAG'] || ENV['TAG']
+  tag = ENV['GITHUB_REF_NAME'] || ENV['TAG']
 
   if tag
     version = android_get_version_name(gradle_file: './android/app/build.gradle')
@@ -183,7 +183,7 @@ lane :github do
     changelog.concat("* iOS\n    * [LoveStory](https://releases.lovestory.com/love-story/#{version}/#{build}/LoveStory.ipa)")
 
     github_release = set_github_release(
-      repository_name: "lovestory/love-story",
+      repository_name: "loyal-ki/love-story",
       api_token: ENV["GITHUB_TOKEN"],
       name: "Mobile Version #{version}",
       tag_name: tag,
