@@ -20,6 +20,6 @@ runs:
       shell: bash
       run: |
         echo "::group::install-pods-dependencies"        
-        npm run ios-gems
-        npm run pod-install
+        yarn ios-gems
+        yarn pod-install
         echo "::endgroup::"
