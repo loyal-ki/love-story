@@ -117,7 +117,7 @@ platform :ios do
 
     sh "rm -rf #{ios_build_dir}/"
     sh "cd #{root_dir}/ios && xcodebuild -workspace love_story_typescript.xcworkspace -scheme love_story_typescript -configuration Release -parallelizeTargets CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED=NO SYMROOT='#{ios_build_dir}' #{more_xc_args} "
-    sh "cd #{ios_build_dir}/#{rel_build_dir} && zip -r #{output_file} LoveStory.app"
+    sh "cd #{ios_build_dir}/#{rel_build_dir} && zip -r #{output_file} love_story_typescript.app"
     sh "mv #{ios_build_dir}/#{rel_build_dir}/#{output_file} #{root_dir}"
   end
 end
