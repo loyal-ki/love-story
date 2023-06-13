@@ -183,7 +183,7 @@ lane :github do
     changelog.concat("* iOS\n    * [LoveStory](https://releases.lovestory.com/love-story/#{version}/#{build}/LoveStory.ipa)")
 
     upload_assets = [
-      '/home/runner/work/love-story/love-story/Lovestory-unsigned.apk',
+      '/home/runner/work/love-story/love-story/LoveStory-unsigned.apk',
       '/Users/runner/work/love-story/love-story/LoveStory-unsigned.ipa'
     ]
 
