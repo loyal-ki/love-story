@@ -182,13 +182,18 @@ lane :github do
     changelog.concat("* Android\n#{android.join("\n")}\n")
     changelog.concat("* iOS\n    * [LoveStory](https://releases.lovestory.com/love-story/#{version}/#{build}/LoveStory.ipa)")
 
+    upload_assets = [
+      '/home/runner/work/love-story/love-story/Lovestory-unsigned.apk',
+      '/Users/runner/work/love-story/love-story/LoveStory-unsigned.ipa'
+    ]
+
     github_release = set_github_release(
       repository_name: "loyal-ki/love-story",
       api_token: ENV["GITHUB_TOKEN"],
       name: "Mobile Version #{version}",
       tag_name: tag,
       description: changelog,
-      upload_assets: ["./Lovestory-unsigned.ipa", "./Lovestory-unsigned.apk"],
+      upload_assets: upload_assets,
       is_draft: true
     )
   end
